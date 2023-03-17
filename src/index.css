@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* FIELD, LABEL AND SPAN */
+.form__group:focus-within .form__label,
+.form__input:not(:placeholder-shown) ~ .form__label {
+  font-size: .75rem;
+  top: -30%;
+  transform: translateY(0);
+  color: #5FA7F0;
+}
+
+/* BACKGROUND GRADIENTS */
+.image__gradient-login{
+  background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 2%, rgba(0,0,0,1) 4%, rgba(0,0,0,1) 6%, rgba(0,0,0,1) 8%, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%), url(/assets/hero-login.jpg) no-repeat top center;
+  background-size: cover;
+}
+.image__gradient-forgot{
+  background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 2%, rgba(0,0,0,1) 4%, rgba(0,0,0,1) 6%, rgba(0,0,0,1) 8%, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%), url(/assets/hero-forgot3.jpg) no-repeat top center;
+  background-size: cover;
+}
