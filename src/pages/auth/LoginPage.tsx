@@ -3,10 +3,10 @@ import { LoadingSpinner } from '../../components';
 
 export const LoginPage = () => {
   return (
-    <>
+    <div className='grid md:grid-cols-2 min-h-screen overflow-hidden'>
       <div className="flex items-center justify-center bg-black text-white">
         <div className=" p-4 max-w-md w-full">
-          <h1 className="text-5xl uppercase -skew-x-12 font-bold text-center">Bienvenido</h1>
+          <h1 className="text-5xl uppercase -skew-x-12 font-bold text-center select-none">Bienvenido</h1>
 
           <form
             className="leading-none flex flex-col gap-6 py-10"
@@ -82,9 +82,9 @@ export const LoginPage = () => {
         </div>
       </div>
 
-      <div className="hidden lg:block h-screen">
+      <div className="hidden md:block h-screen">
         <div className="image__gradient-login w-full h-full"></div>
       </div>
-    </>
+    </div>
   )
 }

@@ -1,9 +1,9 @@
-import { Outlet } from 'react-router-dom';
+import { ReactNode, FC } from "react"
 
-export const AuthLayout = () => {
+export const AuthLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
-    <div className='grid lg:grid-cols-2 min-h-screen'>
-      <Outlet />
+    <div className='grid md:grid-cols-[1fr_2fr] min-h-screen overflow-hidden'>
+      { children }
     </div>
   )
 }

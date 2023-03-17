@@ -16,7 +16,19 @@
   background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 2%, rgba(0,0,0,1) 4%, rgba(0,0,0,1) 6%, rgba(0,0,0,1) 8%, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%), url(/assets/hero-login.jpg) no-repeat top center;
   background-size: cover;
 }
-.image__gradient-forgot{
-  background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 2%, rgba(0,0,0,1) 4%, rgba(0,0,0,1) 6%, rgba(0,0,0,1) 8%, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%), url(/assets/hero-forgot3.jpg) no-repeat top center;
+.image__gradient-register{
+  background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%), url(/assets/hero-register1.jpg) no-repeat center bottom;
+  background-size: cover;
+}
+.image__gradient-forgot {
+  background-image: url(/assets/hero.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.image__gradient-confirm {
+  background-image: url(/assets/bg-confirm.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
   background-size: cover;
 }
