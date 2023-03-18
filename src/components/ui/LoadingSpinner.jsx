@@ -1,5 +1,5 @@
 
-export const LoadingSpinner = ({ title }: { title: string }) => {
+export const LoadingSpinner = ({ title }) => {
   return (
     <>
       <span>{ title }</span>

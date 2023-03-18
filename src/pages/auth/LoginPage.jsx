@@ -1,7 +1,19 @@
 import { Link } from 'react-router-dom';
 import { LoadingSpinner } from '../../components';
+import { useForm } from '../../hooks';
+
+const initialForm = {
+  email: '',
+  password: '',
+}
 
 export const LoginPage = () => {
+  const FormValidations = {
+    email: [ (value) => value.length > 0, 'Ingrese un email válido' ],
+    password: [ (value) => value.length > 7, 'Ingrese un mínimo de 8 caracteres' ],
+  }
+
+  const { formState, email, password, emailValid, passwordValid, handleInputChange } = useForm( initialForm, FormValidations );
   return (
     <div className='grid md:grid-cols-2 min-h-screen overflow-hidden'>
       <div className="flex items-center justify-center bg-black text-white">
@@ -20,6 +32,8 @@ export const LoginPage = () => {
                   name="email"
                   id="email"
                   placeholder=" "
+                  value={email}
+                  onChange={ handleInputChange }
                   autoComplete="off"
                 />
                 
@@ -29,7 +43,7 @@ export const LoginPage = () => {
                 >Correo</label>
               </div>
 
-              {/* <span className="form__span text-[.7rem] text-red-500 font-medium pl-2">Error</span> */}
+              { <span className="form__span text-[.7rem] text-red-500 font-medium pl-2">{ emailValid }</span>}
             </div>
 
             <div className="w-full pb-4">
@@ -41,6 +55,8 @@ export const LoginPage = () => {
                   name="password"
                   id="password"
                   placeholder=" "
+                  value={password}
+                  onChange={ handleInputChange }
                   autoComplete="off"
                 />
                 

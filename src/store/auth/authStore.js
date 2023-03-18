@@ -1,16 +1,13 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AuthState, User } from '../../interfaces';
-
-const initialState: AuthState = {
-  status: 'init',
-  user: undefined,
-  errorMessage: undefined,
-  successMessage: undefined,
-}
+import { createSlice } from '@reduxjs/toolkit';
 
 export const authSlice = createSlice({
   name: 'auth',
-  initialState,
+  initialState: {
+    status: 'init',
+    user: undefined,
+    errorMessage: undefined,
+    successMessage: undefined,
+  },
   reducers: {
     onLoading: (state) => {
       state.status = 'loading';
@@ -18,13 +15,13 @@ export const authSlice = createSlice({
       state.errorMessage = undefined;
       state.successMessage = undefined;
     },
-    onLogin: (state, { payload }: PayloadAction<User>) => {
+    onLogin: (state, { payload }) => {
       state.status = 'authenticated';
       state.user = payload;
       state.errorMessage = undefined;
       state.successMessage = undefined;
     },
-    onRegister: (state, { payload }: PayloadAction<string>) => {
+    onRegister: (state, { payload }) => {
       state.status = 'not-authenticated';
       state.successMessage = payload;
       state.user = undefined;

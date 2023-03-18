@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { AuthRoutes, ProjectRoutes } from './';
+import { AuthRoutes, ProjectRoutes } from '.';
 
 export const AppRoutes = () => {
   return (
