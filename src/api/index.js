@@ -1,1 +1,2 @@
-export { default as taskerApi } from './teamTaskeAPI';
+export * from './index';
+export { default as teamTaskeAPI } from './teamTaskeAPI';
