@@ -1,8 +1,48 @@
+import { useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { LoadingSpinner } from '../../components';
+import { useForm } from '../../hooks';
 import { AuthLayout } from '../../layouts';
+import { startRegisterUser } from '../../store';
+
+const initialForm = {
+  name: '',
+  lastname: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+}
 
 export const RegisterPage = () => {
+  const validations = {
+    name: [ (value) => value.length > 0, 'El nombre es obligatorio' ],
+    lastname: [ (value) => value.length > 0, 'El apellido es obligatorio' ],
+    email: [ (value) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/).test(value), 'Ingrese un email válido' ],
+    password: [ (value) => value.length > 7, 'Ingrese un mínimo de 8 caracteres' ],
+    confirmPassword: [ (value, value2) => (value === value2 || value.length > 7), 'Las contraseñas no coinciden']
+  }
+
+  const dispatch = useDispatch();
+  const { status } = useSelector( state => state.auth );
+
+  const nameRef = useRef( null );
+  const [ isFormSubmitted, setIsFormSubmitted ] = useState(false);
+  const {
+    formState, isFormValid, name, lastname, email, password, confirmPassword, nameValid, lastnameValid, emailValid, passwordValid, confirmPasswordValid, handleInputChange, handleResetForm 
+  } = useForm( initialForm, validations );
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsFormSubmitted( true );
+
+    if ( !isFormValid ) return;
+    dispatch( startRegisterUser( formState ));
+    setIsFormSubmitted( false );
+    handleResetForm();
+    nameRef.current.focus();
+  }
+
   return (
     <AuthLayout>
       <div className="hidden md:block h-screen">
@@ -17,120 +57,132 @@ export const RegisterPage = () => {
           </div>
 
           <form
+          onSubmit={ handleSubmit }
             className="leading-none flex flex-col gap-6 py-10"
           >
             <div className='flex gap-6'>
               <div className="w-full">
-                <div className="form__group relative w-full border-b-[.15rem] border-gray-400 text-gray-600 hover:border-white after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 after:bg-[#5FA7F0] focus-within:after:scale-100 after:transition-all after:duration-300 ease-in">
+                <div className={`form__group ${(isFormSubmitted && nameValid) ? 'form__group-error border-red-400 text-red-400 hover:border-red-500 after:bg-red-400' : 'border-gray-400 text-gray-600 hover:border-white after:bg-[#5FA7F0]'} relative w-full border-b-[.15rem] after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 focus-within:after:scale-100 after:transition-all after:duration-300 ease-in`} >
 
                   <input
-                    className="form__input w-full px-2 pt-3 pb-1 outline-none text-white font-normal bg-inherit resize-none"
+                    className={`form__input ${(isFormSubmitted && nameValid)? 'form__input-error': ''} w-full px-2 pt-3 pb-1 outline-none text-white font-normal bg-inherit resize-none`}
                     type="text"
                     name="name"
                     id="name"
                     placeholder=" "
+                    value={ name }
+                    onChange={ handleInputChange }
+                    ref={ nameRef }
                     autoComplete="off"
                   />
                   
                   <label
                     htmlFor="name"
-                    className="form__label absolute text-gray-300 text-base top-[50%] transform -translate-y-1/2 left-2 font-medium bg-inherit focus-within:top-0 transition-[top transform] duration-200 cursor-text"
+                    className={`form__label ${(isFormSubmitted && nameValid) ? 'text-red-400' : 'text-gray-300'} absolute  text-base top-[50%] transform -translate-y-1/2 left-2 font-medium bg-inherit focus-within:top-0 transition-[top transform] duration-200 cursor-text`}
                   >Nombre</label>
                 </div>
 
-                {/* <span className="form__span text-[.7rem] text-red-500 font-medium pl-2">Error</span> */}
+                { <span className={`form__span ${(isFormSubmitted && nameValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ nameValid }</span>}
               </div>
               
               <div className="w-full">
-                <div className="form__group relative w-full border-b-[.15rem] border-gray-400 text-gray-600 hover:border-white after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 after:bg-[#5FA7F0] focus-within:after:scale-100 after:transition-all after:duration-300 ease-in">
+                <div className={`form__group ${(isFormSubmitted && lastnameValid) ? 'form__group-error border-red-400 text-red-400 hover:border-red-500 after:bg-red-400' : 'border-gray-400 text-gray-600 hover:border-white after:bg-[#5FA7F0]'} relative w-full border-b-[.15rem] after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 focus-within:after:scale-100 after:transition-all after:duration-300 ease-in`} >
 
                   <input
-                    className="form__input w-full px-2 pt-3 pb-1 outline-none text-white font-normal bg-inherit resize-none"
+                    className={`form__input ${(isFormSubmitted && lastnameValid)? 'form__input-error': ''} w-full px-2 pt-3 pb-1 outline-none text-white font-normal bg-inherit resize-none`}
                     type="text"
                     name="lastname"
                     id="lastname"
                     placeholder=" "
+                    value={ lastname }
+                    onChange={ handleInputChange }
                     autoComplete="off"
                   />
                   
                   <label
                     htmlFor="lastname"
-                    className="form__label absolute text-gray-300 text-base top-[50%] transform -translate-y-1/2 left-2 font-medium bg-inherit focus-within:top-0 transition-[top transform] duration-200 cursor-text"
+                    className={`form__label ${(isFormSubmitted && lastnameValid) ? 'text-red-400' : 'text-gray-300'} absolute  text-base top-[50%] transform -translate-y-1/2 left-2 font-medium bg-inherit focus-within:top-0 transition-[top transform] duration-200 cursor-text`}
                   >Apellidos</label>
                 </div>
 
-                {/* <span className="form__span text-[.7rem] text-red-500 font-medium pl-2">Error</span> */}
+                { <span className={`form__span ${(isFormSubmitted && lastnameValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ lastnameValid }</span>}
               </div>
             </div>
 
             <div className="w-full">
-              <div className="form__group relative w-full border-b-[.15rem] border-gray-400 text-gray-600 hover:border-white after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 after:bg-[#5FA7F0] focus-within:after:scale-100 after:transition-all after:duration-300 ease-in">
+              <div className={`form__group ${(isFormSubmitted && emailValid) ? 'form__group-error border-red-400 text-red-400 hover:border-red-500 after:bg-red-400' : 'border-gray-400 text-gray-600 hover:border-white after:bg-[#5FA7F0]'} relative w-full border-b-[.15rem] after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 focus-within:after:scale-100 after:transition-all after:duration-300 ease-in`} >
 
                 <input
-                  className="form__input w-full px-2 pt-3 pb-1 outline-none text-white font-normal bg-inherit resize-none"
+                  className={`form__input ${(isFormSubmitted && emailValid)? 'form__input-error': ''} w-full px-2 pt-3 pb-1 outline-none text-white font-normal bg-inherit resize-none`}
                   type="email"
                   name="email"
                   id="email"
                   placeholder=" "
+                  value={ email }
+                  onChange={ handleInputChange }
                   autoComplete="off"
                 />
                 
                 <label
                   htmlFor="email"
-                  className="form__label absolute text-gray-300 text-base top-[50%] transform -translate-y-1/2 left-2 font-medium bg-inherit focus-within:top-0 transition-[top transform] duration-200 cursor-text"
+                  className={`form__label ${(isFormSubmitted && emailValid) ? 'text-red-400' : 'text-gray-300'} absolute  text-base top-[50%] transform -translate-y-1/2 left-2 font-medium bg-inherit focus-within:top-0 transition-[top transform] duration-200 cursor-text`}
                 >Correo</label>
               </div>
 
-              {/* <span className="form__span text-[.7rem] text-red-500 font-medium pl-2">Error</span> */}
+              { <span className={`form__span ${(isFormSubmitted && emailValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ emailValid }</span>}
             </div>
 
-            <div className="w-full pb-4">
-              <div className="form__group relative w-full border-b-[.15rem] border-gray-400 text-gray-600 hover:border-white after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 after:bg-[#5FA7F0] focus-within:after:scale-100 after:transition-all after:duration-300 ease-in">
+            <div className="w-full">
+              <div className={`form__group ${(isFormSubmitted && passwordValid) ? 'form__group-error border-red-400 text-red-400 hover:border-red-500 after:bg-red-400' : 'border-gray-400 text-gray-600 hover:border-white after:bg-[#5FA7F0]'} relative w-full border-b-[.15rem] after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 focus-within:after:scale-100 after:transition-all after:duration-300 ease-in`} >
 
                 <input
-                  className="form__input w-full px-2 pt-3 pb-1 outline-none text-white font-normal bg-inherit resize-none"
+                  className={`form__input ${(isFormSubmitted && passwordValid)? 'form__input-error': ''} w-full px-2 pt-3 pb-1 outline-none text-white font-normal bg-inherit resize-none`}
                   type="password"
                   name="password"
                   id="password"
                   placeholder=" "
+                  value={ password }
+                  onChange={ handleInputChange }
                   autoComplete="off"
                 />
                 
                 <label
                   htmlFor="password"
-                  className="form__label absolute text-gray-300 text-base top-[50%] transform -translate-y-1/2 left-2 font-medium bg-inherit focus-within:top-0 transition-[top transform] duration-200 cursor-text"
+                  className={`form__label ${(isFormSubmitted && passwordValid) ? 'text-red-400' : 'text-gray-300'} absolute  text-base top-[50%] transform -translate-y-1/2 left-2 font-medium bg-inherit focus-within:top-0 transition-[top transform] duration-200 cursor-text`}
                 >Contraseña</label>
               </div>
 
-              {/* <span className="form__span text-[.7rem] text-red-500 font-medium pl-2">Error</span> */}
+              { <span className={`form__span ${(isFormSubmitted && passwordValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ passwordValid }</span>}
             </div>
 
             <div className="w-full pb-4">
-              <div className="form__group relative w-full border-b-[.15rem] border-gray-400 text-gray-600 hover:border-white after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 after:bg-[#5FA7F0] focus-within:after:scale-100 after:transition-all after:duration-300 ease-in">
+              <div className={`form__group ${(isFormSubmitted && confirmPasswordValid) ? 'form__group-error border-red-400 text-red-400 hover:border-red-500 after:bg-red-400' : 'border-gray-400 text-gray-600 hover:border-white after:bg-[#5FA7F0]'} relative w-full border-b-[.15rem] after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 focus-within:after:scale-100 after:transition-all after:duration-300 ease-in`} >
 
                 <input
-                  className="form__input w-full px-2 pt-3 pb-1 outline-none text-white font-normal bg-inherit resize-none"
+                  className={`form__input ${(isFormSubmitted && confirmPasswordValid)? 'form__input-error': ''} w-full px-2 pt-3 pb-1 outline-none text-white font-normal bg-inherit resize-none`}
                   type="password"
-                  name="confirmPass"
-                  id="confirmPass"
+                  name="confirmPassword"
+                  id="confirmPassword"
                   placeholder=" "
+                  value={ confirmPassword }
+                  onChange={ handleInputChange }
                   autoComplete="off"
                 />
                 
                 <label
-                  htmlFor="confirmPass"
-                  className="form__label absolute text-gray-300 text-base top-[50%] transform -translate-y-1/2 left-2 font-medium bg-inherit focus-within:top-0 transition-[top transform] duration-200 cursor-text"
+                  htmlFor="confirmPassword"
+                  className={`form__label ${(isFormSubmitted && confirmPasswordValid) ? 'text-red-400' : 'text-gray-300'} absolute  text-base top-[50%] transform -translate-y-1/2 left-2 font-medium bg-inherit focus-within:top-0 transition-[top transform] duration-200 cursor-text`}
                 >Confirmar</label>
               </div>
 
-              {/* <span className="form__span text-[.7rem] text-red-500 font-medium pl-2">Error</span> */}
+              { <span className={`form__span ${(isFormSubmitted && confirmPasswordValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ confirmPasswordValid }</span>}
             </div>
 
             <button
               className="bg-blue-600 text-white font-medium py-4 rounded-[.2rem] text-[1.1rem] flex items-center justify-center gap-2 hover:bg-blue-500 transition-colors"
               type="submit"
             >
-              { false ? <LoadingSpinner title="Registrando" /> : 'Registrarse'}
+              { status === 'loading' ? <LoadingSpinner title="Registrando" /> : 'Registrarse'}
             </button>
           </form>
 

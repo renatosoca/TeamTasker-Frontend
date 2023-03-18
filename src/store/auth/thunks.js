@@ -17,12 +17,27 @@ export const startLoginUser = ({ email, password }) => {
   }
 }
 
-export const startRegisterUser = ({ name, email, password }) => {
+export const startRegisterUser = ({ name, lastname, email, password }) => {
   return async (dispatch) => {
     dispatch(onLoading());
 
     try {
-      
+      const { data } = await teamTaskeAPI.post( '/auth/register', { name, lastname, email, password } );
+      console.log(data);
+      //Falta un dispatch
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  }
+}
+
+export const startForgotPassUser = ({ email }) => {
+  return async (dispatch) => {
+    dispatch( onLoading() );
+
+    try {
+      const { data } = await teamTaskeAPI.post( '/auth/forgot-password', { email } );
+      console.log(data);
     } catch (error) {
       console.log(error.response.data);
     }
