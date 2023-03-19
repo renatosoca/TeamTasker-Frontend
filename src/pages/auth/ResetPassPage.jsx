@@ -1,6 +1,33 @@
+import { useState } from 'react';
 import { LoadingSpinner } from '../../components';
+import { useForm } from '../../hooks';
+import { useAuth } from '../../hooks/useAuth';
+
+const initialForm = {
+  password: '',
+}
 
 export const ResetPassPage = () => {
+  const validations = {
+    password: [ (value) => (value.length > 7), 'La contraseña debe tener al menos 8 caracteres' ],
+  }
+
+  const [ isFormSubmitted, setIsFormSubmitted ] = useState(false);
+  const { status } = useAuth();
+
+  const { 
+    formState, isFormValid, password, passwordValid, handleInputChange, handleResetForm 
+  } = useForm( initialForm, validations );
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsFormSubmitted( true );
+
+    if ( !isFormValid ) return;
+
+    setIsFormSubmitted( false );
+  }
+  
   return (
     <div className='grid md:grid-cols-2 min-h-screen overflow-hidden'>
       <div className="flex items-center justify-center bg-black text-white">
@@ -11,55 +38,37 @@ export const ResetPassPage = () => {
           </div>
 
           <form
+            onSubmit={ handleSubmit }
             className="leading-none flex flex-col gap-6 py-10"
           >
-            <div className="w-full">
-              <div className="form__group relative w-full border-b-[.15rem] border-gray-400 text-gray-600 hover:border-white after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 after:bg-[#5FA7F0] focus-within:after:scale-100 after:transition-all after:duration-300 ease-in">
+            <div className="w-full pb-3">
+              <div className={`form__group ${(isFormSubmitted && passwordValid) ? 'form__group-error border-red-400 text-red-400 hover:border-red-500 after:bg-red-400' : 'border-gray-400 text-gray-600 hover:border-white after:bg-[#5FA7F0]'} relative w-full border-b-[.15rem] after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 focus-within:after:scale-100 after:transition-all after:duration-300 ease-in`} >
 
                 <input
-                  className="form__input w-full px-2 pt-3 pb-1 outline-none text-white font-normal bg-inherit resize-none"
+                  className={`form__input ${(isFormSubmitted && passwordValid)? 'form__input-error': ''} w-full px-2 pt-3 pb-1 outline-none text-white font-normal bg-inherit resize-none`}
                   type="password"
                   name="password"
                   id="password"
                   placeholder=" "
+                  value={ password }
+                  onChange={ handleInputChange }
                   autoComplete="off"
                 />
                 
                 <label
                   htmlFor="password"
-                  className="form__label absolute text-gray-300 text-base top-[50%] transform -translate-y-1/2 left-2 font-medium bg-inherit focus-within:top-0 transition-[top transform] duration-200 cursor-text"
+                  className={`form__label ${(isFormSubmitted && passwordValid) ? 'text-red-400' : 'text-gray-300'} absolute  text-base top-[50%] transform -translate-y-1/2 left-2 font-medium bg-inherit focus-within:top-0 transition-[top transform] duration-200 cursor-text`}
                 >Nueva contraseña</label>
               </div>
 
-              {/* <span className="form__span text-[.7rem] text-red-500 font-medium pl-2">Error</span> */}
-            </div>
-
-            <div className="w-full pb-4">
-              <div className="form__group relative w-full border-b-[.15rem] border-gray-400 text-gray-600 hover:border-white after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 after:bg-[#5FA7F0] focus-within:after:scale-100 after:transition-all after:duration-300 ease-in">
-
-                <input
-                  className="form__input w-full px-2 pt-3 pb-1 outline-none text-white font-normal bg-inherit resize-none"
-                  type="password"
-                  name="confirmPass"
-                  id="confirmPass"
-                  placeholder=" "
-                  autoComplete="off"
-                />
-                
-                <label
-                  htmlFor="confirmPass"
-                  className="form__label absolute text-gray-300 text-base top-[50%] transform -translate-y-1/2 left-2 font-medium bg-inherit focus-within:top-0 transition-[top transform] duration-200 cursor-text"
-                >Confirmar</label>
-              </div>
-
-              {/* <span className="form__span text-[.7rem] text-red-500 font-medium pl-2">Error</span> */}
+              <span className={`form__span ${(isFormSubmitted && passwordValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ passwordValid }</span>
             </div>
 
             <button
               className="bg-blue-600 text-white font-medium py-4 rounded-[.2rem] text-[1.1rem] flex items-center justify-center gap-2 hover:bg-blue-500 transition-colors"
               type="submit"
             >
-              { false ? <LoadingSpinner title="Autenticando" /> : 'Continuar'}
+              { status === 'loading' ? <LoadingSpinner title="Autenticando" /> : 'Continuar'}
             </button>
           </form>
         </div>
