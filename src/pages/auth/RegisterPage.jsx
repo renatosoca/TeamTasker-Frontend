@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { LoadingSpinner } from '../../components';
-import { useForm } from '../../hooks';
+import { LoadingSpinner, MessageAPI } from '../../components';
+import { useAuth, useForm } from '../../hooks';
 import { AuthLayout } from '../../layouts';
 import { startRegisterUser } from '../../store';
 
@@ -23,8 +23,7 @@ export const RegisterPage = () => {
     confirmPassword: [ (value, value2) => (value === value2 || value.length > 7), 'Las contraseñas no coinciden']
   }
 
-  const dispatch = useDispatch();
-  const { status } = useSelector( state => state.auth );
+  const { status, messageAPI, dispatch } = useAuth();
 
   const nameRef = useRef( null );
   const [ isFormSubmitted, setIsFormSubmitted ] = useState(false);
@@ -44,7 +43,7 @@ export const RegisterPage = () => {
   }
 
   return (
-    <AuthLayout>
+    <div className='grid md:grid-cols-[1fr_2fr] min-h-screen overflow-hidden'>
       <div className="hidden md:block h-screen">
         <div className="image__gradient-register w-full h-full"></div>
       </div>
@@ -58,8 +57,11 @@ export const RegisterPage = () => {
 
           <form
           onSubmit={ handleSubmit }
-            className="leading-none flex flex-col gap-6 py-10"
+            className="relative leading-none flex flex-col gap-6 py-10"
           >
+
+            { !!messageAPI?.msg && <MessageAPI /> }
+
             <div className='flex gap-6'>
               <div className="w-full">
                 <div className={`form__group ${(isFormSubmitted && nameValid) ? 'form__group-error border-red-400 text-red-400 hover:border-red-500 after:bg-red-400' : 'border-gray-400 text-gray-600 hover:border-white after:bg-[#5FA7F0]'} relative w-full border-b-[.15rem] after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 focus-within:after:scale-100 after:transition-all after:duration-300 ease-in`} >
@@ -82,7 +84,7 @@ export const RegisterPage = () => {
                   >Nombre</label>
                 </div>
 
-                { <span className={`form__span ${(isFormSubmitted && nameValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ nameValid }</span>}
+                <span className={`form__span ${(isFormSubmitted && nameValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ nameValid }</span>
               </div>
               
               <div className="w-full">
@@ -105,7 +107,7 @@ export const RegisterPage = () => {
                   >Apellidos</label>
                 </div>
 
-                { <span className={`form__span ${(isFormSubmitted && lastnameValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ lastnameValid }</span>}
+                <span className={`form__span ${(isFormSubmitted && lastnameValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ lastnameValid }</span>
               </div>
             </div>
 
@@ -129,7 +131,7 @@ export const RegisterPage = () => {
                 >Correo</label>
               </div>
 
-              { <span className={`form__span ${(isFormSubmitted && emailValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ emailValid }</span>}
+              <span className={`form__span ${(isFormSubmitted && emailValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ emailValid }</span>
             </div>
 
             <div className="w-full">
@@ -152,7 +154,7 @@ export const RegisterPage = () => {
                 >Contraseña</label>
               </div>
 
-              { <span className={`form__span ${(isFormSubmitted && passwordValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ passwordValid }</span>}
+              <span className={`form__span ${(isFormSubmitted && passwordValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ passwordValid }</span>
             </div>
 
             <div className="w-full pb-4">
@@ -175,7 +177,7 @@ export const RegisterPage = () => {
                 >Confirmar</label>
               </div>
 
-              { <span className={`form__span ${(isFormSubmitted && confirmPasswordValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ confirmPasswordValid }</span>}
+              <span className={`form__span ${(isFormSubmitted && confirmPasswordValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ confirmPasswordValid }</span>
             </div>
 
             <button
@@ -199,6 +201,6 @@ export const RegisterPage = () => {
           </nav>
         </div>
       </div>
-    </AuthLayout>
+    </div>
   )
 }

@@ -5,35 +5,44 @@ export const authSlice = createSlice({
   initialState: {
     status: 'init',
     user: undefined,
-    errorMessage: undefined,
-    successMessage: undefined,
+    messageAPI: undefined,
+    isConfirmed: undefined,
   },
   reducers: {
     onLoading: (state) => {
       state.status = 'loading';
       state.user = undefined;
-      state.errorMessage = undefined;
-      state.successMessage = undefined;
+      state.messageAPI = undefined,
+      state.isConfirmed = undefined;
     },
     onLogin: (state, { payload }) => {
       state.status = 'authenticated';
       state.user = payload;
-      state.errorMessage = undefined;
-      state.successMessage = undefined;
+      state.messageAPI = undefined,
+      state.isConfirmed = undefined;
     },
     onRegister: (state, { payload }) => {
       state.status = 'not-authenticated';
-      state.successMessage = payload;
+      state.messageAPI = payload,
       state.user = undefined;
-      state.errorMessage = undefined;
+      state.isConfirmed = undefined;
+    },
+    onConfirmed: (state, { payload }) => {
+      state.status = 'not-authenticated';
+      state.isConfirmed = payload;
+      state.user = undefined;
+      state.messageAPI = undefined;
     },
     onLogoutUser: (state, { payload }) => {
       state.status = 'not-authenticated';
+      state.messageAPI = payload;
       state.user = undefined;
-      state.errorMessage = payload;
-      state.successMessage = undefined;
+      state.isConfirmed = undefined;
     },
+    onClearMessage: (state) => {
+      state.messageAPI = undefined;
+    }
   },
 });
 
-export const { onLoading, onLogin, onRegister, onLogoutUser } = authSlice.actions;
+export const { onLoading, onLogin, onRegister, onConfirmed, onLogoutUser, onClearMessage } = authSlice.actions;

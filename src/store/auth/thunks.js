@@ -1,5 +1,5 @@
 import { teamTaskeAPI } from "../../api";
-import { onLoading, onLogin, onLogoutUser } from "./authStore";
+import { onClearMessage, onConfirmed, onLoading, onLogin, onLogoutUser, onRegister } from "./authStore";
 
 export const startLoginUser = ({ email, password }) => {
   return async (dispatch) => {
@@ -12,7 +12,7 @@ export const startLoginUser = ({ email, password }) => {
       dispatch( onLogin( data.user ));
 
     } catch (error) {
-      dispatch( onLogoutUser( error.response.data.msg ));
+      dispatch( onLogoutUser( error.response.data ));
     }
   }
 }
@@ -23,10 +23,24 @@ export const startRegisterUser = ({ name, lastname, email, password }) => {
 
     try {
       const { data } = await teamTaskeAPI.post( '/auth/register', { name, lastname, email, password } );
-      console.log(data);
-      //Falta un dispatch
+      dispatch( onRegister( data ));
+
     } catch (error) {
-      console.log(error.response.data);
+      dispatch( onLogoutUser( error.response.data ));
+    }
+  }
+}
+
+export const startConfirmAccount = ( token ) => {
+  return async ( dispatch ) => {
+    dispatch( onLoading() );
+
+    try {
+      const { data } = await teamTaskeAPI.get( `/auth/confirm-account/${token}`);
+      dispatch( onConfirmed( data ));
+
+    } catch (error) {
+      dispatch( onConfirmed( error.response.data ));
     }
   }
 }
@@ -37,9 +51,32 @@ export const startForgotPassUser = ({ email }) => {
 
     try {
       const { data } = await teamTaskeAPI.post( '/auth/forgot-password', { email } );
-      console.log(data);
+      dispatch( onRegister( data ));
+
     } catch (error) {
-      console.log(error.response.data);
+      dispatch( onLogoutUser( error.response.data ));
     }
+  }
+}
+
+export const startResetPassUser = ( token, { password }) => {
+  return async (dispatch) => {
+    dispatch(onLoading());
+
+    try {
+      const { data } = await teamTaskeAPI.post( `/auth/reset-password/${token}`, { password });
+      localStorage.setItem('authReact', data.jwt);
+
+      dispatch( onLogin( data.user ));
+
+    } catch (error) {
+      dispatch( onLogoutUser( error.response.data));
+    }
+  }
+}
+
+export const startClearMessage = () => {
+  return (dispatch) => {
+    dispatch( onClearMessage());
   }
 }

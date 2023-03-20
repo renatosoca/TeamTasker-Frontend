@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { LoadingSpinner } from '../../components';
+import { LoadingSpinner, MessageAPI } from '../../components';
 import { useRef, useState } from 'react';
 import { useForm } from '../../hooks';
 import { startForgotPassUser } from '../../store';
@@ -15,7 +15,7 @@ export const ForgotPassPage = () => {
   }
 
   const dispatch = useDispatch();
-  const { status } = useSelector( state => state.auth );
+  const { status, messageAPI } = useSelector( state => state.auth );
 
   const [ isFormSubmitted, setIsFormSubmitted ] = useState(false);
   const {
@@ -43,8 +43,11 @@ export const ForgotPassPage = () => {
 
         <form
           onSubmit={ handleSubmit }
-          className="leading-none flex flex-col gap-6 py-8"
+          className="relative leading-none flex flex-col gap-6 py-8"
         >
+
+          { !!messageAPI?.msg && <MessageAPI /> }
+
           <div className="w-full pb-2">
               <div className={`form__group ${(isFormSubmitted && emailValid) ? 'form__group-error border-red-400 text-red-400 hover:border-red-500 after:bg-red-400' : 'border-gray-400 text-gray-600 hover:border-white after:bg-[#5FA7F0]'} relative w-full border-b-[.15rem] after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 focus-within:after:scale-100 after:transition-all after:duration-300 ease-in`} >
 
@@ -65,7 +68,7 @@ export const ForgotPassPage = () => {
                 >Correo</label>
               </div>
 
-              { <span className={`form__span ${(isFormSubmitted && emailValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ emailValid }</span>}
+              <span className={`form__span ${(isFormSubmitted && emailValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ emailValid }</span>
             </div>
 
           <button

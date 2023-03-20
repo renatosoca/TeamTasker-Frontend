@@ -1,10 +1,10 @@
 import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 
-import { LoadingPage, LoadingSpinner } from '../../components';
-import { useForm } from '../../hooks';
+import { LoadingSpinner, MessageAPI } from '../../components';
+import { useAuth, useForm } from '../../hooks';
 import { startLoginUser } from '../../store';
+import { AuthLayout } from '../../layouts';
 
 const initialForm = {
   email: '',
@@ -16,8 +16,8 @@ export const LoginPage = () => {
     email: [ (value) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/).test(value), 'Ingrese un email válido' ],
     password: [ (value) => value.length > 7, 'Ingrese un mínimo de 8 caracteres' ],
   }
-  const dispatch = useDispatch();
-  const { status } = useSelector( state => state.auth );
+  
+  const { status, messageAPI, dispatch } = useAuth();
 
   const [ isFormSubmitted, setIsFormSubmitted ] = useState(false);
   const emailRef = useRef(null)
@@ -25,7 +25,7 @@ export const LoginPage = () => {
   const { 
     formState, isFormValid, email, password, emailValid, passwordValid, handleInputChange, handleResetForm
   } = useForm( initialForm, Validations );
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsFormSubmitted( true );
@@ -38,15 +38,18 @@ export const LoginPage = () => {
   }
 
   return (
-    <div className='grid md:grid-cols-2 min-h-screen overflow-hidden'>
+    <AuthLayout>
       <div className="flex items-center justify-center bg-black text-white">
         <div className=" p-4 max-w-md w-full">
           <h1 className="text-5xl uppercase -skew-x-12 font-bold text-center select-none">Bienvenido</h1>
 
           <form
             onSubmit={ handleSubmit }
-            className="leading-none flex flex-col gap-6 py-10"
+            className="leading-none flex flex-col gap-6 py-10 relative"
           >
+
+            { !!messageAPI?.msg && <MessageAPI /> }
+
             <div className="w-full">
               <div className={`form__group ${(isFormSubmitted && emailValid) ? 'form__group-error border-red-400 text-red-400 hover:border-red-500 after:bg-red-400' : 'border-gray-400 text-gray-600 hover:border-white after:bg-[#5FA7F0]'} relative w-full border-b-[.15rem] after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 focus-within:after:scale-100 after:transition-all after:duration-300 ease-in`} >
 
@@ -68,7 +71,7 @@ export const LoginPage = () => {
                 >Correo</label>
               </div>
 
-              { <span className={`form__span ${(isFormSubmitted && emailValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ emailValid }</span>}
+              <span className={`form__span ${(isFormSubmitted && emailValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ emailValid }</span>
             </div>
 
             <div className="w-full pb-4">
@@ -98,7 +101,7 @@ export const LoginPage = () => {
               className="bg-blue-600 text-white font-medium py-4 rounded-[.2rem] text-[1.1rem] flex items-center justify-center gap-2 hover:bg-blue-500 transition-colors"
               type="submit"
             >
-              { false ? <LoadingSpinner title="Autenticando" /> : 'Iniciar sesión'}
+              { status === 'loading' ? <LoadingSpinner title="Autenticando" /> : 'Iniciar sesión'}
             </button>
           </form>
 
@@ -126,6 +129,6 @@ export const LoginPage = () => {
       <div className="hidden md:block h-screen">
         <div className="image__gradient-login w-full h-full"></div>
       </div>
-    </div>
+    </AuthLayout>
   )
 }

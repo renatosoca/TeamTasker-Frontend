@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { LoadingSpinner } from '../../components';
-import { useForm } from '../../hooks';
-import { useAuth } from '../../hooks/useAuth';
+import { useParams } from 'react-router-dom';
+import { LoadingSpinner, MessageAPI } from '../../components';
+import { useForm, useAuth } from '../../hooks';
+import { AuthLayout } from '../../layouts';
+import { startResetPassUser } from '../../store';
 
 const initialForm = {
   password: '',
@@ -12,24 +14,26 @@ export const ResetPassPage = () => {
     password: [ (value) => (value.length > 7), 'La contraseña debe tener al menos 8 caracteres' ],
   }
 
+  const { token } = useParams();
+  const { status, messageAPI, dispatch } = useAuth();
   const [ isFormSubmitted, setIsFormSubmitted ] = useState(false);
-  const { status } = useAuth();
-
+  
   const { 
     formState, isFormValid, password, passwordValid, handleInputChange, handleResetForm 
   } = useForm( initialForm, validations );
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsFormSubmitted( true );
 
     if ( !isFormValid ) return;
-
+    dispatch( startResetPassUser( token, formState ))
     setIsFormSubmitted( false );
+    handleResetForm();
   }
   
   return (
-    <div className='grid md:grid-cols-2 min-h-screen overflow-hidden'>
+    <AuthLayout>
       <div className="flex items-center justify-center bg-black text-white">
         <div className=" p-4 max-w-md w-full">
           <div>
@@ -39,8 +43,11 @@ export const ResetPassPage = () => {
 
           <form
             onSubmit={ handleSubmit }
-            className="leading-none flex flex-col gap-6 py-10"
+            className="relative leading-none flex flex-col gap-6 py-10"
           >
+
+            { !!messageAPI?.msg && <MessageAPI /> }
+
             <div className="w-full pb-3">
               <div className={`form__group ${(isFormSubmitted && passwordValid) ? 'form__group-error border-red-400 text-red-400 hover:border-red-500 after:bg-red-400' : 'border-gray-400 text-gray-600 hover:border-white after:bg-[#5FA7F0]'} relative w-full border-b-[.15rem] after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 focus-within:after:scale-100 after:transition-all after:duration-300 ease-in`} >
 
@@ -68,7 +75,7 @@ export const ResetPassPage = () => {
               className="bg-blue-600 text-white font-medium py-4 rounded-[.2rem] text-[1.1rem] flex items-center justify-center gap-2 hover:bg-blue-500 transition-colors"
               type="submit"
             >
-              { status === 'loading' ? <LoadingSpinner title="Autenticando" /> : 'Continuar'}
+              { status === 'loading' ? <LoadingSpinner title="Validando" /> : 'Continuar'}
             </button>
           </form>
         </div>
@@ -77,6 +84,6 @@ export const ResetPassPage = () => {
       <div className="hidden md:block h-screen">
         <div className="image__gradient-login w-full h-full"></div>
       </div>
-    </div>
+    </AuthLayout>
   )
 }
