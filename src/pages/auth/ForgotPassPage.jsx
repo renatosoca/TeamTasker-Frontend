@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { LoadingSpinner, MessageAPI } from '../../components';
-import { useRef, useState } from 'react';
-import { useForm } from '../../hooks';
+import { useState } from 'react';
+import { useAuth, useForm } from '../../hooks';
 import { startForgotPassUser } from '../../store';
 
 const initialForm = {
@@ -14,8 +13,7 @@ export const ForgotPassPage = () => {
     email: [ (value) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/).test(value), 'Ingrese un email válido' ],
   }
 
-  const dispatch = useDispatch();
-  const { status, messageAPI } = useSelector( state => state.auth );
+  const { status, messageAPI, dispatch } = useAuth();
 
   const [ isFormSubmitted, setIsFormSubmitted ] = useState(false);
   const {

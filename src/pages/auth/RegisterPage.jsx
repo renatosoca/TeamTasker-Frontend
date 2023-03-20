@@ -27,6 +27,7 @@ export const RegisterPage = () => {
 
   const nameRef = useRef( null );
   const [ isFormSubmitted, setIsFormSubmitted ] = useState(false);
+  
   const {
     formState, isFormValid, name, lastname, email, password, confirmPassword, nameValid, lastnameValid, emailValid, passwordValid, confirmPasswordValid, handleInputChange, handleResetForm 
   } = useForm( initialForm, validations );

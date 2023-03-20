@@ -80,3 +80,21 @@ export const startClearMessage = () => {
     dispatch( onClearMessage());
   }
 }
+
+export const revalidateSession = () => {
+  return async (dispatch) => {
+    const token = localStorage.getItem( 'authReact' ) || null;
+    if ( !token ) return dispatch( onLogoutUser() );
+    
+    try {
+      const { data } = await teamTaskeAPI.get( '/auth/revalidate-jwt' );
+      localStorage.setItem( 'authReact', data.jwt );
+      
+      dispatch( onLogin( data.user ));
+    
+    } catch (error) {
+      localStorage.removeItem( 'authReact' );
+      dispatch( onLogoutUser() );
+    }
+  }
+}

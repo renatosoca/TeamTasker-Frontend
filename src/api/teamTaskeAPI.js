@@ -7,7 +7,7 @@ const teamTaskeAPI = axios.create({
 teamTaskeAPI.interceptors.request.use((config) => {
   config.headers = {
     ...config.headers,
-    Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+    Authorization: `Bearer ${localStorage.getItem('authReact') || ''}`,
   };
 
   return config;

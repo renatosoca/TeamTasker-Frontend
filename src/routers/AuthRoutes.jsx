@@ -11,7 +11,7 @@ export const AuthRoutes = () => {
       <Route path='/forgot-password' element={<ForgotPassPage />} />
       <Route path='/confirm-account/:token' element={<ConfirmAccPage />} />
 
-      <Route path='*' element={<div>404</div>} />
+      <Route path='/*' element={<div>404</div>} />
     </Routes>
   )
 }
