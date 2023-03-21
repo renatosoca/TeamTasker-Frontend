@@ -1,23 +1,27 @@
-import { Navigate } from 'react-router-dom';
-import { LoadingPage } from '../components';
+import { Navigate, Outlet } from 'react-router-dom';
+import { LoadingPage, NavBar, SideBar } from '../components';
 import { useAuth } from '../hooks';
 
-export const ProjectLayout = ({ children }) => {
+export const ProjectLayout = () => {
 
   const { status } = useAuth()
   
   if ( status === 'init' ) return <LoadingPage />;
   
   return (
-    <>
-      <h1>Project</h1>
+    <div className='bg-[#0D1117] text-white min-h-screen flex flex-col'>
+      <NavBar />
 
       { status === 'authenticated'
-        ? children 
+        ? ( 
+            <div className='flex-1 flex h-full'>
+              <SideBar /> 
+              <main className='container mx-auto'> <Outlet /> </main>
+            </div>
+          )
         : <Navigate to="/auth/login" /> 
       }
 
-      <h2>Fin project</h2>
-    </>
+    </div>
   )
 }

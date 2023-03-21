@@ -40,7 +40,7 @@ export const startConfirmAccount = ( token ) => {
       dispatch( onConfirmed( data ));
 
     } catch (error) {
-      dispatch( onConfirmed( error.response.data ));
+      dispatch( onConfirmed( error.response?.data ));
     }
   }
 }
