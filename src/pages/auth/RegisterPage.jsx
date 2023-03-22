@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { LoadingSpinner, MessageAPI } from '../../components';
@@ -31,6 +31,10 @@ export const RegisterPage = () => {
   const {
     formState, isFormValid, name, lastname, email, password, confirmPassword, nameValid, lastnameValid, emailValid, passwordValid, confirmPasswordValid, handleInputChange, handleResetForm 
   } = useForm( initialForm, validations );
+  
+  useEffect(() => {
+    document.title = 'Registro | TeamTasker';
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault();

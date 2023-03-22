@@ -1,4 +1,4 @@
-import { useLocation, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export const SideBar = () => {
   
@@ -18,7 +18,8 @@ export const SideBar = () => {
         <ul className='flex flex-col py-4 gap-4 px-1'>
           <li className={`relative px-3`}>
             <NavLink 
-              to='/project/'
+              to='/project'
+              end
               className={ ({isActive}) => `block py-1 px-2 hover:bg-[#132F4C] rounded-md before:content[""] before:absolute before:top-0 before:left-0 before:bg-blue-500 ${ isActive ? 'before:w-1 before:h-full text-[#64B5F6]' : ''}`}
             >
               Tablero
@@ -30,7 +31,7 @@ export const SideBar = () => {
               to='/project/collaborators'
               className={ ({isActive}) => `block py-1 px-2 hover:bg-[#132F4C] rounded-md before:content[""] before:absolute before:top-0 before:left-0 before:bg-blue-500 ${ isActive ? 'before:w-1 before:h-full text-[#64B5F6]' : ''}`}
             >
-              Colaboradores
+              Miembros
             </NavLink>
           </li>
         </ul>

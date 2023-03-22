@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { LoadingSpinner, MessageAPI } from '../../components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth, useForm } from '../../hooks';
 import { startForgotPassUser } from '../../store';
 
@@ -19,6 +19,10 @@ export const ForgotPassPage = () => {
   const {
     formState, isFormValid, email, emailValid, handleInputChange, handleResetForm 
   } = useForm( initialForm, validations );
+  
+  useEffect(() => {
+    document.title = 'Recuperar | TeamTasker';
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault();

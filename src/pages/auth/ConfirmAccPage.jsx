@@ -14,6 +14,7 @@ export const ConfirmAccPage = () => {
       dispatch( startConfirmAccount( token ) );
       isRefresh .current = false;
     }
+    document.title = 'Confirmar | TeamTasker';
   }, [ token ]);
 
   if ( status === 'loading' ) return <LoadingPage />

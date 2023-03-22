@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { LoadingSpinner, MessageAPI } from '../../components';
@@ -25,6 +25,10 @@ export const LoginPage = () => {
   const { 
     formState, isFormValid, email, password, emailValid, passwordValid, handleInputChange, handleResetForm
   } = useForm( initialForm, Validations );
+  
+  useEffect(() => {
+    document.title = 'Inicio Sesión | TeamTasker';
+  }, [])
   
   const handleSubmit = (e) => {
     e.preventDefault();
