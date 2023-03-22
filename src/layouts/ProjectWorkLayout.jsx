@@ -1,8 +1,8 @@
-import { Navigate, Outlet } from 'react-router-dom';
-import { LoadingPage, NavBar, SideBar } from '../components';
+import { Navigate } from 'react-router-dom';
+import { LoadingPage, NavBar, SideBarWork } from '../components';
 import { useAuth } from '../hooks';
 
-export const ProjectLayout = () => {
+export const ProjectLayout = ({ children }) => {
 
   const { status } = useAuth()
   
@@ -15,8 +15,8 @@ export const ProjectLayout = () => {
       { status === 'authenticated'
         ? ( 
             <div className='flex-1 flex h-full'>
-              <SideBar /> 
-              <main className='container mx-auto'> <Outlet /> </main>
+              <SideBarWork /> 
+              <main className='container mx-auto'>{ children}</main>
             </div>
           )
         : <Navigate to="/auth/login" /> 

@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { AuthRoutes, ProjectRoutes } from '.';
+import { AuthRoutes, ProjectUser, ProjectWork } from './';
 
 export const AppRoutes = () => {
   return (
@@ -8,7 +8,8 @@ export const AppRoutes = () => {
 
       <Route path='/auth/*' element={ <AuthRoutes />} />
 
-      <Route path='/project/*' element={ <ProjectRoutes /> } />
+      <Route path='/u/*' element={ <ProjectUser /> } />
+      <Route path='/w/*' element={ <ProjectWork /> } />
     </Routes>
   )
 }

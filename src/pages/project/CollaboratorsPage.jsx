@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 
 export const CollaboratorsPage = () => {
   
   useEffect(() => {
-    document.title = 'Miembros | TeamTasker';
+    document.title = 'Colaboradores | TeamTasker';
   }, [])
 
   return (

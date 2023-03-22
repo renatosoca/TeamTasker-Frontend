@@ -1,6 +1,9 @@
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../../../hooks';
 
-export const SideBar = () => {
+export const SideBarWork = () => {
+
+  const { user } = useAuth()
   
   return (
     <aside className='bg-[#161B22] max-w-[15rem] w-full border-r-[.1rem] border-[#132F4C] text-gray-400 font-medium text-base'>
@@ -18,7 +21,7 @@ export const SideBar = () => {
         <ul className='flex flex-col py-4 gap-4 px-1'>
           <li className={`relative px-3`}>
             <NavLink 
-              to='/project'
+              to={`/projects/${user?.name}`}
               end
               className={ ({isActive}) => `block py-1 px-2 hover:bg-[#132F4C] rounded-md before:content[""] before:absolute before:top-0 before:left-0 before:bg-blue-500 ${ isActive ? 'before:w-1 before:h-full text-[#64B5F6]' : ''}`}
             >
@@ -28,7 +31,7 @@ export const SideBar = () => {
 
           <li className={`relative px-3`}>
             <NavLink 
-              to='/project/collaborators'
+              to={`/projects/${user?.name}`}
               className={ ({isActive}) => `block py-1 px-2 hover:bg-[#132F4C] rounded-md before:content[""] before:absolute before:top-0 before:left-0 before:bg-blue-500 ${ isActive ? 'before:w-1 before:h-full text-[#64B5F6]' : ''}`}
             >
               Miembros

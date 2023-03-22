@@ -3,9 +3,9 @@ import { useAuth } from '../hooks';
 
 export const AuthLayout = ({ children }) => {
 
-  const { status } = useAuth()
+  const { status, user } = useAuth()
   
-  if ( status === 'authenticated' ) return <Navigate to='/project' />
+  if ( status === 'authenticated' ) return <Navigate to={`/u/${user?.name}`} />
   
   return (
     <div className='grid md:grid-cols-2 min-h-screen overflow-hidden'>
