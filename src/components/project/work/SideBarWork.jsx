@@ -1,4 +1,5 @@
-import { NavLink } from 'react-router-dom';
+import { IoMdAdd } from 'react-icons/io';
+import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../../../hooks';
 
 export const SideBarWork = () => {
@@ -36,6 +37,54 @@ export const SideBarWork = () => {
             >
               Miembros
             </NavLink>
+          </li>
+        </ul>
+
+        <ul className='flex flex-col gap-1 px-1'>
+          <div className='flex justify-between items-center pl-2 pb-3'>
+            <small>Tus tableros</small>
+            <button
+              className='w-7 h-7 rounded-md flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#132F4C] text-xl transition-colors'
+              title='Crear Tablero'
+            >
+              <IoMdAdd />
+            </button>
+          </div>
+
+          <li className=''>
+            <Link
+              to='/w/1'
+              className='flex items-center gap-2 py-1 px-2 hover:bg-[#132F4C] rounded transition-colors'
+            >
+              <div className='bg-black px-3 py-1 rounded-md'>P</div>
+              <span>
+                Tablero 1
+              </span>
+            </Link>
+          </li>
+
+          <li>
+            <Link
+              to='/w/1'
+              className='flex items-center gap-2 py-1 px-2 hover:bg-[#132F4C] rounded transition-colors'
+            >
+              <div className='bg-black px-3 py-1 rounded-md'>P</div>
+              <span>
+                Tablero 2
+              </span>
+            </Link>
+          </li>
+
+          <li>
+            <Link
+              to='/w/1'
+              className='flex items-center gap-2 py-1 px-2 hover:bg-[#132F4C] rounded transition-colors'
+            >
+              <div className='bg-black px-3 py-1 rounded-md'>P</div>
+              <span>
+                Tablero 3
+              </span>
+            </Link>
           </li>
         </ul>
       </nav>

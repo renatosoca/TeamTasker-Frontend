@@ -7,10 +7,10 @@ export const NavBar = () => {
   const { user } = useAuth()
   return (
     <header className='w-full bg-[#161B22] border-b-[.1rem] border-[#132F4C]'>
-      <div className='container mx-auto flex items-center justify-between text-[#64B5F6] py-4'>
+      <div className='max-w-[120rem] mx-auto flex items-center justify-between text-[#64B5F6] py-4'>
         <div className='flex gap-3 items-center justify-center'>
           <Link
-            to={`/u/${ user.name }`}
+            to={`/u/${ user?.name }`}
             className='text-2xl text-white select-none font-bold'
           >
             TeamTasker
