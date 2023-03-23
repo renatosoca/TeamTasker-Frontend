@@ -1,13 +1,20 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import { useAuth } from '../../hooks'
 
 export const NavBar = () => {
+
+  const { user } = useAuth()
   return (
     <header className='w-full bg-[#161B22] border-b-[.1rem] border-[#132F4C]'>
       <div className='container mx-auto flex items-center justify-between text-[#64B5F6] py-4'>
         <div className='flex gap-3 items-center justify-center'>
-          <div className='text-2xl text-white select-none font-bold'>
-            <h1>TeamTasker</h1>
-          </div>
+          <Link
+            to={`/u/${ user.name }`}
+            className='text-2xl text-white select-none font-bold'
+          >
+            TeamTasker
+          </Link>
 
           <div className='flex gap-1'>
             <button className='px-2 py-1 flex gap-1 items-center text-gray-300 hover:bg-[#132F4C] rounded-lg cursor-pointer transition-colors'>

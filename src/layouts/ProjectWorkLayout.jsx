@@ -16,7 +16,7 @@ export const ProjectLayout = ({ children }) => {
         ? ( 
             <div className='flex-1 flex h-full'>
               <SideBarWork /> 
-              <main className='container mx-auto'>{ children}</main>
+              <main className='flex-1 p-6'>{ children }</main>
             </div>
           )
         : <Navigate to="/auth/login" /> 

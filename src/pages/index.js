@@ -4,6 +4,8 @@ export * from './auth/LoginPage';
 export * from './auth/RegisterPage';
 export * from './auth/ResetPassPage';
 
-export * from './project/HomeUserPage';
-export * from './project/BoardsUserPage';
-export * from './project/CollaboratorsPage';
+export * from './project/user/BoardsUserPage';
+export * from './project/user/HomeUserPage';
+
+export * from './project/work/CollaboratorsPage';
+export * from './project/work/ProjectsWork';

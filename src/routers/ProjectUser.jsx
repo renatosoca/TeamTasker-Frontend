@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { CollaboratorsPage , HomeUserPage, BoardsUserPage } from '../pages';
+import { HomeUserPage, BoardsUserPage } from '../pages';
 
 export const ProjectUser = () => {
   return (

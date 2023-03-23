@@ -21,7 +21,7 @@ export const SideBarWork = () => {
         <ul className='flex flex-col py-4 gap-4 px-1'>
           <li className={`relative px-3`}>
             <NavLink 
-              to={`/projects/${user?.name}`}
+              to={`/w/1`}
               end
               className={ ({isActive}) => `block py-1 px-2 hover:bg-[#132F4C] rounded-md before:content[""] before:absolute before:top-0 before:left-0 before:bg-blue-500 ${ isActive ? 'before:w-1 before:h-full text-[#64B5F6]' : ''}`}
             >
@@ -31,7 +31,7 @@ export const SideBarWork = () => {
 
           <li className={`relative px-3`}>
             <NavLink 
-              to={`/projects/${user?.name}`}
+              to={`/w/1/collaborators`}
               className={ ({isActive}) => `block py-1 px-2 hover:bg-[#132F4C] rounded-md before:content[""] before:absolute before:top-0 before:left-0 before:bg-blue-500 ${ isActive ? 'before:w-1 before:h-full text-[#64B5F6]' : ''}`}
             >
               Miembros

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { MdAddChart } from 'react-icons/md';
-import { ProjectUserLayout } from '../../layouts';
+import { ProjectUserLayout } from '../../../layouts';
 
 export const HomeUserPage = () => {
 

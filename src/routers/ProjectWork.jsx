@@ -1,10 +1,11 @@
 import { Route, Routes } from 'react-router-dom';
-import { CollaboratorsPage } from '../pages';
+import { CollaboratorsPage, ProjectsWork } from '../pages';
 
 export const ProjectWork = () => {
   return (
     <Routes>
-      <Route path='/collaborators' element={ <CollaboratorsPage />} />
+      <Route path='/:id' element={ <ProjectsWork />} />
+      <Route path='/:id/collaborators' element={ <CollaboratorsPage />} />
     </Routes>
   )
 }
