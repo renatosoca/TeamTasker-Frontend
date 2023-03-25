@@ -25,7 +25,7 @@ export const useForm = ( initialForm = {}, Validations = {} ) => {
     });
   }
 
-  const handleDateChange = ( value, name ) => {
+  const handleCustomChange = ( name, value ) => {
     setFormState({
       ...formState,
       [ name ]: value,
@@ -54,7 +54,7 @@ export const useForm = ( initialForm = {}, Validations = {} ) => {
     isFormValid,
 
     handleInputChange,
-    handleDateChange,
+    handleCustomChange,
     handleResetForm,
   };
 };

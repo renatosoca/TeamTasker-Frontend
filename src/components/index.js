@@ -3,6 +3,7 @@ export * from './auth/MessageAPI';
 export * from './auth/UnconfirmAcc';
 
 export * from './project/NavBar';
+export * from './project/ModalNewProject';
 export * from './project/user/SideBarUser';
 export * from './project/work/SideBarWork';
 

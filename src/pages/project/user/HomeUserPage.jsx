@@ -10,19 +10,19 @@ export const HomeUserPage = () => {
   
   return (
     <ProjectUserLayout>
-      <main className='max-w-md w-full py-4 px-8'>
+      <main className='max-w-2xl py-4 px-8'>
         <div className='w-full border-[.1rem] border-[#132F4C] rounded-md text-center shadow overflow-hidden'>
           <div className='w-full'>
             <img className='w-full' src="https://a.trellocdn.com/prgb/assets/e55b3540e5c1f06a51d7.svg" alt="" />
           </div>
-          <div className='p-2'>
-            <h2 className='font-bold text-lg'>Bienvenido a TeamTasker</h2>
+          <div className='py-6 px-4'>
+            <h2 className='font-bold text-lg pb-6'>Bienvenido a TeamTasker</h2>
             <p className='text-center'>En este espacio puede empezar a crear sus proyecto, invitar colaboradores, asignar tareas, crear tareas, etc</p>
           </div>
         </div>
       </main>
       
-      <aside className='px-2 py-4 min-w-[13rem] text-sm'>
+      <aside className='flex-1 px-2 py-4 min-w-[13rem] max-w-[16rem] text-sm'>
         <button
           className='flex items-center gap-2 px-2 py-1 w-full hover:bg-[#132F4C]/80 rounded-md'
         >
