@@ -1,3 +1,4 @@
 export * from './useAuth';
 export * from './useForm';
-export * from './useModal';
+export * from './useProject';
+export * from './useUi';

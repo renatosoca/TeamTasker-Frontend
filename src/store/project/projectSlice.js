@@ -3,16 +3,20 @@ import { createSlice } from '@reduxjs/toolkit';
 export const projectSlice = createSlice({
   name: 'project',
   initialState: {
-    status: '',
+    loading: 'initial',
     projects: [],
     project: undefined,
     activeProject: undefined,
   },
   reducers: {
     onLoading: ( state ) => {
-      state.status = 'loading';
+      state.loading = 'loading';
+    },
+    onLoadingProjects: ( state, { payload } ) => {
+      state.loading = 'success';
+      state.projects = payload;
     }
   },
 });
 
-export const { onLoading } = projectSlice.actions;
+export const { onLoading, onLoadingProjects } = projectSlice.actions;

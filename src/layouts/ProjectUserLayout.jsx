@@ -4,8 +4,8 @@ import { useAuth } from '../hooks';
 
 export const ProjectUserLayout = ({ children }) => {
 
-  const { status } = useAuth()
-  
+  const { status } = useAuth();
+
   if ( status === 'init' ) return <LoadingPage />;
   
   return (
