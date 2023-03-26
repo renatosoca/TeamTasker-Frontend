@@ -7,6 +7,7 @@ export const projectSlice = createSlice({
     projects: [],
     project: undefined,
     activeProject: undefined,
+    modalProject: false,
   },
   reducers: {
     onLoading: ( state ) => {
@@ -15,8 +16,18 @@ export const projectSlice = createSlice({
     onLoadingProjects: ( state, { payload } ) => {
       state.loading = 'success';
       state.projects = payload;
-    }
+    },
+    onAddProject: ( state, { payload } ) => {
+      state.loading = 'success Add';
+      state.projects.push( payload );
+    },
+    onOpenModal: (state) => {
+      state.modalProject = true;
+    },
+    onCloseModal: (state) => {
+      state.modalProject = false;
+    },
   },
 });
 
-export const { onLoading, onLoadingProjects } = projectSlice.actions;
+export const { onLoading, onLoadingProjects, onAddProject, onOpenModal, onCloseModal } = projectSlice.actions;
