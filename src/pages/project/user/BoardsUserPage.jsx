@@ -15,7 +15,7 @@ export const BoardsUserPage = () => {
     <ProjectUserLayout>
       <main className='max-w-4xl min-w-min w-full p-4 flex h-full'>
         <div className='flex flex-col h-full w-full'>
-          <h2 className='uppercase text-xl text-gray-400 font-bold pb-6'>Todos tus proyectos</h2>
+          <h2 className='uppercase text-xl text-gray-400 font-bold pb-6 select-none'>Todos tus proyectos</h2>
 
           <div className='h-full'>
             

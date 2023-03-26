@@ -2,7 +2,7 @@ import ReactModal from 'react-modal';
 import Select from 'react-select';
 import { initialNewProject, typeProjects, validationsNewProject } from '../../data';
 import { useForm, useProject, useUi } from '../../hooks';
-import { closeModalNewProject } from '../../store';
+import { closeModalNewProject, startSavedProject } from '../../store';
 import { stylesSelect } from '../../styles';
 
 ReactModal.setAppElement("#root");
@@ -10,11 +10,19 @@ ReactModal.setAppElement("#root");
 export const ModalNewProject = () => {
 
   const { modalNewProject, dispatch } = useUi();
-  const { loading } = useProject();
+  const { loading, dispatch: dispatchProject } = useProject();
 
   const { 
-    formState, name, type, description, isFormValid, handleInputChange, handleCustomChange 
+    formState, name, type, description, isFormValid, handleInputChange, handleCustomChange, handleResetForm
   } = useForm( initialNewProject, validationsNewProject );
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    if ( !isFormValid ) return;
+    dispatchProject( startSavedProject(formState) )
+    handleResetForm();
+  }
 
   return (
     <ReactModal
@@ -31,6 +39,7 @@ export const ModalNewProject = () => {
         </div>
 
         <form
+          onSubmit={ handleSubmit }
           className='flex flex-col gap-6 py-4'
         >
           <div className="w-full">

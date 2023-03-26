@@ -38,7 +38,7 @@ export const SideBarUser = () => {
 
         <ul className='flex flex-col gap-1'>
           <div className='flex justify-between items-center pb-3'>
-            <small>Projectos</small>
+            <small className='select-none'>Projectos</small>
             <button
               className='w-7 h-7 rounded-md flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#132F4C] text-xl transition-colors'
               title='Crear Proyecto'

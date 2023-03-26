@@ -5,20 +5,22 @@ export const BoardList = ({ projects }) => {
     <>
       {projects.length && projects?.map( ({ _id, name, type, colaborators, boards }) => (
         <div key={ _id } className='pb-6'>
-          <div className='flex justify-between pb-3'>
-            <div className='flex items-center gap-2'>
+          <div className='flex justify-between pb-4'>
+            <div className='flex items-center gap-2 select-none'>
               <div className={`bg-[${ type }] px-3 py-1 rounded-md`}>{ name?.charAt(0).toUpperCase() }</div>
               <span>{ name }</span>
             </div>
 
             <div className='flex gap-2'>
               <Link
-                className='bg-black px-4 py-1 rounded-md'
+              to={`/w/${_id}`}
+                className='bg-[#0d47a1]/40 px-4 py-1 rounded-md'
               >
                 Tareas
               </Link>
               <Link
-                className='bg-black px-4 py-1 rounded-md'
+              to={`/w/${_id}/collaborators`}
+                className='bg-[#0d47a1]/40 px-4 py-1 rounded-md'
               >
                 Colaboradores
                 <span>{` ( ${colaborators?.length} )`}</span>
@@ -37,7 +39,7 @@ export const BoardList = ({ projects }) => {
               </li>
             )) }
 
-            <li className='w-[49%] md:w-[32%] mp:w-[23.5%] mb-[2%] h-24 bg-black rounded-md'>
+            <li className='w-[49%] md:w-[32%] mp:w-[23.5%] mb-[2%] h-24 bg-gray-600 rounded-md'>
               <button
                 className='w-full h-full font-normal text-sm'  
               >
