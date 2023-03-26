@@ -1,7 +1,7 @@
 import ReactModal from 'react-modal';
 import Select from 'react-select';
 import { initialNewProject, typeProjects, validationsNewProject } from '../../data';
-import { useForm, useProject, useUi } from '../../hooks';
+import { useForm, useProject } from '../../hooks';
 import { closeModalNewProject, startSavedProject } from '../../store';
 import { stylesSelect } from '../../styles';
 
@@ -9,8 +9,7 @@ ReactModal.setAppElement("#root");
 
 export const ModalNewProject = () => {
 
-  const { modalNewProject, dispatch } = useUi();
-  const { loading, dispatch: dispatchProject } = useProject();
+  const { loading, modalProject, dispatch } = useProject();
 
   const { 
     formState, name, type, description, isFormValid, handleInputChange, handleCustomChange, handleResetForm
@@ -20,13 +19,13 @@ export const ModalNewProject = () => {
     e.preventDefault();
     
     if ( !isFormValid ) return;
-    dispatchProject( startSavedProject(formState) )
+    dispatch( startSavedProject(formState) )
     handleResetForm();
   }
 
   return (
     <ReactModal
-      isOpen={ modalNewProject }
+      isOpen={ modalProject }
       onRequestClose={ () => dispatch( closeModalNewProject() ) }
       closeTimeoutMS={ 300 }
       overlayClassName='modal'

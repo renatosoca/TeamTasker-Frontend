@@ -19,9 +19,10 @@ export const BoardsUserPage = () => {
 
           <div className='h-full'>
             
-            { loading === 'loading' && <BoardLoading />}
-
-            { loading === 'success' && <BoardList projects={ projects } />}
+            { loading === 'loading' ?
+              <BoardLoading /> :
+              <BoardList projects={ projects } />
+            }
 
           </div>
         </div>

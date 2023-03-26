@@ -19,7 +19,7 @@ export const projectSlice = createSlice({
     },
     onAddProject: ( state, { payload } ) => {
       state.loading = 'success Add';
-      state.projects.push( payload );
+      state.projects.unshift( payload );
     },
     onOpenModal: (state) => {
       state.modalProject = true;

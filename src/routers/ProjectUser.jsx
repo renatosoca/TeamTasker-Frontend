@@ -5,7 +5,7 @@ import { HomeUserPage, BoardsUserPage } from '../pages';
 import { startLoadingProjects } from '../store';
 
 export const ProjectUser = () => {
-  const { dispatch } = useProject();
+  const { projects, dispatch } = useProject();
 
   useEffect(() => {
     dispatch( startLoadingProjects() );

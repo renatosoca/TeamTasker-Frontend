@@ -1,9 +1,13 @@
 import { useEffect } from 'react';
 import { MdAddChart } from 'react-icons/md';
+import { useProject } from '../../../hooks';
 import { ProjectUserLayout } from '../../../layouts';
+import { openModalNewProject } from '../../../store';
 
 export const HomeUserPage = () => {
 
+  const { dispatch, projects } = useProject();
+  console.log(projects)
   useEffect(() => {
     document.title = 'Inicio | TeamTasker';
   }, [])
@@ -24,6 +28,7 @@ export const HomeUserPage = () => {
       
       <aside className='flex-1 px-2 py-4 min-w-[13rem] max-w-[16rem] text-sm'>
         <button
+        onClick={ () => dispatch( openModalNewProject() ) }
           className='flex items-center gap-2 px-2 py-1 w-full hover:bg-[#132F4C]/80 rounded-md'
         >
           <div className='bg-[#0d47a1]/30 w-7 h-7 rounded flex justify-center items-center hover:bg-[#132F4C]'>
