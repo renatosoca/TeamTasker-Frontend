@@ -4,6 +4,7 @@ export const uiSlice = createSlice({
   name: 'ui',
   initialState: {
     modalNewProject: false,
+    modalNewBoard: false,
   },
   reducers: {
     onOpenModalNewProject: (state) => {
@@ -12,7 +13,13 @@ export const uiSlice = createSlice({
     onCloseModalNewProject: (state) => {
       state.modalNewProject = false;
     },
+    onOpenModalNewBoard: (state) => {
+      state.modalNewBoard = true;
+    },
+    onCloseModalNewBoard: (state) => {
+      state.modalNewBoard = false;
+    }
   },
 });
 
-export const { onOpenModalNewProject, onCloseModalNewProject } = uiSlice.actions;
+export const { onOpenModalNewProject, onCloseModalNewProject, onOpenModalNewBoard, onCloseModalNewBoard } = uiSlice.actions;

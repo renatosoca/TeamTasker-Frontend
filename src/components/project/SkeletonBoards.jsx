@@ -1,11 +1,11 @@
 import React from 'react'
 
-export const BoardLoading = () => {
+export const SkeletonBoards = () => {
 
   const amounts = [1, 2, 3]
 
   return (
-    <div>
+    <div className='w-full'>
       { amounts.map( ( amount ) => (
         <div key={ amount }>
           <div className='flex justify-between pb-3'>

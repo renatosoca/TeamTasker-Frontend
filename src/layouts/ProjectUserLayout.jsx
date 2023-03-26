@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { LoadingPage, ModalNewProject, NavBar, SideBarUser } from '../components';
+import { LoadingPage, ModalNewBoard, ModalNewProject, NavBar, SideBarUser } from '../components';
 import { useAuth } from '../hooks';
 
 export const ProjectUserLayout = ({ children }) => {
@@ -27,6 +27,7 @@ export const ProjectUserLayout = ({ children }) => {
       }
 
       <ModalNewProject />
+      <ModalNewBoard />
 
     </div>
   )

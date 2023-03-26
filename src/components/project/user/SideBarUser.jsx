@@ -3,20 +3,21 @@ import { AiOutlineFundProjectionScreen } from 'react-icons/ai';
 import { GoProject } from 'react-icons/go';
 import { IoMdAdd } from 'react-icons/io';
 import { useAuth, useProject, useUi } from '../../../hooks';
-import { openModalNewProject } from '../../../store';
+import { openModalNewProject, startActiveProject } from '../../../store';
+import { SkeletonListSideBar } from '../SkeletonListSideBar';
 
 export const SideBarUser = () => {
   
-  const { dispatch } = useUi();
   const { user } = useAuth();
-  const { projects, loading } = useProject();
+  const { projects, loading, dispatch } = useProject();
+
   return (
     <aside className='sticky top-0 text-gray-300 font-medium text-base px-4 h-full w-full max-w-[16rem] min-w-[14rem]'>
       <nav className=''>
         <ul className='flex flex-col py-4 gap-2'>
           <li>
             <NavLink 
-              to={`/u/${user?.name}`}
+              to={`/project/u/${user?.name}`}
               end
               className={ ({isActive}) => `flex items-center gap-2 py-1 px-2 hover:bg-[#132F4C] rounded-md ${ isActive ? ' bg-[#132F4C]/40 text-[#64B5F6]' : ''}`}
             >
@@ -27,7 +28,7 @@ export const SideBarUser = () => {
 
           <li>
             <NavLink 
-              to={`/u/${user?.name}/boards`}
+              to={`/project/u/${user?.name}/boards`}
               className={ ({isActive}) => `flex items-center gap-2 py-1 px-2 hover:bg-[#132F4C] rounded-md ${ isActive ? ' bg-[#132F4C]/40 text-[#64B5F6]' : ''}`}
             >
               <GoProject />
@@ -49,29 +50,17 @@ export const SideBarUser = () => {
           </div>
 
           { loading === 'loading' ?
-            ( <div className='flex flex-col gap-2'>
-                <div className='flex items-center gap-2 px-2'>
-                  <div className='bg-gray-600 animate-pulse w-[2.2rem] h-[2.2rem] rounded-md'></div>
-                  <div className='bg-gray-600 animate-pulse h-[.1rem] py-2 rounded-md w-[60%]'></div>
-                </div>
-                <div className='flex items-center gap-2 px-2'>
-                  <div className='bg-gray-600 animate-pulse w-[2.2rem] h-[2.2rem] rounded-md'></div>
-                  <div className='bg-gray-600 animate-pulse h-[.1rem] py-2 rounded-md w-[60%]'></div>
-                </div>
-                <div className='flex items-center gap-2 px-2'>
-                  <div className='bg-gray-600 animate-pulse w-[2.2rem] h-[2.2rem] rounded-md'></div>
-                  <div className='bg-gray-600 animate-pulse h-[.1rem] py-2 rounded-md w-[60%]'></div>
-                </div>
-              </div> ) :
+            ( <SkeletonListSideBar /> ) :
             <>
-              { projects?.map( ({ _id, name, type }) => (
-                <li key={ _id }>
+              { projects?.map( (project) => (
+                <li key={ project._id }>
                   <Link
-                    to={`/w/${ _id }`}
+                    onClick={ () => dispatch( startActiveProject( project ) )}
+                    to={`/project/w/${ project._id }`}
                     className='flex items-center gap-2 py-1 px-2 hover:bg-[#132F4C] rounded transition-colors'
                   >
-                    <div className={`bg-[${ type }] px-3 py-1 rounded-md`}>{ name?.charAt(0).toUpperCase() }</div>
-                    <span>{ name }</span>
+                    <div className={`bg-[${ project.type }] px-3 py-1 rounded-md`} style={{ background: `${project.type}` }}>{ project.name?.charAt(0).toUpperCase() }</div>
+                    <span>{ project.name }</span>
                   </Link>
                 </li>
               )) }

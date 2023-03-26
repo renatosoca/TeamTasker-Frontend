@@ -1,30 +1,30 @@
 export const typeProjects = [
   {
-    value: '#292F36',
+    value: '#3772FF',
     label: 'Ingeniería'
   },
   {
-    value: '#292F31',
+    value: '#70E4EF',
     label: 'Arquitectura'
   },
   {
-    value: '#292F32',
+    value: '#80FF72',
     label: 'Urbanismo'
   },
   {
-    value: '#292F35',
+    value: '#3E363F',
     label: 'Construcción'
   },
   {
-    value: '#292F33',
+    value: '#FF3E41',
     label: 'Diseño'
   },
   {
-    value: '#292F34',
+    value: '#5AFF15',
     label: 'Arte'
   },
   {
-    value: '#292F37',
+    value: '#6F8F81',
     label: 'Otro'
   }
 ]
@@ -37,4 +37,15 @@ export const initialNewProject = {
 export const validationsNewProject = {
   name: [ (value) => value.length > 0, 'El nombre es requerido' ],
   type: [ (value) => value.length > 0, 'El tipo es requerido' ],
+}
+
+export const initialNewBoard = {
+  title: '',
+  background: '',
+  project: '',
+}
+export const validationsNewBoard = {
+  title: [ (value) => value.length > 0, 'El título es requerido' ],
+  background: [ (value) => value.length > 0, 'El color es requerido' ],
+  project: [ (value) => value.length > 0, 'El proyecto es requerido' ],
 }

@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { BoardList, BoardLoading } from '../../../components';
+import { BoardList, SkeletonBoards } from '../../../components';
 import { useProject } from '../../../hooks';
 import { ProjectUserLayout } from '../../../layouts';
 
@@ -20,7 +20,7 @@ export const BoardsUserPage = () => {
           <div className='h-full'>
             
             { loading === 'loading' ?
-              <BoardLoading /> :
+              <SkeletonBoards /> :
               <BoardList projects={ projects } />
             }
 

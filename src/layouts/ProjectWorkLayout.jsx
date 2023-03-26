@@ -3,8 +3,8 @@ import { LoadingPage, NavBar, SideBarWork } from '../components';
 import { useAuth } from '../hooks';
 
 export const ProjectLayout = ({ children }) => {
-
-  const { status } = useAuth()
+  
+  const { status } = useAuth();
   
   if ( status === 'init' ) return <LoadingPage />;
   

@@ -1,41 +1,49 @@
 import ReactModal from 'react-modal';
 import Select from 'react-select';
 import { useForm, useProject, useUi } from '../../hooks';
-import { closeModalNewProject, startSavedProject } from '../../store';
-import { initialNewProject, typeProjects, validationsNewProject } from '../../data';
+import { closeModalNewBoard } from '../../store';
+import { initialNewBoard, typeProjects, validationsNewBoard} from '../../data';
 import { stylesSelect } from '../../styles';
 
 ReactModal.setAppElement("#root");
 
-export const ModalNewProject = () => {
+export const ModalNewBoard = () => {
 
-  const { modalNewProject } = useUi();
-  const { loading, dispatch } = useProject();
-
+  const { modalNewBoard } = useUi();
+  const { loading, projects, activeProject, dispatch } = useProject();
+  const projectOptions = projects.map( project => ({ value: project._id, label: project.name}) )
+  console.log(projectOptions)
   const { 
-    formState, name, description, isFormValid, handleInputChange, handleCustomChange, handleResetForm
-  } = useForm( initialNewProject, validationsNewProject );
+    formState, title, background, project, isFormValid, handleInputChange, handleCustomChange, handleResetForm
+  } = useForm( initialNewBoard, validationsNewBoard );
 
   const handleSubmit = (e) => {
     e.preventDefault();
     
     if ( !isFormValid ) return;
-    dispatch( startSavedProject(formState) )
-    handleResetForm();
+    console.log(formState)
+    //dispatch( startSavedProject(formState) )
+    //handleResetForm();
+  }
+
+  const handleRequestClose = () => {
+    dispatch( closeModalNewBoard() )
+    setTimeout(() => {
+      handleResetForm();
+    }, 500);
   }
 
   return (
     <ReactModal
-      isOpen={ modalNewProject }
-      onRequestClose={ () => dispatch( closeModalNewProject() ) }
+      isOpen={ modalNewBoard }
+      onRequestClose={ handleRequestClose }
       closeTimeoutMS={ 300 }
       overlayClassName='modal'
-      className={`max-w-[80rem] w-[95%] grid grid-cols-2 bg-[#292F36] text-white rounded-md overflow-hidden`}
+      className={`max-w-[40rem] w-[95%] bg-[#292F36] text-white rounded-md overflow-hidden`}
     >
       <div className='max-w-lg mx-auto py-6 px-4'>
         <div className='text-center pt-8'>
-          <h2 className='text-xl font-bold'>Crea tu proyecto en unos simples pasos</h2>
-          <p className='text-gray-400 pt-3 pb-6'>Organiza tus proyectos de manera facil, invita a tus colaboradores para que puedan participar</p>
+          <h2 className='text-xl font-bold'>Crear tablero</h2>
         </div>
 
         <form
@@ -48,18 +56,18 @@ export const ModalNewProject = () => {
               <input
                 className={`inputs__input w-full px-2 py-3 outline-none text-white font-normal bg-inherit resize-none`}
                 type="text"
-                id="name"
-                name="name"
-                value={ name }
+                id="title"
+                name="title"
+                value={ title }
                 onChange={ handleInputChange }
                 placeholder=" "
                 autoComplete="off"
               />
               
               <label
-                htmlFor="name"
+                htmlFor="title"
                 className={`inputs__label text-gray-300 absolute bg-[#292F36] px-1 text-base top-[50%] transform -translate-y-1/2 left-2 font-medium focus-within:top-0 transition-[top transform] duration-200 cursor-text`}
-              >Nombre del Proyecto</label>
+              >Titulo del tablero</label>
             </div>
 
             <span className='text-sm block text-start text-gray-400 pt-1'>Digite el nombre de su proyecto <small className='text-red-500 text-sm'>*</small></span>
@@ -68,11 +76,11 @@ export const ModalNewProject = () => {
           <div>
             <Select
               styles={ stylesSelect }
-              onChange={ ({ value }) => handleCustomChange( 'type', value) }
+              onChange={ ({ value }) => handleCustomChange( 'project', value ) }
               classNamePrefix='select'
-              placeholder='Seleccionar...'
-              options={ typeProjects }
-            />  
+              defaultValue={ projectOptions.find( option => option.value === '6420b758e50338fe00b30f51' )}
+              options={ projectOptions }
+            />
 
             <span className='text-sm block text-start text-gray-400 pt-1'>Escoga el tipo de proyecto que va a desarrollar <small className='text-red-500 text-sm'>*</small></span>
           </div>
@@ -83,21 +91,21 @@ export const ModalNewProject = () => {
               <textarea
                 className={`textarea__input w-full px-2 py-3 outline-none text-white font-normal bg-inherit resize-none`}
                 rows="4"
-                id="description"
-                name="description"
-                value={ description }
+                id="background"
+                name="background"
+                value={ background }
                 onChange={ handleInputChange }
                 placeholder=" "
                 autoComplete="off"
               />
               
               <label
-                htmlFor="description"
+                htmlFor="background"
                 className={`textarea__label text-gray-300 absolute bg-[#292F36] px-1 text-base top-[5%] left-2 font-medium focus-within:top-1/2 transition-[top transform] duration-200 cursor-text`}
-              >Descripción del proyecto</label>
+              >Color</label>
             </div>
 
-            <span className='text-sm block text-start text-gray-400 pt-1'>Ingrese una breve descripción para sus colaboradores</span>
+            <span className='text-sm block text-start text-gray-400 pt-1'>Escoga un color</span>
           </div>
 
           <button
@@ -107,9 +115,6 @@ export const ModalNewProject = () => {
             { loading === 'loading' ? 'Creando proyecto...' : 'Crear proyecto' }
           </button>
         </form>
-      </div>
-
-      <div className='bg-[url(https://a.trellocdn.com/prgb/assets/df0d81969c6394b61c0d.svg)] bg-cover bg-no-repeat w-full h-full'>
       </div>
     </ReactModal>
   )
