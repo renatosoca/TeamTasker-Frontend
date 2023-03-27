@@ -1,18 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { LoadingSpinner, MessageAPI } from '../../components';
+import { initialResetPassword, validationsResetPassword } from '../../data';
 import { useForm, useAuth } from '../../hooks';
 import { AuthLayout } from '../../layouts';
 import { startResetPassUser } from '../../store';
 
-const initialForm = {
-  password: '',
-}
-
 export const ResetPassPage = () => {
-  const validations = {
-    password: [ (value) => (value.length > 7), 'La contraseña debe tener al menos 8 caracteres' ],
-  }
 
   const { token } = useParams();
   const { status, messageAPI, dispatch } = useAuth();
@@ -20,7 +14,7 @@ export const ResetPassPage = () => {
   
   const { 
     formState, isFormValid, password, passwordValid, handleInputChange, handleResetForm 
-  } = useForm( initialForm, validations );
+  } = useForm( initialResetPassword, validationsResetPassword );
   
   useEffect(() => {
     document.title = 'Nueva Contraseña | TeamTasker';

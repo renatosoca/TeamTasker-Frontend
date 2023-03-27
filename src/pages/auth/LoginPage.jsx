@@ -5,17 +5,9 @@ import { LoadingSpinner, MessageAPI } from '../../components';
 import { useAuth, useForm } from '../../hooks';
 import { startLoginUser } from '../../store';
 import { AuthLayout } from '../../layouts';
-
-const initialForm = {
-  email: '',
-  password: '',
-}
+import { initialLoginUser, ValidationsLoginUser } from '../../data';
 
 export const LoginPage = () => {
-  const Validations = {
-    email: [ (value) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/).test(value), 'Ingrese un email válido' ],
-    password: [ (value) => value.length > 7, 'Ingrese un mínimo de 8 caracteres' ],
-  }
   
   const { status, messageAPI, dispatch } = useAuth();
 
@@ -24,7 +16,7 @@ export const LoginPage = () => {
 
   const { 
     formState, isFormValid, email, password, emailValid, passwordValid, handleInputChange, handleResetForm
-  } = useForm( initialForm, Validations );
+  } = useForm( initialLoginUser, ValidationsLoginUser );
   
   useEffect(() => {
     document.title = 'Inicio Sesión | TeamTasker';

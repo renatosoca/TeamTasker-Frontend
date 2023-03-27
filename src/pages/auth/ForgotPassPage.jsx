@@ -3,22 +3,16 @@ import { LoadingSpinner, MessageAPI } from '../../components';
 import { useEffect, useState } from 'react';
 import { useAuth, useForm } from '../../hooks';
 import { startForgotPassUser } from '../../store';
-
-const initialForm = {
-  email: '',
-}
+import { initialForgotPassword, validationsForgotPassword } from '../../data';
 
 export const ForgotPassPage = () => {
-  const validations = {
-    email: [ (value) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/).test(value), 'Ingrese un email válido' ],
-  }
 
   const { status, messageAPI, dispatch } = useAuth();
 
   const [ isFormSubmitted, setIsFormSubmitted ] = useState(false);
   const {
     formState, isFormValid, email, emailValid, handleInputChange, handleResetForm 
-  } = useForm( initialForm, validations );
+  } = useForm( initialForgotPassword, validationsForgotPassword );
   
   useEffect(() => {
     document.title = 'Recuperar | TeamTasker';
@@ -47,31 +41,30 @@ export const ForgotPassPage = () => {
           onSubmit={ handleSubmit }
           className="relative leading-none flex flex-col gap-6 py-8"
         >
-
           { !!messageAPI?.msg && <MessageAPI /> }
 
           <div className="w-full pb-2">
-              <div className={`form__group ${(isFormSubmitted && emailValid) ? 'form__group-error border-red-400 text-red-400 hover:border-red-500 after:bg-red-400' : 'border-gray-400 text-gray-600 hover:border-white after:bg-[#5FA7F0]'} relative w-full border-b-[.15rem] after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 focus-within:after:scale-100 after:transition-all after:duration-300 ease-in`} >
+            <div className={`form__group ${(isFormSubmitted && emailValid) ? 'form__group-error border-red-400 text-red-400 hover:border-red-500 after:bg-red-400' : 'border-gray-400 text-gray-600 hover:border-white after:bg-[#5FA7F0]'} relative w-full border-b-[.15rem] after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 focus-within:after:scale-100 after:transition-all after:duration-300 ease-in`} >
 
-                <input
-                  className={`form__input ${(isFormSubmitted && emailValid)? 'form__input-error': ''} w-full px-2 pt-3 pb-1 outline-none text-white font-normal bg-inherit resize-none`}
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder=" "
-                  value={ email }
-                  onChange={ handleInputChange }
-                  autoComplete="off"
-                />
-                
-                <label
-                  htmlFor="email"
-                  className={`form__label ${(isFormSubmitted && emailValid) ? 'text-red-400' : 'text-gray-300'} absolute  text-base top-[50%] transform -translate-y-1/2 left-2 font-medium bg-inherit focus-within:top-0 transition-[top transform] duration-200 cursor-text`}
-                >Correo</label>
-              </div>
-
-              <span className={`form__span ${(isFormSubmitted && emailValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ emailValid }</span>
+              <input
+                className={`form__input ${(isFormSubmitted && emailValid)? 'form__input-error': ''} w-full px-2 pt-3 pb-1 outline-none text-white font-normal bg-inherit resize-none`}
+                type="email"
+                name="email"
+                id="email"
+                placeholder=" "
+                value={ email }
+                onChange={ handleInputChange }
+                autoComplete="off"
+              />
+              
+              <label
+                htmlFor="email"
+                className={`form__label ${(isFormSubmitted && emailValid) ? 'text-red-400' : 'text-gray-300'} absolute  text-base top-[50%] transform -translate-y-1/2 left-2 font-medium bg-inherit focus-within:top-0 transition-[top transform] duration-200 cursor-text`}
+              >Correo</label>
             </div>
+
+            <span className={`form__span ${(isFormSubmitted && emailValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ emailValid }</span>
+          </div>
 
           <button
             className="bg-blue-600 text-white font-medium py-4 rounded-[.2rem] text-[1.1rem] flex items-center justify-center gap-2 hover:bg-blue-500 transition-colors"

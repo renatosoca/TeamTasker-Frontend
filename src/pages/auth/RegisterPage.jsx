@@ -1,12 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { LoadingSpinner, MessageAPI } from '../../components';
+import { initialRegisterUser, validationsRegisterUser } from '../../data';
 import { useAuth, useForm } from '../../hooks';
-import { AuthLayout } from '../../layouts';
 import { startRegisterUser } from '../../store';
-
-
 
 export const RegisterPage = () => {
 
@@ -16,8 +13,8 @@ export const RegisterPage = () => {
   const [ isFormSubmitted, setIsFormSubmitted ] = useState(false);
   
   const {
-    formState, isFormValid, name, lastname, email, password, confirmPassword, nameValid, lastnameValid, emailValid, passwordValid, confirmPasswordValid, handleInputChange, handleResetForm 
-  } = useForm( initialForm, validations );
+    formState, isFormValid, name, lastname, username, email, password, confirmPassword, nameValid, lastnameValid, usernameValid, emailValid, passwordValid, confirmPasswordValid, handleInputChange, handleResetForm 
+  } = useForm( initialRegisterUser, validationsRegisterUser );
   
   useEffect(() => {
     document.title = 'Registro | TeamTasker';
@@ -101,6 +98,30 @@ export const RegisterPage = () => {
 
                 <span className={`form__span ${(isFormSubmitted && lastnameValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ lastnameValid }</span>
               </div>
+            </div>
+
+            <div className="w-full">
+              <div className={`form__group ${(isFormSubmitted && usernameValid) ? 'form__group-error border-red-400 text-red-400 hover:border-red-500 after:bg-red-400' : 'border-gray-400 text-gray-600 hover:border-white after:bg-[#5FA7F0]'} relative w-full border-b-[.15rem] after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 focus-within:after:scale-100 after:transition-all after:duration-300 ease-in`} >
+
+                <input
+                  className={`form__input ${(isFormSubmitted && usernameValid)? 'form__input-error': ''} w-full px-2 pt-3 pb-1 outline-none text-white font-normal bg-inherit resize-none`}
+                  type="text"
+                  name="username"
+                  id="username"
+                  placeholder=" "
+                  value={ username }
+                  onChange={ handleInputChange }
+                  ref={ nameRef }
+                  autoComplete="off"
+                />
+                
+                <label
+                  htmlFor="username"
+                  className={`form__label ${(isFormSubmitted && usernameValid) ? 'text-red-400' : 'text-gray-300'} absolute  text-base top-[50%] transform -translate-y-1/2 left-2 font-medium bg-inherit focus-within:top-0 transition-[top transform] duration-200 cursor-text`}
+                >Nombre de usuario</label>
+              </div>
+
+              <span className={`form__span ${(isFormSubmitted && usernameValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ usernameValid }</span>
             </div>
 
             <div className="w-full">

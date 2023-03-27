@@ -17,12 +17,12 @@ export const startLoginUser = ({ email, password }) => {
   }
 }
 
-export const startRegisterUser = ({ name, lastname, email, password }) => {
+export const startRegisterUser = ({ name, lastname, email, password, username }) => {
   return async (dispatch) => {
     dispatch(onLoading());
 
     try {
-      const { data } = await teamTaskeAPI.post( '/auth/register', { name, lastname, email, password } );
+      const { data } = await teamTaskeAPI.post( '/auth/register', { name, lastname, username, email, password  } );
       dispatch( onRegister( data ));
 
     } catch (error) {

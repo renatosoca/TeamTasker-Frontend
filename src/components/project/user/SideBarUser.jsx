@@ -11,13 +11,17 @@ export const SideBarUser = () => {
   const { user } = useAuth();
   const { projects, loading, dispatch } = useProject();
 
+  const handleClickModalNewProject = () => {
+    dispatch( openModalNewProject() );
+  }
+
   return (
     <aside className='sticky top-0 text-gray-300 font-medium text-base px-4 pt-6 h-full w-full max-w-[16rem] min-w-[14rem]'>
       <nav className=''>
         <ul className='flex flex-col py-4 gap-2'>
           <li>
             <NavLink 
-              to={`/project/u/${user?.name}`}
+              to={`/project/u/${user?.username}`}
               end
               className={ ({isActive}) => `flex items-center gap-2 py-1 px-2 hover:bg-[#132F4C] rounded-md ${ isActive ? ' bg-[#132F4C]/40 text-[#64B5F6]' : ''}`}
             >
@@ -28,7 +32,7 @@ export const SideBarUser = () => {
 
           <li>
             <NavLink 
-              to={`/project/u/${user?.name}/boards`}
+              to={`/project/u/${user?.username}/boards`}
               className={ ({isActive}) => `flex items-center gap-2 py-1 px-2 hover:bg-[#132F4C] rounded-md ${ isActive ? ' bg-[#132F4C]/40 text-[#64B5F6]' : ''}`}
             >
               <GoProject />
@@ -43,15 +47,15 @@ export const SideBarUser = () => {
             <button
               className='w-7 h-7 rounded-md flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#132F4C] text-xl transition-colors'
               title='Crear Proyecto'
-              onClick={ () => dispatch( openModalNewProject() ) }
+              onClick={ handleClickModalNewProject }
             >
               <IoMdAdd />
             </button>
           </div>
 
-          { loading === 'loading' ?
-            ( <SkeletonListSideBar /> ) :
-            <>
+          { loading === 'loading'
+            ?( <SkeletonListSideBar /> )
+            :<>
               { projects?.map( (project) => (
                 <li key={ project._id }>
                   <Link
