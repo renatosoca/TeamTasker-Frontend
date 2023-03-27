@@ -1,4 +1,4 @@
-import { onCloseModalNewBoard, onCloseModalNewCollaborator, onCloseModalNewProject, onOpenModalNewBoard, onOpenModalNewCollaborator, onOpenModalNewProject } from "./uiSlice";
+import { onCloseModalNewBoard, onCloseModalNewCollaborator, onCloseModalNewProject, onDesactiveSideBarUser, onOpenModalNewBoard, onOpenModalNewCollaborator, onOpenModalNewProject, ontoggleSideBarUser } from "./uiSlice";
 
 export const closeModalNewProject = () => {
   return (dispatch) => {
@@ -30,5 +30,16 @@ export const closeModalNewCollaborator = () => {
 export const openModalNewCollaborator = () => {
   return (dispatch) => {
     dispatch( onOpenModalNewCollaborator() );
+  }
+}
+
+export const toggleSideBarUser = () => {
+  return (dispatch) => {
+    dispatch(ontoggleSideBarUser());
+  }
+}
+export const desactiveSideBarUser = () => {
+  return (dispatch) => {
+    dispatch(onDesactiveSideBarUser());
   }
 }

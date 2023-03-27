@@ -6,11 +6,10 @@ import { useAuth, useForm } from '../../hooks';
 import { startRegisterUser } from '../../store';
 
 export const RegisterPage = () => {
+  const { isLoading, messageAPI, dispatch } = useAuth();
 
-  const { status, messageAPI, dispatch } = useAuth();
-
-  const nameRef = useRef( null );
   const [ isFormSubmitted, setIsFormSubmitted ] = useState(false);
+  const nameRef = useRef( null );
   
   const {
     formState, isFormValid, name, lastname, username, email, password, confirmPassword, nameValid, lastnameValid, usernameValid, emailValid, passwordValid, confirmPasswordValid, handleInputChange, handleResetForm 
@@ -45,10 +44,9 @@ export const RegisterPage = () => {
           </div>
 
           <form
-          onSubmit={ handleSubmit }
+            onSubmit={ handleSubmit }
             className="relative leading-none flex flex-col gap-6 py-10"
           >
-
             { !!messageAPI?.msg && <MessageAPI /> }
 
             <div className='flex gap-6'>
@@ -194,10 +192,11 @@ export const RegisterPage = () => {
             </div>
 
             <button
-              className="bg-blue-600 text-white font-medium py-4 rounded-[.2rem] text-[1.1rem] flex items-center justify-center gap-2 hover:bg-blue-500 transition-colors"
+              className={`${isLoading ? 'bg-gray-400 text-gray-700 cursor-not-allowed' : 'text-white hover:bg-blue-500'} bg-blue-600  font-medium py-4 rounded-[.2rem] text-[1.1rem] flex items-center justify-center gap-2 transition-colors`}
               type="submit"
+              disabled={ isLoading }
             >
-              { status === 'loading' ? <LoadingSpinner title="Registrando" /> : 'Registrarse'}
+              { isLoading ? <LoadingSpinner title="Registrando" /> : 'Registrarse'}
             </button>
           </form>
 

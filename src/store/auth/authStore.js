@@ -4,14 +4,14 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState: {
     status: 'init',
-    user: undefined,
+    user: { _id: '', name: '', lastname: '', username: '', email: '' },
     messageAPI: undefined,
     isConfirmed: undefined,
   },
   reducers: {
     onLoading: (state) => {
       state.status = 'loading';
-      state.user = undefined;
+      state.user = { _id: '', name: '', lastname: '', username: '', email: '' };
       state.messageAPI = undefined,
       state.isConfirmed = undefined;
     },
@@ -24,19 +24,19 @@ export const authSlice = createSlice({
     onRegister: (state, { payload }) => {
       state.status = 'not-authenticated';
       state.messageAPI = payload,
-      state.user = undefined;
+      state.user = { _id: '', name: '', lastname: '', username: '', email: '' };
       state.isConfirmed = undefined;
     },
     onConfirmed: (state, { payload }) => {
       state.status = 'not-authenticated';
       state.isConfirmed = payload;
-      state.user = undefined;
+      state.user = { _id: '', name: '', lastname: '', username: '', email: '' };
       state.messageAPI = undefined;
     },
     onLogoutUser: (state, { payload }) => {
       state.status = 'not-authenticated';
       state.messageAPI = payload;
-      state.user = undefined;
+      state.user = {};
       state.isConfirmed = undefined;
     },
     onClearMessage: (state) => {

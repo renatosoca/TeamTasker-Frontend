@@ -6,6 +6,7 @@ export const useProject = () => {
 
   return {
     ...stateProject,
+    isLoadingProjects: stateProject.loading === 'loading',
 
     dispatch,
   }

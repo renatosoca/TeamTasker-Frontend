@@ -6,6 +6,7 @@ export const useAuth = () => {
 
   return {
     ...authState,
+    isLoading: authState.status === 'loading',
 
     dispatch,
   }

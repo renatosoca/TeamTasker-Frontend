@@ -6,6 +6,8 @@ module.exports = {
   ],
   theme: {
     screens: {
+      'xs': '410px',
+      '3xs': '600px',
       'sm': '640px',
       'md': '768px',
       'mp': '900px',

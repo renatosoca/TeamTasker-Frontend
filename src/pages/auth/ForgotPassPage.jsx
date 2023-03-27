@@ -6,10 +6,9 @@ import { startForgotPassUser } from '../../store';
 import { initialForgotPassword, validationsForgotPassword } from '../../data';
 
 export const ForgotPassPage = () => {
-
-  const { status, messageAPI, dispatch } = useAuth();
-
+  const { isLoading, messageAPI, dispatch } = useAuth();
   const [ isFormSubmitted, setIsFormSubmitted ] = useState(false);
+
   const {
     formState, isFormValid, email, emailValid, handleInputChange, handleResetForm 
   } = useForm( initialForgotPassword, validationsForgotPassword );
@@ -67,10 +66,11 @@ export const ForgotPassPage = () => {
           </div>
 
           <button
-            className="bg-blue-600 text-white font-medium py-4 rounded-[.2rem] text-[1.1rem] flex items-center justify-center gap-2 hover:bg-blue-500 transition-colors"
-            type="submit"
+              className={`${isLoading ? 'bg-gray-400 text-gray-700 cursor-not-allowed' : 'text-white hover:bg-blue-500'} bg-blue-600  font-medium py-4 rounded-[.2rem] text-[1.1rem] flex items-center justify-center gap-2 transition-colors`}
+              type="submit"
+              disabled={ isLoading }
           >
-            { status === 'loading' ? <LoadingSpinner title="Enviando" /> : 'Enviar instrucciones'}
+            { isLoading ? <LoadingSpinner title="Enviando" /> : 'Enviar instrucciones'}
           </button>
         </form>
 

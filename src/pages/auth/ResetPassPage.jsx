@@ -9,7 +9,7 @@ import { startResetPassUser } from '../../store';
 export const ResetPassPage = () => {
 
   const { token } = useParams();
-  const { status, messageAPI, dispatch } = useAuth();
+  const { isLoading, messageAPI, dispatch } = useAuth();
   const [ isFormSubmitted, setIsFormSubmitted ] = useState(false);
   
   const { 
@@ -70,10 +70,11 @@ export const ResetPassPage = () => {
             </div>
 
             <button
-              className="bg-blue-600 text-white font-medium py-4 rounded-[.2rem] text-[1.1rem] flex items-center justify-center gap-2 hover:bg-blue-500 transition-colors"
+              className={`${isLoading ? 'bg-gray-400 text-gray-700 cursor-not-allowed' : 'text-white hover:bg-blue-500'} bg-blue-600  font-medium py-4 rounded-[.2rem] text-[1.1rem] flex items-center justify-center gap-2 transition-colors`}
               type="submit"
+              disabled={ isLoading }
             >
-              { status === 'loading' ? <LoadingSpinner title="Validando" /> : 'Continuar'}
+              { isLoading ? <LoadingSpinner title="Validando" /> : 'Continuar'}
             </button>
           </form>
         </div>

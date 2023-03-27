@@ -8,9 +8,8 @@ import { AuthLayout } from '../../layouts';
 import { initialLoginUser, ValidationsLoginUser } from '../../data';
 
 export const LoginPage = () => {
+  const { messageAPI, isLoading, dispatch } = useAuth();
   
-  const { status, messageAPI, dispatch } = useAuth();
-
   const [ isFormSubmitted, setIsFormSubmitted ] = useState(false);
   const emailRef = useRef(null)
 
@@ -43,7 +42,6 @@ export const LoginPage = () => {
             onSubmit={ handleSubmit }
             className="leading-none flex flex-col gap-6 py-10 relative"
           >
-
             { !!messageAPI?.msg && <MessageAPI /> }
 
             <div className="w-full">
@@ -94,10 +92,11 @@ export const LoginPage = () => {
             </div>
 
             <button
-              className="bg-blue-600 text-white font-medium py-4 rounded-[.2rem] text-[1.1rem] flex items-center justify-center gap-2 hover:bg-blue-500 transition-colors"
+              className={`${isLoading ? 'bg-gray-400 text-gray-700 cursor-not-allowed' : 'text-white hover:bg-blue-500'} bg-blue-600  font-medium py-4 rounded-[.2rem] text-[1.1rem] flex items-center justify-center gap-2 transition-colors`}
               type="submit"
+              disabled={ isLoading }
             >
-              { status === 'loading' ? <LoadingSpinner title="Autenticando" /> : 'Iniciar sesión'}
+              { isLoading ? <LoadingSpinner title="Autenticando" /> : 'Iniciar sesión'}
             </button>
           </form>
 

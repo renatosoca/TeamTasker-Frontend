@@ -2,21 +2,26 @@ import { Link, NavLink } from 'react-router-dom';
 import { AiOutlineFundProjectionScreen } from 'react-icons/ai';
 import { GoProject } from 'react-icons/go';
 import { IoMdAdd } from 'react-icons/io';
+
 import { useAuth, useProject, useUi } from '../../../hooks';
-import { openModalNewProject, startActiveProject } from '../../../store';
+import { openModalNewProject } from '../../../store';
 import { SkeletonListSideBar } from '../SkeletonListSideBar';
+import { ListSideBar } from './ListSideBar';
 
 export const SideBarUser = () => {
   
   const { user } = useAuth();
   const { projects, loading, dispatch } = useProject();
+  const { sideBarUser } = useUi();
 
   const handleClickModalNewProject = () => {
     dispatch( openModalNewProject() );
   }
 
   return (
-    <aside className='sticky top-0 text-gray-300 font-medium text-base px-4 pt-6 h-full w-full max-w-[16rem] min-w-[14rem]'>
+    <aside
+      className={`absolute ${sideBarUser ? 'left-0 rounded-tr-xl rounded-br-xl' : '-left-full'} transition-[left] bg-[#0A1929] 3xs:bg-inherit 3xs:sticky top-0 text-gray-300 font-medium text-base px-4 pt-6 h-full w-full max-w-[16rem] min-w-[14rem] z-50`}
+    >
       <nav className=''>
         <ul className='flex flex-col py-4 gap-2'>
           <li>
@@ -55,22 +60,8 @@ export const SideBarUser = () => {
 
           { loading === 'loading'
             ?( <SkeletonListSideBar /> )
-            :<>
-              { projects?.map( (project) => (
-                <li key={ project._id }>
-                  <Link
-                    onClick={ () => dispatch( startActiveProject( project ) )}
-                    to={`/project/w/${ project._id }`}
-                    className='flex items-center gap-2 py-1 px-2 hover:bg-[#132F4C] rounded transition-colors'
-                  >
-                    <div className={`bg-[${ project.type }] px-3 py-1 rounded-md`} style={{ background: `${project.type}` }}>{ project.name?.charAt(0).toUpperCase() }</div>
-                    <span>{ project.name }</span>
-                  </Link>
-                </li>
-              )) }
-            </>
+            :<ListSideBar projects={ projects } />
           }
-          
         </ul>
       </nav>
     </aside>
