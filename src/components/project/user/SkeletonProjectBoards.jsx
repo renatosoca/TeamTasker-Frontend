@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const SkeletonBoards = () => {
+export const SkeletonProjectBoards = () => {
 
   const amounts = [1, 2, 3]
 

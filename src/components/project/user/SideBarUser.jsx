@@ -12,7 +12,7 @@ export const SideBarUser = () => {
   const { projects, loading, dispatch } = useProject();
 
   return (
-    <aside className='sticky top-0 text-gray-300 font-medium text-base px-4 h-full w-full max-w-[16rem] min-w-[14rem]'>
+    <aside className='sticky top-0 text-gray-300 font-medium text-base px-4 pt-6 h-full w-full max-w-[16rem] min-w-[14rem]'>
       <nav className=''>
         <ul className='flex flex-col py-4 gap-2'>
           <li>

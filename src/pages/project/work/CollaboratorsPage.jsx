@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { HeaderProjectWork } from '../../../components';
 import { ProjectLayout } from '../../../layouts';
 
 export const CollaboratorsPage = () => {
@@ -8,6 +9,10 @@ export const CollaboratorsPage = () => {
   }, [])
 
   return (
-    <ProjectLayout>Collaborators</ProjectLayout>
+    <ProjectLayout>
+      <HeaderProjectWork />
+
+      <h1>colaboradores</h1>
+    </ProjectLayout>
   )
 }

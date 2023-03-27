@@ -5,6 +5,7 @@ export const uiSlice = createSlice({
   initialState: {
     modalNewProject: false,
     modalNewBoard: false,
+    modalNewCollaborator: false,
   },
   reducers: {
     onOpenModalNewProject: (state) => {
@@ -18,8 +19,21 @@ export const uiSlice = createSlice({
     },
     onCloseModalNewBoard: (state) => {
       state.modalNewBoard = false;
+    },
+    onOpenModalNewCollaborator: (state) => {
+      state.modalNewCollaborator = true;
+    },
+    onCloseModalNewCollaborator: (state) => {
+      state.modalNewCollaborator = false;
     }
   },
 });
 
-export const { onOpenModalNewProject, onCloseModalNewProject, onOpenModalNewBoard, onCloseModalNewBoard } = uiSlice.actions;
+export const { 
+  onOpenModalNewProject,
+  onCloseModalNewProject,
+  onOpenModalNewBoard,
+  onCloseModalNewBoard,
+  onOpenModalNewCollaborator,
+  onCloseModalNewCollaborator,
+} = uiSlice.actions;

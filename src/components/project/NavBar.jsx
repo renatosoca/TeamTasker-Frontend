@@ -10,7 +10,7 @@ export const NavBar = () => {
       <div className='max-w-[120rem] mx-auto flex items-center justify-between text-[#64B5F6] py-2 px-4'>
         <div className='flex gap-3 items-center justify-center'>
           <Link
-            to={`/u/${ user?.name }`}
+            to={`/project/u/${ user?.name }`}
             className='text-2xl text-white select-none font-bold'
           >
             TeamTasker

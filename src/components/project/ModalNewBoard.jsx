@@ -1,8 +1,9 @@
+import { useEffect } from 'react';
 import ReactModal from 'react-modal';
 import Select from 'react-select';
 import { useForm, useProject, useUi } from '../../hooks';
-import { closeModalNewBoard } from '../../store';
-import { initialNewBoard, typeProjects, validationsNewBoard} from '../../data';
+import { closeModalNewBoard, startSavedBoard } from '../../store';
+import { initialNewBoard, validationsNewBoard} from '../../data';
 import { stylesSelect } from '../../styles';
 
 ReactModal.setAppElement("#root");
@@ -11,23 +12,28 @@ export const ModalNewBoard = () => {
 
   const { modalNewBoard } = useUi();
   const { loading, projects, activeProject, dispatch } = useProject();
-  const projectOptions = projects.map( project => ({ value: project._id, label: project.name}) )
-  console.log(projectOptions)
+  const projectOptions = projects.map( project => ({ value: project._id, label: project.name}) );
+  const defaultOption = projectOptions.find( option => option.value === activeProject?._id );
+  
   const { 
     formState, title, background, project, isFormValid, handleInputChange, handleCustomChange, handleResetForm
   } = useForm( initialNewBoard, validationsNewBoard );
+
+  useEffect(() => {
+    handleCustomChange( 'project',( activeProject?._id || defaultOption?.value) )
+  }, [ title])
 
   const handleSubmit = (e) => {
     e.preventDefault();
     
     if ( !isFormValid ) return;
-    console.log(formState)
-    //dispatch( startSavedProject(formState) )
+    dispatch( startSavedBoard(formState) )
     //handleResetForm();
   }
 
   const handleRequestClose = () => {
-    dispatch( closeModalNewBoard() )
+    dispatch( closeModalNewBoard() );
+
     setTimeout(() => {
       handleResetForm();
     }, 500);
@@ -78,7 +84,7 @@ export const ModalNewBoard = () => {
               styles={ stylesSelect }
               onChange={ ({ value }) => handleCustomChange( 'project', value ) }
               classNamePrefix='select'
-              defaultValue={ projectOptions.find( option => option.value === '6420b758e50338fe00b30f51' )}
+              defaultValue={ ( defaultOption) }
               options={ projectOptions }
             />
 
@@ -112,7 +118,7 @@ export const ModalNewBoard = () => {
             className={`${ isFormValid ? 'bg-[#5FA7F0] text-white hover:bg-blue-500' : 'bg-gray-400 cursor-not-allowed text-gray-300'} rounded-md py-3 font-medium`}
             disabled={ !isFormValid }
           >
-            { loading === 'loading' ? 'Creando proyecto...' : 'Crear proyecto' }
+            { loading === 'loading Saved Board' ? 'Creando proyecto...' : 'Crear proyecto' }
           </button>
         </form>
       </div>

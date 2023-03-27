@@ -41,7 +41,7 @@ export
 const validations = {
   name: [ (value) => value.length > 0, 'El nombre es obligatorio' ],
   lastname: [ (value) => value.length > 0, 'El apellido es obligatorio' ],
-  username: [ (value) => value.length > 0, 'El nombre de usuario es obligatorio' ],
+  username: [ (value) => (/^[^!#$&'()*+,/:;=?@[\]^`{|}~.-]*$/).test(value), 'El nombre de usuario es obligatorio' ],
   email: [ (value) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/).test(value), 'Ingrese un email válido' ],
   password: [ (value) => value.length > 7, 'Ingrese un mínimo de 8 caracteres' ],
   confirmPassword: [ (value, value2) => (value === value2 || value.length > 7), 'Las contraseñas no coinciden']
