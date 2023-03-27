@@ -6,22 +6,9 @@ import { useAuth, useForm } from '../../hooks';
 import { AuthLayout } from '../../layouts';
 import { startRegisterUser } from '../../store';
 
-const initialForm = {
-  name: '',
-  lastname: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
-}
+
 
 export const RegisterPage = () => {
-  const validations = {
-    name: [ (value) => value.length > 0, 'El nombre es obligatorio' ],
-    lastname: [ (value) => value.length > 0, 'El apellido es obligatorio' ],
-    email: [ (value) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/).test(value), 'Ingrese un email válido' ],
-    password: [ (value) => value.length > 7, 'Ingrese un mínimo de 8 caracteres' ],
-    confirmPassword: [ (value, value2) => (value === value2 || value.length > 7), 'Las contraseñas no coinciden']
-  }
 
   const { status, messageAPI, dispatch } = useAuth();
 

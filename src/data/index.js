@@ -29,6 +29,24 @@ export const typeProjects = [
   }
 ]
 
+export const initialRegisterUser = {
+  name: '',
+  lastname: '',
+  username: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+}
+export 
+const validations = {
+  name: [ (value) => value.length > 0, 'El nombre es obligatorio' ],
+  lastname: [ (value) => value.length > 0, 'El apellido es obligatorio' ],
+  username: [ (value) => value.length > 0, 'El nombre de usuario es obligatorio' ],
+  email: [ (value) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/).test(value), 'Ingrese un email válido' ],
+  password: [ (value) => value.length > 7, 'Ingrese un mínimo de 8 caracteres' ],
+  confirmPassword: [ (value, value2) => (value === value2 || value.length > 7), 'Las contraseñas no coinciden']
+}
+
 export const initialNewProject = {
   name: '',
   type: '',
@@ -46,6 +64,13 @@ export const initialNewBoard = {
 }
 export const validationsNewBoard = {
   title: [ (value) => value.length > 0, 'El título es requerido' ],
-  background: [ (value) => value.length > 0, 'El color es requerido' ],
-  project: [ (value) => value.length > 0, 'El proyecto es requerido' ],
+  background: [ (value) => value?.length > 0, 'El color es requerido' ],
+  project: [ (value) => value?.length > 0, 'El proyecto es requerido' ],
+}
+
+export const initialNewCollaborator = {
+  email: '',
+}
+export const validationsNewCollaborator = {
+  email: [ (value) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/).test(value), 'Ingrese un email válido' ],
 }
