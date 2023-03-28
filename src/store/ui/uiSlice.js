@@ -39,10 +39,13 @@ export const uiSlice = createSlice({
 export const { 
   onOpenModalNewProject,
   onCloseModalNewProject,
+
   onOpenModalNewBoard,
   onCloseModalNewBoard,
+
   onOpenModalNewCollaborator,
   onCloseModalNewCollaborator,
+
   ontoggleSideBarUser,
   onDesactiveSideBarUser,
 } = uiSlice.actions;

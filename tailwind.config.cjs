@@ -6,6 +6,7 @@ module.exports = {
   ],
   theme: {
     screens: {
+      'vs': '300px',
       'xs': '410px',
       '3xs': '600px',
       'sm': '640px',
@@ -15,7 +16,11 @@ module.exports = {
       'xl': '1280px',
       '2xl': '1536px',
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        'jakarta': ['"Plus Jakarta Sans"', 'sans-serif']
+      }
+    },
   },
   plugins: [],
 }

@@ -20,7 +20,7 @@ export const SideBarUser = () => {
 
   return (
     <aside
-      className={`absolute ${sideBarUser ? 'left-0 rounded-tr-xl rounded-br-xl' : '-left-full'} transition-[left] bg-[#0A1929] 3xs:bg-inherit 3xs:sticky top-0 text-gray-300 font-medium text-base px-4 pt-6 h-full w-full max-w-[16rem] min-w-[14rem] z-50`}
+      className={`absolute ${sideBarUser ? 'left-0 rounded-tr-xl rounded-br-xl' : '-left-full'} transition-[left] bg-[#0A1929] 3xs:bg-inherit 3xs:sticky top-0 text-gray-300 font-medium text-base px-4 pt-6 h-full w-full max-w-[16rem] min-w-[14rem] z-50 3xs:z-0`}
     >
       <nav className=''>
         <ul className='flex flex-col py-4 gap-2'>
