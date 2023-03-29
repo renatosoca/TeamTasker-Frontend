@@ -15,8 +15,8 @@ export const ProjectsWork = () => {
     <ProjectLayout>
       <HeaderProjectWork />
 
-      <div>
-        <h2 className='text-xl pb-4'>Tableros</h2>
+      <div className='px-2 md:px-6 py-6'>
+        <h2 className='text-2xl pb-4 font-jakarta'>Tus tableros</h2>
 
         {isLoadingProjects
           ?<SkeletonProjectBoards />

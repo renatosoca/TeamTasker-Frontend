@@ -3,14 +3,19 @@ import { Link } from 'react-router-dom';
 import { ButtonAddNewBoard, ListProjectBoard, SkeletonProjectBoards } from '../../../components';
 import { useProject } from '../../../hooks';
 import { ProjectUserLayout } from '../../../layouts';
+import { startActiveProject } from '../../../store';
 
 export const BoardsUserPage = () => {
   
-  const { projects, isLoadingProjects } = useProject();
+  const { projects, isLoadingProjects, dispatch } = useProject();
   
   useEffect(() => {
     document.title = 'Proyectos | TeamTasker';
-  }, [])
+  }, []);
+
+  const handleClickLinks = ( project ) => {
+    dispatch( startActiveProject( project ) )
+  }
   
   return (
     <ProjectUserLayout>
@@ -23,7 +28,7 @@ export const BoardsUserPage = () => {
           { isLoadingProjects
             ? <SkeletonProjectBoards />
             :<>
-              { projects?.map( ({ _id, name, type, collaborators, boards, owner, description }) => (
+              {projects?.map( ({ _id, name, type, collaborators, boards, owner, description }) => (
                 <div key={ _id } className='pb-6'>
                   <div className='flex flex-col md:flex-row md:items-start gap-2 md justify-between pb-4'>
                     <div className='flex items-center gap-2 select-none whitespace-nowrap'>
@@ -68,7 +73,7 @@ export const BoardsUserPage = () => {
                     <ButtonAddNewBoard project={{ _id, name, type, collaborators, boards, owner, description }} />
                   </ul> {/* END BODY PROJECT BOARD */}
                 </div>
-              )) }
+              ))}
             </>
           }
         </div>

@@ -6,12 +6,14 @@ module.exports = {
   ],
   theme: {
     screens: {
-      'vs': '300px',
+      'vs': '310px',
       'xs': '410px',
       '2xs': '510px',
       '3xs': '600px',
       'sm': '640px',
+      '2sm': '710px',
       'md': '768px',
+      '2md': '810px',
       'mp': '900px',
       'lg': '1024px',
       'xl': '1280px',

@@ -38,7 +38,7 @@ export const ModalNewProject = () => {
       isOpen={ modalNewProject }
       onRequestClose={ handleCloseModalNewProject }
       closeTimeoutMS={ 300 }
-      overlayClassName='modal'
+      overlayClassName='modal__project'
       className={`relative max-w-[35rem] mp:max-w-[80rem] w-[95%] bg-[#292F36] text-white rounded-md my-[4rem] mp:my-0 overflow-hidden`}
     >
       <div className='flex flex-col-reverse mp:grid mp:grid-cols-2'>

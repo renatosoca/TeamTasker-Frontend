@@ -4,28 +4,27 @@ import { useAuth } from '../hooks';
 
 export const ProjectLayout = ({ children }) => {
   
-  const { status } = useAuth();
+  const { status, isAuthenticated } = useAuth();
   
   if ( status === 'init' ) return <LoadingPage />;
   
   return (
     <div className='bg-[#0D1117] text-white min-h-screen flex flex-col'>
-      <NavBar />
+      { isAuthenticated
+        ?<>
+          <NavBar />
 
-      { status === 'authenticated'
-        ? ( 
-            <div className='flex-1 flex h-full'>
-              <SideBarWork /> 
-              <main className='flex-1 p-6'>{ children }</main>
-            </div>
-          )
-        : <Navigate to="/auth/login" /> 
+          <div className='flex-1 flex h-full overflow-y-auto'>
+            <SideBarWork /> 
+            <main className='flex-1'>{ children }</main>
+          </div>
+        
+          <ModalNewProject />
+          <ModalNewBoard />
+          <ModalNewCollaborator />
+        </>
+        :<Navigate to="/auth/login" /> 
       }
-      
-      <ModalNewProject />
-      <ModalNewBoard />
-      <ModalNewCollaborator />
-
     </div>
   )
 }

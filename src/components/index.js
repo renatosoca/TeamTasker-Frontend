@@ -1,6 +1,7 @@
 export * from './auth/ConfirmAcc';
 export * from './auth/MessageAPI';
 export * from './auth/UnconfirmAcc';
+export * from './index';
 export * from './project/ButtonAddNewBoard';
 export * from './project/ListProjectBoard';
 export * from './project/ModalNewBoard';
@@ -9,7 +10,6 @@ export * from './project/ModalNewProject';
 export * from './project/NavBar';
 export * from './project/SkeletonListSideBar';
 export * from './project/user/ListSideBar';
-export * from './project/user/ProjectBoardList';
 export * from './project/user/SideBarUser';
 export * from './project/user/SkeletonProjectBoards';
 export * from './project/work/HeaderProjectWork';

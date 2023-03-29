@@ -6,6 +6,7 @@ export const useAuth = () => {
 
   return {
     ...authState,
+    isAuthenticated: authState.status === 'authenticated',
     isLoading: authState.status === 'loading',
 
     dispatch,

@@ -13,7 +13,7 @@ export const SideBarWork = () => {
   }
   
   return (
-    <aside className='bg-[#161B22] max-w-[15rem] w-full border-r-[.1rem] border-[#132F4C] text-gray-400 font-medium text-base'>
+    <aside className='hidden 2sm:block bg-[#161B22] max-w-[15rem] w-full border-r-[.1rem] border-[#132F4C] text-gray-400 font-medium text-base'>
       <nav className=''>
         { isLoadingProjects
           ?<div className='pt-6'>
