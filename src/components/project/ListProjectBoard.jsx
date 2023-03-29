@@ -1,16 +1,14 @@
-import React from 'react'
+import { Link } from 'react-router-dom';
 
 export const ListProjectBoard = ({ board }) => {
-
   const { _id, title, background } = board;
 
   return (
     <li 
-      key={ id } 
       className={`w-[100%] vs:w-[49%] md:w-[32%] mp:w-[23.5%] mb-[2%] h-24 rounded-md hover:bg-[${background}]/40`} 
       style={{ background: `${background}` }}
     >
-      <Link 
+      <Link
         to={`/project/w/${ _id }`} 
         className='block w-full h-full p-2'
       >

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useProject } from '../../../hooks';
 import { openModalNewBoard, startActiveProject } from '../../../store';
+import { ListProjectBoard } from '../ListProjectBoard';
 
 export const ProjectBoardList = ({ projects }) => {
 
@@ -55,16 +56,8 @@ export const ProjectBoardList = ({ projects }) => {
           </div>  {/* END HEADER PROJECT BOARD */}
 
           <ul className='flex gap-[2%] flex-wrap'>
-            { boards.map( ({ _id: id, title, background }) => (
-              <ListProjectBoard />
-              {/* <li key={ id } className={`w-[100%] vs:w-[49%] md:w-[32%] mp:w-[23.5%] mb-[2%] h-24 rounded-md hover:bg-[${background}]/40`} style={{ background: `${background}` }}>
-                <Link 
-                  to={`/project/w/${ _id }/${ id }`} 
-                  className='block w-full h-full p-2'
-                >
-                  <h3 className='font-bold'>{ title }</h3>
-                </Link>
-              </li> */}
+            { boards.map( (board) => (
+              <ListProjectBoard board={ board } />
             )) }
 
             <li className='w-[100%] vs:w-[49%] md:w-[32%] mp:w-[23.5%] mb-[2%] h-24 bg-gray-600 rounded-md'>
