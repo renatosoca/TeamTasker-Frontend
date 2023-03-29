@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { openModalNewBoard, openModalNewProject, toggleSideBarUser } from '../store';
+import { openModalNewBoard, openModalNewProject, toggleSideBarUser, toggleSideBarWork } from '../store';
 import { useAuth, useProject, useUi } from './';
 
 export const useNavBar = () => {
   const { user, dispatch } = useAuth();
-  const { sideBarUser } = useUi();
+  const { sideBarUser, sideBarWork } = useUi();
   const { projects, isLoadingProjects, activeProject } = useProject();
 
   const [ showMenu, setShowMenu ] = useState(false);
@@ -49,6 +49,7 @@ export const useNavBar = () => {
   }
 
   const handleShowSideBarUser = () => dispatch( toggleSideBarUser() );
+  const handleToggleSideBarWork = () => dispatch( toggleSideBarWork() );
 
   const handleToggleMenu = () => setShowMenu(!showMenu);
   const handleClickShowProjects = () => setShowProjects(!showProjects);
@@ -67,6 +68,7 @@ export const useNavBar = () => {
 
     user,
     sideBarUser,
+    sideBarWork,
     projects,
     isLoadingProjects,
     activeProject,
@@ -75,6 +77,7 @@ export const useNavBar = () => {
     handleClickModalProject,
     handleClickModalBoard,
     handleShowSideBarUser,
+    handleToggleSideBarWork,
     handleToggleMenu,
     handleClickShowProjects,
     handleShowUserProfile

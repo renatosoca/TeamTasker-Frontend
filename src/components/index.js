@@ -13,6 +13,7 @@ export * from './project/user/ListSideBar';
 export * from './project/user/SideBarUser';
 export * from './project/user/SkeletonProjectBoards';
 export * from './project/work/HeaderProjectWork';
+export * from './project/work/ListSideBarWork';
 export * from './project/work/SideBarWork';
 export * from './ui/LoadingPage';
 export * from './ui/LoadingSpinner';

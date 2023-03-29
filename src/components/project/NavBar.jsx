@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { CgMenuGridR, CgSearch } from 'react-icons/cg';
+import { CgMenuGridR, CgSearch, CgMenuRight } from 'react-icons/cg';
 import { TiArrowSortedDown } from 'react-icons/ti';
 import { RiAddLine } from 'react-icons/ri';
 
@@ -7,9 +7,9 @@ import { useNavBar } from '../../hooks';
 import { SkeletonListSideBar } from './SkeletonListSideBar';
 import { ListSideBar } from './user/ListSideBar';
 
-export const NavBar = () => {
+export const NavBar = ({ location }) => {
   const { 
-    showMenu, showProjects, showUserProfile, menuOptionsRef, btnMenuOptionsRef, projectsRef, btnProjectsRef, userProfileRef, btnUserProfileRef, user, sideBarUser, projects, isLoadingProjects, lastURL, activeProject, handleClickModalProject, handleClickModalBoard, handleShowSideBarUser, handleToggleMenu, handleClickShowProjects, handleShowUserProfile 
+    showMenu, showProjects, showUserProfile, menuOptionsRef, btnMenuOptionsRef, projectsRef, btnProjectsRef, userProfileRef, btnUserProfileRef, user, sideBarUser, sideBarWork, projects, isLoadingProjects, lastURL, activeProject, handleClickModalProject, handleClickModalBoard, handleShowSideBarUser, handleToggleMenu, handleClickShowProjects, handleShowUserProfile, handleToggleSideBarWork
   } = useNavBar();
 
   return (
@@ -17,13 +17,15 @@ export const NavBar = () => {
       <div className='max-w-[120rem] mx-auto flex items-center justify-between py-2 px-1 md:px-4'>
         <div className='flex gap-2 md:gap-3 items-center justify-center'>
           <div className='flex gap-1 items-center'>
-            <button
-              onClick={ handleShowSideBarUser}
-              className={`text-2xl ${sideBarUser ? 'bg-[#132F4C] 3xs:bg-inherit' : 'bg-inherit'} w-full h-full px-1 py-1 rounded-md hover:bg-[#132F4C] transition-colors 3xs:hidden`}
-              title='Lista de Menu'
-            >
-              <CgMenuGridR />
-            </button>
+            { location === 'user' && (
+              <button
+                onClick={ handleShowSideBarUser}
+                className={`text-2xl ${sideBarUser ? 'bg-[#132F4C] 3xs:bg-inherit' : 'bg-inherit'} w-full h-full px-1 py-1 rounded-md hover:bg-[#132F4C] transition-colors 3xs:hidden border border-[#132F4C]`}
+                title='Lista de Menu'
+              >
+                <CgMenuGridR />
+              </button>
+            )}
 
             <Link
               to={ lastURL }
@@ -99,7 +101,7 @@ export const NavBar = () => {
           </div>  {/* END LIST MENU */}
         </div>  {/* END HEADER-LEFT */}
 
-        <div className='flex gap-1 sm:gap-3 items-center'>
+        <div className='flex gap-2 2sm:gap-4 items-center'>
           <div className='flex items-center sm:hidden'>
             <button
               className='flex items-center justify-center px-[.375rem] py-[.375rem] text-xl rounded-md border-[.1rem] border-[#132F4C] hover:bg-[#132F4C] transition-colors'
@@ -161,6 +163,16 @@ export const NavBar = () => {
               </li> {/* END FOOTER USERPROFILE */}
             </ul>
           </div>  {/* END USERPROFILE */}
+
+          { location === 'work' && (
+            <button
+              onClick={ handleToggleSideBarWork }
+              className={`text-2xl w-full h-full px-1 py-1 rounded-md hover:bg-[#132F4C] ${sideBarWork ? 'bg-[#132F4C]' : 'bg-inherit'} transition-colors 2sm:hidden border border-[#132F4C]`}
+              title='Menu de opciones'
+            >
+              <CgMenuRight />
+            </button>
+          )}
         </div>  {/* END HEADER-RIGHT */}
       </div>
     </header>

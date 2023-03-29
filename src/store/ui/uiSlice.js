@@ -7,6 +7,7 @@ export const uiSlice = createSlice({
     modalNewBoard: false,
     modalNewCollaborator: false,
     sideBarUser: false,
+    sideBarWork: false,
   },
   reducers: {
     onOpenModalNewProject: (state) => {
@@ -33,6 +34,12 @@ export const uiSlice = createSlice({
     onDesactiveSideBarUser: (state) => {
       state.sideBarUser = false;
     },
+    ontoggleSideBarWork: (state) => {
+      state.sideBarWork = !state.sideBarWork;
+    },
+    onDesactiveSideBarWork: (state) => {
+      state.sideBarWork = false;
+    },
   },
 });
 
@@ -48,4 +55,8 @@ export const {
 
   ontoggleSideBarUser,
   onDesactiveSideBarUser,
+
+
+  ontoggleSideBarWork,
+  onDesactiveSideBarWork,
 } = uiSlice.actions;

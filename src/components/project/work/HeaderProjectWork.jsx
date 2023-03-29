@@ -40,7 +40,7 @@ export const HeaderProjectWork = () => {
             <FaUserPlus className='text-xl' />
             <span className='hidden vs:block xs:hidden'>Agregar</span>
             <span className='hidden xs:block 2xs:hidden'>Agregar colaborador</span>
-            <span className='hidden 2xs:block'>Agregar un colaborador al proyecto</span>
+            <span className='hidden 2xs:block text-sm md:text-base'>Agregar un colaborador al proyecto</span>
           </button>
         </div>  {/* END BTN ADD COLLABORATOR */}
       </div>

@@ -18,7 +18,7 @@ export const ProjectUserLayout = ({ children }) => {
     <div className='bg-[#0D1117] text-white flex flex-col overflow-hidden'>
       { isAuthenticated
         ?<>
-          <NavBar />
+          <NavBar location={'user'} />
 
           <div className='relative w-full h-[calc(100vh-3.2rem)] overflow-y-auto flex flex-col justify-start'>
             <div className='flex-1 flex items-center h-full overflow-y-auto'>

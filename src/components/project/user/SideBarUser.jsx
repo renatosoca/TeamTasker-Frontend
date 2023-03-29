@@ -4,7 +4,7 @@ import { GoProject } from 'react-icons/go';
 import { IoMdAdd } from 'react-icons/io';
 
 import { useAuth, useProject, useUi } from '../../../hooks';
-import { openModalNewProject } from '../../../store';
+import { desactiveSideBarUser, openModalNewProject } from '../../../store';
 import { SkeletonListSideBar } from '../SkeletonListSideBar';
 import { ListSideBar } from './ListSideBar';
 
@@ -18,6 +18,10 @@ export const SideBarUser = () => {
     dispatch( openModalNewProject() );
   }
 
+  const handleDesactiveSideBarUSer = () => {
+    dispatch( desactiveSideBarUser() );
+  }
+
   return (
     <aside
       className={`absolute ${sideBarUser ? 'left-0 rounded-tr-xl rounded-br-xl' : '-left-full'} transition-[left] bg-[#0A1929] 3xs:bg-inherit 3xs:sticky top-0 text-gray-300 font-medium text-base px-4 pt-6 h-full w-full max-w-[16rem] min-w-[14rem] z-50 3xs:z-0`}
@@ -25,7 +29,8 @@ export const SideBarUser = () => {
       <nav className=''>
         <ul className='flex flex-col py-4 gap-2'>
           <li>
-            <NavLink 
+            <NavLink
+              onClick={ handleDesactiveSideBarUSer }
               to={`/project/u/${user?.username}`}
               end
               className={ ({isActive}) => `flex items-center gap-2 py-1 px-2 hover:bg-[#132F4C] rounded-md ${ isActive ? ' bg-[#132F4C]/40 text-[#64B5F6]' : ''}`}
@@ -37,6 +42,7 @@ export const SideBarUser = () => {
 
           <li>
             <NavLink 
+              onClick={ handleDesactiveSideBarUSer }
               to={`/project/u/${user?.username}/boards`}
               className={ ({isActive}) => `flex items-center gap-2 py-1 px-2 hover:bg-[#132F4C] rounded-md ${ isActive ? ' bg-[#132F4C]/40 text-[#64B5F6]' : ''}`}
             >
