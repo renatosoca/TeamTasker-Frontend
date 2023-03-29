@@ -11,13 +11,13 @@ export const ListSideBarWork = ({ activeProject }) => {
         >
           <Link
             to={`/project/w/${ project }`}
-            className='flex items-center gap-2 py-1 px-2 hover:bg-[#132F4C] text-white rounded transition-colors overflow-x-hidden'
+            className='flex items-center gap-2 py-1 px-2 hover:bg-[#132F4C] text-white rounded transition-colors'
           >
             <div className={`bg-[${ background }] px-3 py-1 rounded-md`} style={{ backgroundColor: `${background}`}}>
               { title?.charAt(0).toUpperCase() }
             </div>
 
-            <span>{ title }</span>
+            <span className='text-ellipsis whitespace-nowrap overflow-x-hidden'>{ title }</span>
           </Link>
         </li>
       ))}

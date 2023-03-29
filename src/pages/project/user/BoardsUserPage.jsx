@@ -31,13 +31,18 @@ export const BoardsUserPage = () => {
               {projects?.map( ({ _id, name, type, collaborators, boards, owner, description }) => (
                 <div key={ _id } className='pb-6'>
                   <div className='flex flex-col md:flex-row md:items-start gap-2 md justify-between pb-4'>
-                    <div className='flex items-center gap-2 select-none whitespace-nowrap'>
-                      <div className={`bg-[#${ type }] px-3 py-1 rounded-md`} style={{ background: `${type}` }}>{ name?.charAt(0).toUpperCase() }</div>
+                    <div
+                      className='flex items-center gap-2 select-none text-ellipsis whitespace-nowrap overflow-x-hidden max-w-[10rem] min-w-[5rem]'
+                      title={ name }
+                    >
+                      <div className={`bg-[#${ type }] px-3 py-1 rounded-md`} style={{ background: `${type}` }}>
+                        { name?.charAt(0).toUpperCase() }
+                      </div>
 
-                      <span>{ name }</span>
+                      <span className='text-ellipsis whitespace-nowrap overflow-x-hidden'>{ name }</span>
                     </div>  {/* END PROFILE PROJECT */}
 
-                    <div className='flex-1 flex gap-[2%] flex-wrap justify-end'>
+                    <div className='flex-1 flex gap-[2%] flex-wrap justify-start'>
                       <Link
                         onClick={ () => handleClickLinks({ _id, name, type, collaborators, boards, owner, description }) }
                         to={`/project/w/${_id}`}

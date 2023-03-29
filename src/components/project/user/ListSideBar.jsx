@@ -18,12 +18,13 @@ export const ListSideBar = ({ projects, handleClickShowProjects }) => {
             onClick={ () => handleClickActiveProject( project ) }
             to={`/project/w/${ project._id }`}
             className='flex items-center gap-2 py-1 px-2 hover:bg-[#132F4C] rounded transition-colors'
+            title={ project.name }
           >
             <div className={`px-3 py-1 rounded-md`} style={{ background: `${project.type}` }}>
               { project.name?.charAt(0).toUpperCase() }
             </div>
 
-            <span>{ project.name }</span>
+            <span className='text-ellipsis whitespace-nowrap overflow-x-hidden'>{ project.name }</span>
           </Link>
         </li>
       )) }
