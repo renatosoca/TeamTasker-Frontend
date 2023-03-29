@@ -1,22 +1,25 @@
-import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { openModalNewBoard, openModalNewProject, toggleSideBarUser } from "../store";
+import { useEffect, useRef, useState } from 'react';
+import { openModalNewBoard, openModalNewProject, toggleSideBarUser } from '../store';
+import { useAuth, useProject, useUi } from './';
 
 export const useNavBar = () => {
-  const dispatch = useDispatch();
+  const { user, dispatch } = useAuth();
+  const { sideBarUser } = useUi();
+  const { projects, isLoadingProjects, activeProject } = useProject();
 
   const [ showMenu, setShowMenu ] = useState(false);
-  const [ showProjects, setShowProjects ] = useState(false);
-  const [ showUserProfile, setShowUserProfile ] = useState(false);
-
   const menuOptionsRef = useRef(null);
   const btnMenuOptionsRef = useRef(null);
 
+  const [ showProjects, setShowProjects ] = useState(false);
   const projectsRef = useRef(null);
   const btnProjectsRef = useRef(null);
-  
+
+  const [ showUserProfile, setShowUserProfile ] = useState(false);
   const userProfileRef = useRef(null);
   const btnUserProfileRef = useRef(null);
+
+  const lastURL = localStorage.getItem("lastURL") || `/project/u/${ user?.username }`;
 
   useEffect(() => {
     function handleClickHiddenOptions({ target }) {
@@ -61,6 +64,13 @@ export const useNavBar = () => {
     btnProjectsRef,
     userProfileRef,
     btnUserProfileRef,
+
+    user,
+    sideBarUser,
+    projects,
+    isLoadingProjects,
+    activeProject,
+    lastURL,
 
     handleClickModalProject,
     handleClickModalBoard,

@@ -1,4 +1,4 @@
-
+@use '../base/mixins' as m;
 .ReactModalPortal {
   
   > div{
@@ -23,6 +23,14 @@
     }
     &--before-close {
       opacity: 0;
+    }
+  }
+  .modal {
+    overflow-y: auto;
+    display: flex;
+    align-items: flex-start;
+    @include m.mp {
+      align-items: center;
     }
   }
 }

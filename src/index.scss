@@ -1,7 +1,9 @@
-@use './scss/auth/auth';
-@use './scss/ui/spinners';
-@use './scss/global/general';
 @use './scss/base/fonts';
+@use './scss/base/mixins';
+@use './scss/auth/auth';
+
+@use './scss/ui/spinners';
+@use './scss/ui/general';
 
 @use './scss/project/modal';
 @use './scss/project/layoutUser';

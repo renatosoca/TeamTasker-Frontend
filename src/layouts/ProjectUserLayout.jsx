@@ -20,7 +20,7 @@ export const ProjectUserLayout = ({ children }) => {
 
       { status === 'authenticated'
         ? (
-            <div className='relative w-full h-[calc(100vh-3rem)] overflow-y-auto flex flex-col justify-start'>
+            <div className='relative w-full h-[calc(100vh-3.2rem)] overflow-y-auto flex flex-col justify-start'>
               <div className='flex-1 flex items-center h-full overflow-y-auto'>
                 <div className='flex-1 flex justify-center items-start w-full h-full overflow-y-scroll scrollbar'>
                   <SideBarUser /> 

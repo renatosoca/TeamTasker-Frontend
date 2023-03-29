@@ -2,11 +2,12 @@ import { Link } from 'react-router-dom';
 import { useProject } from '../../../hooks';
 import { startActiveProject } from '../../../store';
 
-export const ListSideBar = ({ projects }) => {
+export const ListSideBar = ({ projects, handleClickShowProjects }) => {
   const { dispatch } = useProject();
 
   const handleClickActiveProject = (project) => {
-    dispatch( startActiveProject( project ) )
+    dispatch( startActiveProject( project ) );
+    if ( handleClickShowProjects ) handleClickShowProjects()
   }
 
   return (

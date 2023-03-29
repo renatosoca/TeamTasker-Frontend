@@ -3,16 +3,13 @@ import { CgMenuGridR, CgSearch } from 'react-icons/cg';
 import { TiArrowSortedDown } from 'react-icons/ti';
 import { RiAddLine } from 'react-icons/ri';
 
-import { useAuth, useNavBar, useProject, useUi } from '../../hooks';
+import { useNavBar } from '../../hooks';
 import { SkeletonListSideBar } from './SkeletonListSideBar';
 import { ListSideBar } from './user/ListSideBar';
 
 export const NavBar = () => {
-  const { user } = useAuth();
-  const { sideBarUser } = useUi();
-  const { projects, isLoadingProjects } = useProject();
   const { 
-    showMenu, showProjects, showUserProfile, menuOptionsRef, btnMenuOptionsRef, projectsRef, btnProjectsRef, userProfileRef, btnUserProfileRef, handleClickModalProject, handleClickModalBoard, handleShowSideBarUser, handleToggleMenu, handleClickShowProjects, handleShowUserProfile 
+    showMenu, showProjects, showUserProfile, menuOptionsRef, btnMenuOptionsRef, projectsRef, btnProjectsRef, userProfileRef, btnUserProfileRef, user, sideBarUser, projects, isLoadingProjects, lastURL, activeProject, handleClickModalProject, handleClickModalBoard, handleShowSideBarUser, handleToggleMenu, handleClickShowProjects, handleShowUserProfile 
   } = useNavBar();
 
   return (
@@ -29,16 +26,16 @@ export const NavBar = () => {
             </button>
 
             <Link
-              to={`/project/u/${ user?.username }`}
+              to={ lastURL }
               className='text-lg text-white select-none font-bold pl-1'
             >
               <h1>TeamTasker</h1>
             </Link>
           </div>  {/* END LOGO */}
 
-          <div className='hidden xs:block md:relative'>
+          <div className='hidden xs:block relative'>
             <button
-              onClick={ handleClickShowProjects}
+              onClick={ handleClickShowProjects }
               className={`px-2 py-[.4rem] flex gap-1 items-center text-gray-300 ${showProjects ? 'bg-[#132F4C] border-transparent': 'hover:bg-[#132F4C] border-[#132F4C]'} border-[.1rem] rounded-lg cursor-pointer transition-colors`}
               ref={ btnProjectsRef }
             >
@@ -46,20 +43,29 @@ export const NavBar = () => {
               <TiArrowSortedDown className='text-lg' />
             </button>
 
-            <ul 
-              className={`absolute ${showProjects ? 'opacity-100' : 'pointer-events-none opacity-0'} top-[115%] right-1 min-w-[10rem] max-w-[16rem] w-full border-[.15rem] border-[#132F4C] bg-[#161B22] rounded z-10 py-3 flex flex-col gap-1 transition-[opacity] ease-in-out`}
+            <div
+              className={`absolute max-h-[90vh] ${showProjects ? 'opacity-100' : 'pointer-events-none opacity-0'} top-[135%] left-0 min-w-[15rem] max-w-[17rem] w-full border-[.15rem] border-[#132F4C] bg-[#161B22] rounded z-10 py-3 flex flex-col gap-1 transition-[opacity] ease-in-out overflow-y-auto scrollbar`}
               ref={ projectsRef }
             >
-              <small className='pb-2 pl-2 select-none'>Tus Projectos</small>
-    
-              { isLoadingProjects
-                ?<SkeletonListSideBar />
-                :<ListSideBar projects={ projects } />
-              }
-            </ul>
+              { activeProject._id && (
+                <ul>
+                  <li className='pb-2 pl-2 select-none text-sm'>Tu proyecto actual</li>
+                  <ListSideBar projects={[activeProject]} handleClickShowProjects={ handleClickShowProjects } />
+                </ul>
+              )}
+
+              <ul>
+                <li className='pb-2 pl-2 select-none text-sm'>Tus Projectos</li>
+      
+                { isLoadingProjects
+                  ?<SkeletonListSideBar />
+                  :<ListSideBar projects={ projects } handleClickShowProjects={ handleClickShowProjects } />
+                }
+              </ul>
+            </div>
           </div>  {/* END LIST PROJECTS */}
 
-          <div className='md:relative'>
+          <div className='2xs:relative'>
             <button
               onClick={ handleToggleMenu }
               className={` px-2 md:px-4 py-[.4rem] md:py-1 font-bold ${showMenu ? 'bg-[#0d47a1]/60 text-white' : 'bg-[#0d47a1]/30 text-[#64B5F6]'} hover:bg-[#0d47a1]/60 hover:text-white transition-colors border-[.1rem] border-[#132F4C] rounded-md`}
@@ -71,7 +77,7 @@ export const NavBar = () => {
             </button>
 
             <div
-              className={`absolute py-3 ${showMenu ? 'opacity-100' : 'pointer-events-none opacity-0'} max-w-[18rem] min-w-[12rem] w-full border-[.15rem] border-[#132F4C] right-1 top-[115%] bg-[#161B22] z-10 rounded-md transition-[opacity] ease-in-out`}
+              className={`absolute py-3 ${showMenu ? 'opacity-100' : 'pointer-events-none opacity-0'} min-w-[15rem] w-full max-w-[18rem] border-[.15rem] border-[#132F4C] right-1 2xs:left-0 top-[115%] 2xs:top-[135%] bg-[#161B22] z-10 rounded-md transition-[opacity] ease-in-out`}
               ref={ menuOptionsRef }
             >
               <button
@@ -110,7 +116,7 @@ export const NavBar = () => {
             />
           </form>
 
-          <div>
+          <div className='relative'>
             <button
               onClick={ handleShowUserProfile }
               className={`rounded-full font-bold ${showUserProfile ? 'bg-[#0d47a1]/60' : 'bg-[#0d47a1]/30'} hover:bg-[#0d47a1]/60 border-[.15rem] border-[#132F4C] w-8 h-8 flex items-center justify-center`}
@@ -120,7 +126,7 @@ export const NavBar = () => {
             </button>
 
             <ul 
-              className={`absolute ${showUserProfile ? 'opacity-100' : 'pointer-events-none opacity-0'} max-w-[14rem] min-w-[12rem] w-full border-[.15rem] border-[#132F4C] right-1 top-[115%] bg-[#161B22] z-10 rounded-md transition-[opacity] ease-in-out`}
+              className={`absolute ${showUserProfile ? 'opacity-100' : 'pointer-events-none opacity-0'} max-w-[14rem] min-w-[12rem] w-full border-[.15rem] border-[#132F4C] right-0 top-[145%] bg-[#161B22] z-10 rounded-md transition-[opacity] ease-in-out`}
               ref={ userProfileRef }
             >
               <li className='border-b-2 border-gray-500'>

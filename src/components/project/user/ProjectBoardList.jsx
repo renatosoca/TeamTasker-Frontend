@@ -24,7 +24,7 @@ export const ProjectBoardList = ({ projects }) => {
               <div className={`bg-[#${ type }] px-3 py-1 rounded-md`} style={{ background: `${type}` }}>{ name?.charAt(0).toUpperCase() }</div>
 
               <span>{ name }</span>
-            </div>
+            </div>  {/* END PROFILE PROJECT */}
 
             <div className='flex-1 flex gap-[2%] flex-wrap justify-end'>
               <Link
@@ -44,22 +44,27 @@ export const ProjectBoardList = ({ projects }) => {
                 <span>{` (${(collaborators?.length) + 1 })`}</span>
               </Link>
 
-              {/* PRueba */}
-              
-              {/* Fin prueba */}
-            </div>
-          </div>
+              <Link
+                onClick={ () => handleClickLinks({ _id, name, type, collaborators, boards, owner, description })}
+                to={`/project/w/${_id}/settings`}
+                className='w-[100%] xs:w-[49%] mp:w-min mb-[2%] bg-[#161B22] px-4 py-1 rounded whitespace-nowrap hover:bg-[#132F4C] transition-colors'
+              >
+                Configuración
+              </Link>
+            </div>  {/* END LINKS PROJECT */}
+          </div>  {/* END HEADER PROJECT BOARD */}
 
           <ul className='flex gap-[2%] flex-wrap'>
             { boards.map( ({ _id: id, title, background }) => (
-              <li className={`w-[100%] vs:w-[49%] md:w-[32%] mp:w-[23.5%] mb-[2%] h-24 rounded-md hover:bg-[${background}]/40`} key={ id } style={{ background: `${background}` }}>
+              <ListProjectBoard />
+              {/* <li key={ id } className={`w-[100%] vs:w-[49%] md:w-[32%] mp:w-[23.5%] mb-[2%] h-24 rounded-md hover:bg-[${background}]/40`} style={{ background: `${background}` }}>
                 <Link 
                   to={`/project/w/${ _id }/${ id }`} 
                   className='block w-full h-full p-2'
                 >
                   <h3 className='font-bold'>{ title }</h3>
                 </Link>
-              </li>
+              </li> */}
             )) }
 
             <li className='w-[100%] vs:w-[49%] md:w-[32%] mp:w-[23.5%] mb-[2%] h-24 bg-gray-600 rounded-md'>
@@ -70,7 +75,7 @@ export const ProjectBoardList = ({ projects }) => {
                 Crear un tablero
               </button>
             </li>
-          </ul>
+          </ul> {/* END BODY PROJECT BOARD */}
         </div>
       )) }
     </>

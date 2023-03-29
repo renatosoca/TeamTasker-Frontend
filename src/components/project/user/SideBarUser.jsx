@@ -11,7 +11,7 @@ import { ListSideBar } from './ListSideBar';
 export const SideBarUser = () => {
   
   const { user } = useAuth();
-  const { projects, loading, dispatch } = useProject();
+  const { projects, isLoadingProjects, dispatch } = useProject();
   const { sideBarUser } = useUi();
 
   const handleClickModalNewProject = () => {
@@ -46,23 +46,25 @@ export const SideBarUser = () => {
           </li>
         </ul>
 
-        <ul className='flex flex-col gap-1'>
-          <div className='flex justify-between items-center pb-3'>
-            <small className='select-none'>Projectos</small>
-            <button
-              className='w-7 h-7 rounded-md flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#132F4C] text-xl transition-colors'
-              title='Crear Proyecto'
-              onClick={ handleClickModalNewProject }
-            >
-              <IoMdAdd />
-            </button>
-          </div>
+        <div className='flex justify-between items-center pb-3'>
+          <small className='select-none'>Projectos</small>
+          <button
+            className='w-7 h-7 rounded-md flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#132F4C] text-xl transition-colors'
+            title='Crear Proyecto'
+            onClick={ handleClickModalNewProject }
+          >
+            <IoMdAdd />
+          </button>
+        </div>
 
-          { loading === 'loading'
-            ?( <SkeletonListSideBar /> )
-            :<ListSideBar projects={ projects } />
-          }
-        </ul>
+        <div className=''>
+          <ul className='flex flex-col gap-1 overflow-y-auto max-h-[calc(100vh-13.7rem)] pb-4 scrollbar'>
+            { isLoadingProjects
+              ?( <SkeletonListSideBar /> )
+              :<ListSideBar projects={ projects } />
+            }
+          </ul>
+        </div>
       </nav>
     </aside>
   )

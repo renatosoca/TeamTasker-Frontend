@@ -2,6 +2,7 @@ export * from './auth/ConfirmAcc';
 export * from './auth/MessageAPI';
 export * from './auth/UnconfirmAcc';
 export * from './project/ButtonAddNewBoard';
+export * from './project/ListProjectBoard';
 export * from './project/ModalNewBoard';
 export * from './project/ModalNewCollaborator';
 export * from './project/ModalNewProject';

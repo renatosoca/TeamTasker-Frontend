@@ -6,7 +6,7 @@ import { SkeletonListSideBar } from '../SkeletonListSideBar';
 
 export const SideBarWork = () => {
 
-  const { activeProject, loading, dispatch } = useProject();
+  const { activeProject, isLoadingProjects, dispatch } = useProject();
 
   const handleClickModalNewBoard = () => {
     dispatch( openModalNewBoard() );
@@ -15,26 +15,25 @@ export const SideBarWork = () => {
   return (
     <aside className='bg-[#161B22] max-w-[15rem] w-full border-r-[.1rem] border-[#132F4C] text-gray-400 font-medium text-base'>
       <nav className=''>
-        <Link 
-          to={`/project/w/${ activeProject?._id }`} 
-          className='flex items-center gap-3 p-4 border-b-[.1rem] border-[#132F4C]'
-        >
-          <div className='py-2 px-4 rounded-md text-white' style={{ backgroundColor: `${activeProject?.type}`}}>
-            { activeProject?.name.charAt(0).toUpperCase() }
-          </div>
-
-          <div>
-            <h2 className='text-white'>{ activeProject?.name }</h2>
-
-            <small className='text-gray-400'>Gratuito</small>
-          </div>
-        </Link>
-
-        { loading === 'loading'
+        { isLoadingProjects
           ?<div className='pt-6'>
               <SkeletonListSideBar />
           </div>
           :<>
+            <Link 
+              to={`/project/w/${ activeProject?._id }`} 
+              className='flex items-center gap-3 p-4 border-b-[.1rem] border-[#132F4C]'
+            >
+              <div className='py-2 px-4 rounded-md text-white' style={{ backgroundColor: `${activeProject?.type}`}}>
+                { activeProject?.name.charAt(0).toUpperCase() }
+              </div>
+    
+              <div>
+                <h2 className='text-white'>{ activeProject?.name }</h2>
+                <small className='text-gray-400'>Gratuito</small>
+              </div>
+            </Link>
+
             <ul className='flex flex-col py-4 gap-2 px-1'>
               <li className={`relative px-3`}>
                 <NavLink 
@@ -52,6 +51,15 @@ export const SideBarWork = () => {
                   className={ ({isActive}) => `block py-1 px-2 hover:bg-[#132F4C] rounded-md before:content[""] before:absolute before:top-0 before:left-0 before:bg-blue-500 ${ isActive ? 'before:w-1 before:h-full text-[#64B5F6] hover:text-[#64B5F6]' : 'hover:text-white'}`}
                 >
                   Colaboradores
+                </NavLink>
+              </li>
+
+              <li className={`relative px-3`}>
+                <NavLink 
+                  to={`/project/w/${ activeProject?._id }/settings`}
+                  className={ ({isActive}) => `block py-1 px-2 hover:bg-[#132F4C] rounded-md before:content[""] before:absolute before:top-0 before:left-0 before:bg-blue-500 ${ isActive ? 'before:w-1 before:h-full text-[#64B5F6] hover:text-[#64B5F6]' : 'hover:text-white'}`}
+                >
+                  Configuración
                 </NavLink>
               </li>
             </ul>

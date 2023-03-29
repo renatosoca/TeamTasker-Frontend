@@ -5,11 +5,11 @@ import { ProjectLayout } from '../../../layouts';
 
 export const ProjectsWork = () => {
 
-  const { activeProject, loading } = useProject();
+  const { activeProject, isLoadingProjects } = useProject();
   
   useEffect(() => {
-    document.title = 'Proyecto 1 | TeamTasker'
-  }, [])
+    document.title =`${activeProject?.name} | TeamTasker`
+  }, [activeProject]);
   
   return (
     <ProjectLayout>
@@ -19,8 +19,7 @@ export const ProjectsWork = () => {
         <h2 className='text-xl pb-4'>Tableros</h2>
 
         <ul className='flex gap-x-[2%] flex-wrap w-full'>
-
-          { loading === 'loading' ? 
+          { isLoadingProjects ? 
             <SkeletonProjectBoards /> :
             <>
               {activeProject?.boards.map( ({ _id, title, background }) => (
@@ -32,7 +31,6 @@ export const ProjectsWork = () => {
               <ButtonAddNewBoard />
             </>
           }
-          
         </ul>
       </div>
     </ProjectLayout>
