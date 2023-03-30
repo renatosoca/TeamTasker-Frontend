@@ -15,14 +15,14 @@ export const projectSlice = createSlice({
         owner: {},
       }
     ],
-    project: undefined,
+    users: [],
     activeProject: {
       _id: '',
       name: '',
       description: '',
       type: '',
       boards: [{ _id: '', title: '', background: '', project: '', tasks: [] }],
-      colaborators: [],
+      collaborators: [],
       owner: {},
     },
   },
@@ -50,8 +50,23 @@ export const projectSlice = createSlice({
         return ( _id === payload.project ) ? { ...project, boards: [ ...boards, payload ] } : project;
       } );
       state.activeProject.boards.push( payload );
+    },
+    onAddUsersSerach: ( state, { payload } ) => {
+      state.users = [ ...payload ];
+      state.loading = 'success';
+    },
+    onResetUsersSearch: ( state ) => {
+      state.users = [];
     }
   },
 });
 
-export const { onLoading, onLoadingProjects, onActiveProject, onAddProject, onAddBoard } = projectSlice.actions;
+export const { 
+  onLoading, 
+  onLoadingProjects, 
+  onActiveProject, 
+  onAddProject, 
+  onAddBoard, 
+  onAddUsersSerach, 
+  onResetUsersSearch,
+} = projectSlice.actions;

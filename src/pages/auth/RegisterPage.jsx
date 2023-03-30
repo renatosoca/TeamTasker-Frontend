@@ -26,8 +26,6 @@ export const RegisterPage = () => {
     if ( !isFormValid ) return;
     dispatch( startRegisterUser( formState ));
     setIsFormSubmitted( false );
-    handleResetForm();
-    nameRef.current.focus();
   }
 
   return (
@@ -37,18 +35,17 @@ export const RegisterPage = () => {
       </div>
 
       <div className="flex items-center justify-center bg-black text-white">
-        <div className=" p-4 max-w-lg w-full">
-          <div>
+        <div className="p-4 max-w-lg w-full">
+          <div className='relative'>
             <h1 className="text-4xl uppercase -skew-x-12 font-bold text-center max-w-[15rem] mx-auto select-none">Únete a TeamTasker</h1>
             <p className='pt-6'>Casi listo. Para terminar de crear tu cuenta, completa los datos que faltan a continuación.</p>
+            { !!messageAPI?.msg && <MessageAPI /> }
           </div>
 
           <form
             onSubmit={ handleSubmit }
-            className="relative leading-none flex flex-col gap-6 py-10"
+            className="leading-none flex flex-col gap-6 py-10"
           >
-            { !!messageAPI?.msg && <MessageAPI /> }
-
             <div className='flex gap-6'>
               <div className="w-full">
                 <div className={`form__group ${(isFormSubmitted && nameValid) ? 'form__group-error border-red-400 text-red-400 hover:border-red-500 after:bg-red-400' : 'border-gray-400 text-gray-600 hover:border-white after:bg-[#5FA7F0]'} relative w-full border-b-[.15rem] after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 focus-within:after:scale-100 after:transition-all after:duration-300 ease-in`} >

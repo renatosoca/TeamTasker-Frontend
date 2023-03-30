@@ -8,6 +8,7 @@ export const useProject = () => {
     ...stateProject,
     isLoadingProjects: stateProject.loading === 'loading',
     isLoadingSaveProject: stateProject.loading === 'loading Saved Project',
+    isLoadingSearchUsers: stateProject.loading === 'loading Search Users',
 
     dispatch,
   }

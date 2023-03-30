@@ -12,3 +12,17 @@
     border-radius: 1rem;
   }
 }
+
+.webkitBox {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+
+  &__2 {
+    -webkit-line-clamp: 2;
+  }
+  &__3 {
+    -webkit-line-clamp: 3;
+  }
+}

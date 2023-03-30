@@ -30,23 +30,23 @@ export const BoardsUserPage = () => {
             :<>
               {projects?.map( ({ _id, name, type, collaborators, boards, owner, description }) => (
                 <div key={ _id } className='pb-6'>
-                  <div className='flex flex-col md:flex-row md:items-start gap-2 md justify-between pb-4'>
+                  <div className='flex flex-col mp:flex-row md:items-start gap-2 md justify-between pb-4'>
                     <div
-                      className='flex items-center gap-2 select-none text-ellipsis whitespace-nowrap overflow-x-hidden max-w-[10rem] min-w-[5rem]'
+                      className='flex items-center w-full gap-2 select-none overflow-x-hidden pr-4'
                       title={ name }
                     >
                       <div className={`bg-[#${ type }] px-3 py-1 rounded-md`} style={{ background: `${type}` }}>
                         { name?.charAt(0).toUpperCase() }
                       </div>
 
-                      <span className='text-ellipsis whitespace-nowrap overflow-x-hidden'>{ name }</span>
+                      <span className='webkitBox'>{ name }</span>
                     </div>  {/* END PROFILE PROJECT */}
 
-                    <div className='flex-1 flex gap-[2%] flex-wrap justify-start'>
+                    <div className='flex w-full gap-[2%] flex-wrap mp:flex-nowrap justify-start mp:justify-end'>
                       <Link
                         onClick={ () => handleClickLinks({ _id, name, type, collaborators, boards, owner, description }) }
                         to={`/project/w/${_id}`}
-                        className='w-[100%] xs:w-[49%] mp:w-min mb-[2%] bg-[#161B22] px-4 py-1 rounded whitespace-nowrap hover:bg-[#132F4C] transition-colors'
+                        className='w-[100%] xs:w-[49%] md:w-[32%] mp:w-min mb-[2%] bg-[#161B22] px-4 py-1 rounded whitespace-nowrap hover:bg-[#132F4C] transition-colors'
                       >
                         Tableros
                       </Link>
@@ -54,16 +54,16 @@ export const BoardsUserPage = () => {
                       <Link
                         onClick={ () => handleClickLinks({ _id, name, type, collaborators, boards, owner, description })}
                         to={`/project/w/${_id}/collaborators`}
-                        className='w-[100%] xs:w-[49%] mp:w-min mb-[2%] bg-[#161B22] px-4 py-1 rounded whitespace-nowrap hover:bg-[#132F4C] transition-colors'
+                        className='w-[100%] xs:w-[49%] md:w-[32%] mp:w-min mb-[2%] bg-[#161B22] px-4 py-1 rounded whitespace-nowrap hover:bg-[#132F4C] transition-colors'
                       >
                         Colaboradores
-                        <span>{` (${(collaborators?.length) + 1 })`}</span>
+                        <span>{` (${ collaborators?.length })`}</span>
                       </Link>
 
                       <Link
                         onClick={ () => handleClickLinks({ _id, name, type, collaborators, boards, owner, description })}
                         to={`/project/w/${_id}/settings`}
-                        className='w-[100%] xs:w-[49%] mp:w-min mb-[2%] bg-[#161B22] px-4 py-1 rounded whitespace-nowrap hover:bg-[#132F4C] transition-colors'
+                        className='w-[100%] xs:w-[49%] md:w-[32%] mp:w-min mb-[2%] bg-[#161B22] px-4 py-1 rounded whitespace-nowrap hover:bg-[#132F4C] transition-colors'
                       >
                         Configuración
                       </Link>

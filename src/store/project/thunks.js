@@ -1,6 +1,6 @@
 import { teamTaskeAPI } from "../../api";
 import { onCloseModalNewBoard, onCloseModalNewProject } from "../ui/uiSlice";
-import { onActiveProject, onAddBoard, onAddProject, onLoading, onLoadingProjects } from "./projectSlice";
+import { onActiveProject, onAddBoard, onAddProject, onAddUsersSerach, onLoading, onLoadingProjects, onResetUsersSearch } from "./projectSlice";
 
 export const startLoadingProjects = () => {
   return async (dispatch) => {
@@ -34,7 +34,7 @@ export const startSavedProject = ({ name, type, description }) => {
 export const startLoadingProject = (id) => {
   return async (dispatch) => {
     try {
-      dispatch( onLoading('loading Project') );
+      dispatch( onLoading('loading') );
 
       const { data } = await teamTaskeAPI.get( `/project/${id}`);
       dispatch( onActiveProject( data.project ) );
@@ -60,6 +60,50 @@ export const startSavedBoard = ( project ) => {
       console.log(data)
       dispatch( onAddBoard( data.board ) );
       dispatch( onCloseModalNewBoard() );
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
+export const startSearchUsers = ( username ) => {
+  return async (dispatch) => {
+    try {
+      dispatch( onLoading('loading Search Users') );
+      dispatch( onResetUsersSearch() );
+      const { data } = await teamTaskeAPI.post( `/project/search-collaborator`, username );
+      dispatch( onAddUsersSerach( data.users ))
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+export const startAddCollaborator = ({ _id }) => {
+  return async (dispatch, getState) => {
+    const { activeProject } = getState().project;
+
+    try {
+      dispatch( onLoading('loading Add Collaborator') );
+
+      const { data } = await teamTaskeAPI.post( `/project/add-collaborator/${activeProject._id}`, { collaboratorId: _id } );
+      dispatch( onActiveProject( data.project ) );
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+export const startDeleteCollaborator = ({ _id }) => {
+  return async (dispatch, getState) => {
+    const { activeProject } = getState().project;
+
+    try {
+      dispatch( onLoading('loading Delete Collaborator') );
+
+      const { data } = await teamTaskeAPI.post( `/project/delete-collaborator/${activeProject._id}`, { collaboratorId: _id } );
+      dispatch( onActiveProject( data.project ) );
 
     } catch (error) {
       console.log(error);

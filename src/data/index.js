@@ -91,8 +91,8 @@ export const validationsNewBoard = {
 }
 
 export const initialNewCollaborator = {
-  email: '',
+  username: '',
 }
 export const validationsNewCollaborator = {
-  email: [ (value) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/).test(value), 'Ingrese un email válido' ],
+  username: [ (value) => value.length > 2, 'Ingrese 3 carcateres' ],
 }
