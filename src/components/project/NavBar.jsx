@@ -49,7 +49,7 @@ export const NavBar = ({ location }) => {
               className={`absolute max-h-[90vh] ${showProjects ? 'opacity-100' : 'pointer-events-none opacity-0'} top-[135%] left-0 min-w-[15rem] max-w-[17rem] w-full border-[.15rem] border-[#132F4C] bg-[#161B22] rounded z-10 py-3 flex flex-col gap-1 transition-[opacity] ease-in-out overflow-y-auto scrollbar`}
               ref={ projectsRef }
             >
-              { activeProject._id && (
+              { activeProject?._id && (
                 <ul>
                   <li className='pb-2 pl-2 select-none text-sm'>Tu proyecto actual</li>
                   <ListSideBar projects={[activeProject]} handleClickShowProjects={ handleClickShowProjects } />

@@ -3,9 +3,9 @@ import Select from 'react-select';
 import { CgClose } from 'react-icons/cg';
 import { useForm, useProject, useUi } from '../../hooks';
 import { closeModalNewProject, startSavedProject } from '../../store';
-import { initialNewProject, typeProjects, validationsNewProject } from '../../data';
-import { stylesSelect } from '../../styles';
-import { LoadingSpinner } from '../ui/LoadingSpinner';
+import { initialNewProject, typeProjects, validationsNewProject } from '../../data/data';
+import { stylesSelect } from '../../styles/stylesSelects';
+import { LoadingSpinner } from './LoadingSpinner';
 
 ReactModal.setAppElement("#root");
 
@@ -129,7 +129,7 @@ export const ModalNewProject = () => {
         
         <button
           onClick={ handleCloseModalNewProject }
-          className='absolute top-4 right-4 text-3xl text-gray-600 border border-gray-400 rounded-full p-1 hover:text-black hover:bg-gray-200 transition-colors'
+          className='absolute top-4 right-4 text-3xl text-gray-500 rounded-full p-1 hover:text-black transition-colors'
         >
           <CgClose />
         </button>

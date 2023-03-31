@@ -72,7 +72,11 @@ export const BoardsUserPage = () => {
 
                   <ul className='flex gap-[2%] flex-wrap'>
                     { boards.map( (board) => (
-                      <ListProjectBoard key={board._id} board={ board } />
+                      <ListProjectBoard 
+                        key={board._id} 
+                        board={ board } 
+                        project={{ _id, name, type, collaborators, boards, owner, description }} 
+                      />
                     )) }
 
                     <ButtonAddNewBoard project={{ _id, name, type, collaborators, boards, owner, description }} />

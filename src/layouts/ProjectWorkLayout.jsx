@@ -1,11 +1,12 @@
 import { Navigate } from 'react-router-dom';
 import { LoadingPage, ModalNewBoard, ModalNewCollaborator, ModalNewProject, NavBar, SideBarWork } from '../components';
-import { useAuth, useUi } from '../hooks';
+import { useAuth, useProject, useUi } from '../hooks';
 import { desactiveSideBarWork } from '../store';
 
 export const ProjectLayout = ({ children }) => {
-  const { sideBarWork } = useUi();
   const { status, isAuthenticated, dispatch } = useAuth();
+  const { activeBoard }= useProject();
+  const { sideBarWork } = useUi();
 
   const handleDesactiveSideBarWork = () => {
     dispatch( desactiveSideBarWork() );
@@ -20,8 +21,18 @@ export const ProjectLayout = ({ children }) => {
           <NavBar location={'work'} />
 
           <div className='relative w-full h-[calc(100vh-3.2rem)] overflow-y-auto flex flex-col justify-start overflow-x-hidden'>
-            <div className='flex-1 flex items-center h-full overflow-y-auto'>
-              <div className='flex-1 flex justify-center items-start w-full h-full overflow-y-scroll scrollbar'>
+            <div
+              className='flex-1 flex items-center h-full overflow-y-auto'
+            >
+              <div className='flex-1 flex justify-center items-start w-full h-full overflow-y-scroll scrollbar'
+                style={{ 
+                  backgroundColor: `${activeBoard?.background.includes('#') ? activeBoard?.background : ''}`,
+                  backgroundImage: `${activeBoard?.background.includes('https') ? `url(${activeBoard?.background}`: ''}`,
+                  backgroundSize: 'cover',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'center',
+                }}
+              >
                 <SideBarWork /> 
                 <main className='flex-1'>{ children }</main>
                 <span 

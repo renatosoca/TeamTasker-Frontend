@@ -13,22 +13,31 @@ export const ProjectsWork = () => {
   
   return (
     <ProjectLayout>
-      <HeaderProjectWork />
+      {activeProject._id ?
+        <>
+          <HeaderProjectWork />
 
-      <div className='px-2 md:px-6 py-6'>
-        <h2 className='text-2xl pb-4 font-jakarta'>Tus tableros</h2>
+          <div className='px-2 md:px-6 py-6'>
+            <h2 className='text-2xl pb-4 font-jakarta'>Tus tableros</h2>
 
-        {isLoadingProjects
-          ?<SkeletonProjectBoards />
-          :<ul className='flex gap-[2%] flex-wrap w-full'>
-            {activeProject?.boards.map( (board) => (
-              <ListProjectBoard key={ board._id } board={ board } />
-            )) }
+            {isLoadingProjects
+              ?<SkeletonProjectBoards />
+              :<ul className='flex gap-[2%] flex-wrap w-full'>
+                {activeProject?.boards.map( (board) => (
+                  <ListProjectBoard 
+                    key={ board._id } 
+                    board={ board } 
+                    project={ activeProject } 
+                  />
+                )) }
 
-            <ButtonAddNewBoard project={activeProject} />
-          </ul>
-        }
-      </div>
+                <ButtonAddNewBoard project={activeProject} />
+              </ul>
+            }
+          </div>
+        </> :
+        <p>Pagina no encontrada</p>
+      }
     </ProjectLayout>
   )
 }

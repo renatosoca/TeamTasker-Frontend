@@ -1,10 +1,10 @@
+import { useState } from 'react';
 import ReactModal from 'react-modal';
 import { CgClose } from 'react-icons/cg';
 import { useForm, useProject, useUi } from '../../hooks';
 import { closeModalNewCollaborator, startAddCollaborator, startSearchUsers } from '../../store';
-import { initialNewCollaborator, validationsNewCollaborator } from '../../data';
-import { useState } from 'react';
-import { LoadingSpinner } from '../ui/LoadingSpinner';
+import { initialNewCollaborator, validationsNewCollaborator } from '../../data/data';
+import { LoadingSpinner } from './LoadingSpinner';
 
 ReactModal.setAppElement("#root");
 
@@ -89,7 +89,7 @@ export const ModalNewCollaborator = () => {
           {showResultUsers && (
             <div className='absolute top-[110%] w-full bg-[#0D1117] rounded text-white'>
               {isLoadingSearchUsers ?
-                <p className='flex items-center justify-center py-4'><LoadingSpinner title={'Buscando usuario'} /></p> :
+                <p className='flex gap-2 items-center justify-center py-4'><LoadingSpinner title={'Buscando usuario'} /></p> :
                 <>
                   { (users.length >= 1) ? 
                     <>
@@ -129,7 +129,7 @@ export const ModalNewCollaborator = () => {
 
         <button
           onClick={ handleRequestClose }
-          className='absolute top-2 3xs:top-4 right-2 3xs:right-4 px-1 py-1 border rounded-full text-2xl text-gray-400 hover:text-white transition-colors ease-in-out duration-200'
+          className='absolute top-2 3xs:top-4 right-2 3xs:right-4 px-1 py-1 rounded-full text-2xl text-gray-500 hover:text-white transition-colors ease-in-out'
         >
           <CgClose />
         </button>

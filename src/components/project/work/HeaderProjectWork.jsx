@@ -6,7 +6,7 @@ import { openModalNewCollaborator } from '../../../store';
 export const HeaderProjectWork = () => {
 
   const { activeProject, dispatch, isLoadingProjects } = useProject();
-  const firstCaracterProject = activeProject?.name.charAt(0).toUpperCase();
+  const firstCaracterProject = activeProject?.name?.charAt(0).toUpperCase();
 
   const handleClickNewCollaborator = () => {
     dispatch( openModalNewCollaborator() )

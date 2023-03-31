@@ -1,6 +1,6 @@
 import { teamTaskeAPI } from "../../api";
 import { onCloseModalNewBoard, onCloseModalNewProject } from "../ui/uiSlice";
-import { onActiveProject, onAddBoard, onAddProject, onAddUsersSerach, onLoading, onLoadingProjects, onResetUsersSearch } from "./projectSlice";
+import { onActiveBoard, onActiveProject, onAddBoard, onAddProject, onAddUsersSerach, onDeleteProject, onLoading, onLoadingProjects, onResetUsersSearch } from "./projectSlice";
 
 export const startLoadingProjects = () => {
   return async (dispatch) => {
@@ -12,6 +12,19 @@ export const startLoadingProjects = () => {
 
     } catch (error) {
       console.log(error);
+    }
+  }
+}
+export const startLoadingProject = (id) => {
+  return async (dispatch) => {
+    try {
+      dispatch( onLoading('loading') );
+
+      const { data } = await teamTaskeAPI.get( `/project/${id}`);
+      dispatch( onActiveProject( data.project ) );
+
+    } catch (error) {
+      console.log(error)
     }
   }
 }
@@ -30,17 +43,18 @@ export const startSavedProject = ({ name, type, description }) => {
     }
   }
 }
-
-export const startLoadingProject = (id) => {
-  return async (dispatch) => {
+export const startDeleteProject = () => {
+  return async (dispatch, getState) => {
     try {
-      dispatch( onLoading('loading') );
+      dispatch( onLoading('loading Delete Project') );
+      const { activeProject } = getState().project;
 
-      const { data } = await teamTaskeAPI.get( `/project/${id}`);
-      dispatch( onActiveProject( data.project ) );
+      await teamTaskeAPI.delete( `/project/${activeProject._id}`);
+      dispatch( onDeleteProject( activeProject._id ) );
+      dispatch( onActiveProject({}) )
 
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 }
@@ -57,7 +71,6 @@ export const startSavedBoard = ( project ) => {
       dispatch( onLoading('loading Saved Board') );
 
       const { data } = await teamTaskeAPI.post( `/board`, project );
-      console.log(data)
       dispatch( onAddBoard( data.board ) );
       dispatch( onCloseModalNewBoard() );
 
@@ -108,5 +121,11 @@ export const startDeleteCollaborator = ({ _id }) => {
     } catch (error) {
       console.log(error);
     }
+  }
+}
+
+export const startActiveboard = (board) => {
+  return async (dispatch) => {
+    dispatch( onActiveBoard( board ));
   }
 }

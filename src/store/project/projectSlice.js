@@ -25,6 +25,7 @@ export const projectSlice = createSlice({
       collaborators: [],
       owner: {},
     },
+    activeBoard: { _id: '', title: '', background: '', project: '', tasks: [] },
   },
   reducers: {
     onLoading: ( state, { payload } ) => {
@@ -42,14 +43,14 @@ export const projectSlice = createSlice({
       state.loading = 'success Add';
       state.projects.unshift( payload );
     },
+    onDeleteProject: ( state, { payload } ) => {
+      state.loading = 'success';
+      state.projects = state.projects.filter( (project) => project._id !== payload );
+    },
     onAddBoard: ( state, { payload } ) => {
       state.loading = 'success Add';
-      state.projects = state.projects.map( (project) => {
-        const { _id, boards } = project;
-
-        return ( _id === payload.project ) ? { ...project, boards: [ ...boards, payload ] } : project;
-      } );
-      state.activeProject.boards.push( payload );
+      state.projects = state.projects.map( (project) => (project._id === payload.project) ? {...project, boards: [...project.boards, payload]} : project );
+      if ( payload.project === state.activeProject?._id ) state.activeProject.boards.push( payload );
     },
     onAddUsersSerach: ( state, { payload } ) => {
       state.users = [ ...payload ];
@@ -57,6 +58,10 @@ export const projectSlice = createSlice({
     },
     onResetUsersSearch: ( state ) => {
       state.users = [];
+    },
+    onActiveBoard: ( state, { payload } ) => {
+      state.loading = 'success';
+      state.activeBoard = payload;
     }
   },
 });
@@ -65,8 +70,10 @@ export const {
   onLoading, 
   onLoadingProjects, 
   onActiveProject, 
-  onAddProject, 
+  onAddProject,
+  onDeleteProject,
   onAddBoard, 
   onAddUsersSerach, 
   onResetUsersSearch,
+  onActiveBoard,
 } = projectSlice.actions;
