@@ -5,20 +5,20 @@ import { CollaboratorsPage, ProjectsWork, SettingsPage } from '../pages';
 import { startLoadingProject } from '../store';
 
 export const ProjectWork = () => {
-  
-  const { ['*']: hola } = useParams();
+  const {['*']: param}= useParams();
   const { dispatch, activeProject } = useProject();
-  const id = hola.split('/')[0];
+  
+  const projectId = param.split('/')[0];
 
   useEffect(() => {
-    if ( !activeProject._id ) dispatch( startLoadingProject( id ) );
+    if ( !activeProject._id ) dispatch( startLoadingProject( projectId ) );
   }, []);
 
   return (
     <Routes>
-      <Route path='/:id' element={ <ProjectsWork />} />
-      <Route path='/:id/collaborators' element={ <CollaboratorsPage />} />
-      <Route path='/:id/settings' element={ <SettingsPage />} />
+      <Route path='/:projectId' element={ <ProjectsWork />} />
+      <Route path='/:projectId/collaborators' element={ <CollaboratorsPage />} />
+      <Route path='/:projectId/settings' element={ <SettingsPage />} />
     </Routes>
   )
 }

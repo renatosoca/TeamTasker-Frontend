@@ -18,8 +18,6 @@ export const CollaboratorsPage = () => {
 
   return (
     <ProjectLayout>
-      {activeProject._id ?
-        <>
           <HeaderProjectWork />
 
           <main className=''>
@@ -77,9 +75,6 @@ export const CollaboratorsPage = () => {
               </div>
             </div>
           </main>
-        </> :
-        <p>Pagina no encontrada</p>
-      }
     </ProjectLayout>
   )
 }

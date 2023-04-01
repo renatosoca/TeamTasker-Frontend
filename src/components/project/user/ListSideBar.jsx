@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom';
 import { useProject } from '../../../hooks';
-import { startActiveProject } from '../../../store';
+import { startActiveProject, startDesactiveBoard } from '../../../store';
 
 export const ListSideBar = ({ projects, handleClickShowProjects }) => {
   const { dispatch } = useProject();
 
   const handleClickActiveProject = (project) => {
     dispatch( startActiveProject( project ) );
-    if ( handleClickShowProjects ) handleClickShowProjects()
+    if ( handleClickShowProjects ) handleClickShowProjects();
+    dispatch( startDesactiveBoard() );
   }
 
   return (

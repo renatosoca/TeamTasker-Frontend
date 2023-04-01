@@ -1,7 +1,7 @@
 import { IoMdAdd } from 'react-icons/io';
 import { Link, NavLink } from 'react-router-dom';
 import { useProject, useUi } from '../../../hooks';
-import { desactiveSideBarWork, openModalNewBoard } from '../../../store';
+import { desactiveSideBarWork, openModalNewBoard, startDesactiveBoard } from '../../../store';
 import { SkeletonListSideBar } from '../SkeletonListSideBar';
 import { ListSideBarWork } from './ListSideBarWork';
 
@@ -15,19 +15,19 @@ export const SideBarWork = () => {
 
   const handleDesactiveSideBarWork = () => {
     dispatch( desactiveSideBarWork() );
+    dispatch( startDesactiveBoard() );
   }
   
   return (
     <aside 
       className={`absolute ${sideBarWork ? 'right-0 rounded-tl-xl rounded-bl-xl' : '-right-full'} 2sm:sticky 2sm:top-0 h-full ${ activeBoard?._id ? 'bg-[#161B22]/80 backdrop-blur-3xl' : 'bg-[#161B22]'} max-w-[18rem] 2sm:max-w-[15rem] w-full border-r-[.1rem] border-[#132F4C] text-gray-400 font-medium text-base transition-[right] ease-in-out border-l z-10`}
     >
-      {activeProject._id ?
         <nav className='w-full'>
-          { isLoadingProjects
-            ?<div className='pt-6'>
-                <SkeletonListSideBar />
-            </div>
-            :<>
+          { isLoadingProjects ?
+            <div className='pt-6'>
+              <SkeletonListSideBar />
+            </div>  :
+            <>
               <Link
                 onClick={ handleDesactiveSideBarWork }
                 to={`/project/w/${ activeProject?._id }`} 
@@ -93,9 +93,7 @@ export const SideBarWork = () => {
               </ul>
             </>
           }
-        </nav>  :
-        <p>Sin permisos</p>
-      }
+        </nav>
     </aside>
   )
 }

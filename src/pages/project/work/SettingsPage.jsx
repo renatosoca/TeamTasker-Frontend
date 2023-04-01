@@ -15,11 +15,9 @@ export const SettingsPage = () => {
   const handleDeleteProject = () => {
     dispatch( startDeleteProject() );
   }
-  
+
   return (
     <ProjectLayout>
-      {activeProject._id ?
-        <>
           <HeaderProjectWork />
           <main className="flex justify-center">
             <div className="max-w-3xl w-full py-8 px-6">
@@ -47,9 +45,6 @@ export const SettingsPage = () => {
               </div>
             </div>
           </main>
-        </> :
-        <p>Pagina no encontrada</p>
-      }
     </ProjectLayout>
   )
 }

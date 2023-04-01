@@ -13,8 +13,6 @@ export const ProjectsWork = () => {
   
   return (
     <ProjectLayout>
-      {activeProject._id ?
-        <>
           <HeaderProjectWork />
 
           <div className='px-2 md:px-6 py-6'>
@@ -35,9 +33,6 @@ export const ProjectsWork = () => {
               </ul>
             }
           </div>
-        </> :
-        <p>Pagina no encontrada</p>
-      }
     </ProjectLayout>
   )
 }

@@ -9,7 +9,7 @@ import { ListSideBar } from './user/ListSideBar';
 
 export const NavBar = ({ location }) => {
   const { 
-    showMenu, showProjects, showUserProfile, menuOptionsRef, btnMenuOptionsRef, projectsRef, btnProjectsRef, userProfileRef, btnUserProfileRef, user, sideBarUser, sideBarWork, projects, isLoadingProjects, lastURL, activeProject, handleClickModalProject, handleClickModalBoard, handleShowSideBarUser, handleToggleMenu, handleClickShowProjects, handleShowUserProfile, handleToggleSideBarWork
+    showMenu, showProjects, showUserProfile, menuOptionsRef, btnMenuOptionsRef, projectsRef, btnProjectsRef, userProfileRef, btnUserProfileRef, user, sideBarUser, sideBarWork, projects, isLoadingProjects, lastURL, activeProject, handleClickModalProject, handleClickModalBoard, handleShowSideBarUser, handleToggleMenu, handleClickShowProjects, handleShowUserProfile, handleToggleSideBarWork, handleClickTitleNavBar,
   } = useNavBar();
 
   return (
@@ -28,6 +28,7 @@ export const NavBar = ({ location }) => {
             )}
 
             <Link
+              onClick={ handleClickTitleNavBar }
               to={ lastURL }
               className='text-lg text-white select-none font-bold pl-1'
             >
@@ -52,7 +53,10 @@ export const NavBar = ({ location }) => {
               { activeProject?._id && (
                 <ul>
                   <li className='pb-2 pl-2 select-none text-sm'>Tu proyecto actual</li>
-                  <ListSideBar projects={[activeProject]} handleClickShowProjects={ handleClickShowProjects } />
+                  <ListSideBar 
+                    projects={[activeProject]} 
+                    handleClickShowProjects={ handleClickShowProjects } 
+                  />
                 </ul>
               )}
 
@@ -61,7 +65,10 @@ export const NavBar = ({ location }) => {
       
                 { isLoadingProjects
                   ?<SkeletonListSideBar />
-                  :<ListSideBar projects={ projects } handleClickShowProjects={ handleClickShowProjects } />
+                  :<ListSideBar 
+                    projects={ projects } 
+                    handleClickShowProjects={ handleClickShowProjects } 
+                  />
                 }
               </ul>
             </div>

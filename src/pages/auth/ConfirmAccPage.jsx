@@ -7,12 +7,12 @@ import { startConfirmAccount } from '../../store';
 export const ConfirmAccPage = () => {
   const { dispatch, status, isConfirmed } = useAuth();
   const { token } = useParams();
-  const isRefresh  = useRef( true );
+  const isRefreshPage = useRef( true );
 
   useEffect(() => {
-    if ( isRefresh .current ) {
+    if ( isRefreshPage .current ) {
       dispatch( startConfirmAccount( token ) );
-      isRefresh .current = false;
+      isRefreshPage .current = false;
     }
     document.title = 'Confirmar | TeamTasker';
   }, [ token ]);

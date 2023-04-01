@@ -1,11 +1,12 @@
 import { Navigate } from 'react-router-dom';
 import { LoadingPage, ModalNewBoard, ModalNewProject, NavBar, SideBarUser } from '../components';
-import { useAuth, useUi } from '../hooks';
+import { useAuth, useProject, useUi } from '../hooks';
 import { desactiveSideBarUser } from '../store';
 
 export const ProjectUserLayout = ({ children }) => {
 
   const { status, isAuthenticated, dispatch } = useAuth();
+  const { loading } = useProject();
   const { sideBarUser } = useUi();
 
   const handleDesactiveSideBarUSer = () => {

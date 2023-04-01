@@ -7,17 +7,17 @@ import { ProjectWork } from './ProjectWork'
 import { ProjectBoard } from './ProjectBoard'
 
 export const PrivateRoutes = () => {
-  const { dispatch } = useProject();
+  const { projects, dispatch } = useProject();
   
   useEffect(() => {
-    dispatch( startLoadingProjects() );
+    if ( !projects?._id ) dispatch( startLoadingProjects() );
   }, [])
   
   return (
     <Routes>
       <Route path='/u/*' element={ <ProjectUser /> } />
-      <Route path='/w/*' element={ <ProjectWork /> } />
       <Route path='/b/*' element={ <ProjectBoard /> } />
+      <Route path='/w/*' element={ <ProjectWork /> } />
     </Routes>
   )
 }

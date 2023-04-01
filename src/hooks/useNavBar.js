@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { openModalNewBoard, openModalNewProject, toggleSideBarUser, toggleSideBarWork } from '../store';
+import { openModalNewBoard, openModalNewProject, startDesactiveBoard, toggleSideBarUser, toggleSideBarWork } from '../store';
 import { useAuth, useProject, useUi } from './';
 
 export const useNavBar = () => {
@@ -55,6 +55,8 @@ export const useNavBar = () => {
   const handleClickShowProjects = () => setShowProjects(!showProjects);
   const handleShowUserProfile = () => setShowUserProfile(!showUserProfile);
 
+  const handleClickTitleNavBar = () => dispatch( startDesactiveBoard() );
+
   return {
     showMenu,
     showProjects,
@@ -80,6 +82,7 @@ export const useNavBar = () => {
     handleToggleSideBarWork,
     handleToggleMenu,
     handleClickShowProjects,
-    handleShowUserProfile
+    handleShowUserProfile,
+    handleClickTitleNavBar,
   }
 }

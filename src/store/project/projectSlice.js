@@ -28,7 +28,7 @@ export const projectSlice = createSlice({
     activeBoard: { _id: '', title: '', background: '', project: '', tasks: [] },
   },
   reducers: {
-    onLoading: ( state, { payload } ) => {
+    onLoadingDataProject: ( state, { payload } ) => {
       state.loading = payload;
     },
     onLoadingProjects: ( state, { payload } ) => {
@@ -62,12 +62,15 @@ export const projectSlice = createSlice({
     onActiveBoard: ( state, { payload } ) => {
       state.loading = 'success';
       state.activeBoard = payload;
-    }
+    },
+    onDesactiveActiveBoard: ( state ) => {
+      state.activeBoard = { _id: '', title: '', background: '', project: '', tasks: [] };
+    },
   },
 });
 
 export const { 
-  onLoading, 
+  onLoadingDataProject, 
   onLoadingProjects, 
   onActiveProject, 
   onAddProject,
@@ -76,4 +79,5 @@ export const {
   onAddUsersSerach, 
   onResetUsersSearch,
   onActiveBoard,
+  onDesactiveActiveBoard
 } = projectSlice.actions;
