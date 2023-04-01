@@ -1,6 +1,6 @@
 import { teamTaskeAPI } from "../../api";
 import { onCloseModalNewBoard, onCloseModalNewProject } from "../ui/uiSlice";
-import { onActiveBoard, onActiveProject, onAddBoard, onAddProject, onAddUsersSerach, onDeleteProject, onDesactiveActiveBoard, onLoadingDataProject, onLoadingProjects, onResetUsersSearch } from "./projectSlice";
+import { onActiveBoard, onActiveProject, onAddBoard, onAddProject, onAddUsersSerach, onClearMessages, onDeleteCollaborator, onDeleteProject, onDesactiveActiveBoard, onErrorMessage, onLoadingDataProject, onLoadingProjects, onResetUsersSearch, onSuccessMessage } from "./projectSlice";
 
 export const startLoadingProjects = () => {
   return async (dispatch) => {
@@ -31,12 +31,12 @@ export const startLoadingProject = (id) => {
 export const startLoadingBoard = (id) => {
   return async (dispatch) => {
     try {
-      dispatch( onLoadingDataProject('loading') );
+      dispatch( onLoadingDataProject('loading Board') );
 
       const { data } = await teamTaskeAPI.get( `/board/${id}`);
-      console.log(data, 'Data de la API');
+      const board = data.project.boards.find( board => board._id === id );
       dispatch( onActiveProject( data.project ) );
-      dispatch( onActiveBoard( data.board ) );
+      dispatch( onActiveBoard( board ) );
 
     } catch (error) {
       console.log(error)
@@ -79,6 +79,16 @@ export const startDeleteProject = () => {
   }
 }
 
+export const startActiveboard = (board) => {
+  return async (dispatch) => {
+    dispatch( onActiveBoard( board ));
+  }
+}
+export const startDesactiveBoard = () => {
+  return async (dispatch) => {
+    dispatch( onDesactiveActiveBoard() );
+  }
+}
 export const startSavedBoard = ( project ) => {
   return async (dispatch) => {
     try {
@@ -113,12 +123,18 @@ export const startAddCollaborator = ({ _id }) => {
 
     try {
       dispatch( onLoadingDataProject('loading Add Collaborator') );
-onLoadingDataProject
       const { data } = await teamTaskeAPI.post( `/project/add-collaborator/${activeProject._id}`, { collaboratorId: _id } );
-      dispatch( onActiveProject( data.project ) );
+      dispatch( onActiveProject(data.project) );
+      dispatch( onSuccessMessage(data.msg) );
+      setTimeout(() => {
+        dispatch( onClearMessages() );
+      }, 2000);
 
     } catch (error) {
-      console.log(error);
+      dispatch( onErrorMessage(error.response.data.msg) );
+      setTimeout(() => {
+        dispatch( onClearMessages() );
+      }, 2000);
     }
   }
 }
@@ -130,7 +146,7 @@ export const startDeleteCollaborator = ({ _id }) => {
       dispatch( onLoadingDataProject('loading Delete Collaborator') );
 
       const { data } = await teamTaskeAPI.post( `/project/delete-collaborator/${activeProject._id}`, { collaboratorId: _id } );
-      dispatch( onActiveProject( data.project ) );
+      dispatch( onDeleteCollaborator(_id) );
 
     } catch (error) {
       console.log(error);
@@ -138,13 +154,3 @@ export const startDeleteCollaborator = ({ _id }) => {
   }
 }
 
-export const startActiveboard = (board) => {
-  return async (dispatch) => {
-    dispatch( onActiveBoard( board ));
-  }
-}
-export const startDesactiveBoard = () => {
-  return async (dispatch) => {
-    dispatch( onDesactiveActiveBoard() );
-  }
-}

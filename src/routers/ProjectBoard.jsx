@@ -6,12 +6,12 @@ import { startLoadingBoard } from '../store';
 
 export const ProjectBoard = () => {
   const { ['*']: param }= useParams();
-  const { dispatch, activeProject } = useProject();
+  const { dispatch, activeBoard } = useProject();
   
   const boardId = param.split('/')[0];
 
   useEffect(() => {
-    if ( !activeProject._id ) dispatch( startLoadingBoard(boardId) );
+    if ( !activeBoard._id ) dispatch( startLoadingBoard(boardId) );
   }, []);
 
   return (

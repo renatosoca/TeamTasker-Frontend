@@ -1,7 +1,6 @@
 export * from './auth/ConfirmAcc';
 export * from './auth/MessageAPI';
 export * from './auth/UnconfirmAcc';
-export * from './index';
 export * from './project/ButtonAddNewBoard';
 export * from './project/ListProjectBoard';
 export * from './project/NavBar';
@@ -17,3 +16,4 @@ export * from './ui/LoadingSpinner';
 export * from './ui/ModalNewBoard';
 export * from './ui/ModalNewCollaborator';
 export * from './ui/ModalNewProject';
+export * from './ui/ToastNotification';

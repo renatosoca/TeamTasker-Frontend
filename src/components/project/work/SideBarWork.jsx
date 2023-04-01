@@ -23,27 +23,29 @@ export const SideBarWork = () => {
       className={`absolute ${sideBarWork ? 'right-0 rounded-tl-xl rounded-bl-xl' : '-right-full'} 2sm:sticky 2sm:top-0 h-full ${ activeBoard?._id ? 'bg-[#161B22]/80 backdrop-blur-3xl' : 'bg-[#161B22]'} max-w-[18rem] 2sm:max-w-[15rem] w-full border-r-[.1rem] border-[#132F4C] text-gray-400 font-medium text-base transition-[right] ease-in-out border-l z-10`}
     >
         <nav className='w-full'>
-          { isLoadingProjects ?
-            <div className='pt-6'>
-              <SkeletonListSideBar />
-            </div>  :
-            <>
-              <Link
-                onClick={ handleDesactiveSideBarWork }
-                to={`/project/w/${ activeProject?._id }`} 
-                className='flex items-center gap-3 p-4 border-b-[.1rem] border-[#132F4C]'
-              >
-                <div className='py-2 px-4 rounded-md text-white' style={{ backgroundColor: `${activeProject?.type}`}}>
-                  { activeProject?.name?.charAt(0).toUpperCase() }
-                </div>
-      
-                <div>
-                  <h2 className='text-white'>{ activeProject?.name }</h2>
-                  <small className='text-gray-400'>Gratuito</small>
-                </div>
-              </Link>
+          {isLoadingProjects
+            ? <div className='p-4'><SkeletonListSideBar /></div>
+            : <Link
+              onClick={ handleDesactiveSideBarWork }
+              to={`/project/w/${ activeProject?._id }`} 
+              className='flex items-center gap-3 p-4 border-b-[.1rem] border-[#132F4C] min-h-[5.1rem]'
+            >
+              <div className='py-2 px-4 rounded-md text-white' style={{ backgroundColor: `${activeProject?.type}`}}>
+                { activeProject?.name?.charAt(0).toUpperCase() }
+              </div>
+    
+              <div>
+                <h2 className='text-white'>{ activeProject?.name }</h2>
+                <small className='text-gray-400'>Gratuito</small>
+              </div>
+            </Link>
+          }
 
-              <ul className='flex flex-col pt-4 pb-3 gap-2 px-3 2sm:px-2'>
+          {isLoadingProjects
+            ? <div className='p-4'><SkeletonListSideBar quantity={3} /></div>
+            : <ul 
+              className='flex flex-col pt-4 pb-3 gap-2 px-3 2sm:px-2'
+            >
                 <li className={`relative px-3`}>
                   <NavLink
                     onClick={ handleDesactiveSideBarWork }
@@ -74,25 +76,29 @@ export const SideBarWork = () => {
                     Configuración
                   </NavLink>
                 </li>
-              </ul>
-
-              <div className='flex justify-between items-center pb-2 px-3 2sm:px-2'>
-                <small>Tus tableros</small>
-
-                <button
-                  onClick={ handleClickModalNewBoard }
-                  className='w-7 h-7 rounded-md flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#132F4C] text-xl transition-colors'
-                  title='Crear Tablero'
-                >
-                  <IoMdAdd />
-                </button>
-              </div>
-
-              <ul className='flex flex-col gap-1 px-3 2sm:px-2 pb-2 max-h-[calc(100vh-19.85rem)] overflow-y-auto scrollbar'>
-                <ListSideBarWork activeProject={ activeProject } />
-              </ul>
-            </>
+            </ul>
           }
+
+          <div className='flex justify-between items-center pb-2 px-3 2sm:px-2'>
+            <small>Tus tableros</small>
+            <button
+              onClick={ handleClickModalNewBoard }
+              className='w-7 h-7 rounded-md flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#132F4C] text-xl transition-colors'
+              title='Crear Tablero'
+            >
+              <IoMdAdd />
+            </button>
+          </div>
+
+          {isLoadingProjects
+            ? <div className='p-4'><SkeletonListSideBar quantity={5} /></div>
+            : <ul 
+              className='flex flex-col gap-1 px-3 2sm:px-2 pb-2 max-h-[calc(100vh-19.85rem)] overflow-y-auto scrollbar'
+            >
+              <ListSideBarWork activeProject={ activeProject } />
+            </ul>
+          }
+
         </nav>
     </aside>
   )

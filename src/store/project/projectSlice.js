@@ -11,7 +11,7 @@ export const projectSlice = createSlice({
         description: '',
         type: '',
         boards: [{ _id: '', title: '', background: '', project: '', tasks: []}],
-        colaborators: [],
+        collaborators: [],
         owner: {},
       }
     ],
@@ -26,6 +26,8 @@ export const projectSlice = createSlice({
       owner: {},
     },
     activeBoard: { _id: '', title: '', background: '', project: '', tasks: [] },
+    successMessage: '',
+    errorMessage: '',
   },
   reducers: {
     onLoadingDataProject: ( state, { payload } ) => {
@@ -47,18 +49,6 @@ export const projectSlice = createSlice({
       state.loading = 'success';
       state.projects = state.projects.filter( (project) => project._id !== payload );
     },
-    onAddBoard: ( state, { payload } ) => {
-      state.loading = 'success Add';
-      state.projects = state.projects.map( (project) => (project._id === payload.project) ? {...project, boards: [...project.boards, payload]} : project );
-      if ( payload.project === state.activeProject?._id ) state.activeProject.boards.push( payload );
-    },
-    onAddUsersSerach: ( state, { payload } ) => {
-      state.users = [ ...payload ];
-      state.loading = 'success';
-    },
-    onResetUsersSearch: ( state ) => {
-      state.users = [];
-    },
     onActiveBoard: ( state, { payload } ) => {
       state.loading = 'success';
       state.activeBoard = payload;
@@ -66,12 +56,43 @@ export const projectSlice = createSlice({
     onDesactiveActiveBoard: ( state ) => {
       state.activeBoard = { _id: '', title: '', background: '', project: '', tasks: [] };
     },
+    onAddBoard: ( state, { payload } ) => {
+      state.loading = 'success Add';
+      state.projects = state.projects.map( (project) => (project._id === payload.project) ? {...project, boards: [...project.boards, payload]} : project );
+      if ( payload.project === state.activeProject?._id ) state.activeProject.boards.push( payload );
+    },
+    onAddUsersSerach: ( state, { payload } ) => {
+      state.loading = 'success';
+      state.users = [ ...payload ];
+    },
+    onResetUsersSearch: ( state ) => {
+      state.users = [];
+    },
+    onDeleteCollaborator: ( state, { payload } ) => {
+      state.loading = 'success';
+      state.activeProject.collaborators = state.activeProject.collaborators.filter( (user) => user._id !== payload );
+
+      state.projects = state.projects.map( (project) => (project._id === state.activeProject._id) ?
+        {...project, collaborators: project.collaborators.filter( (user) => user._id !== payload )} : project );
+    },
+    onSuccessMessage: ( state, { payload } ) => {
+      state.loading = 'success';
+      state.successMessage = payload;
+    },
+    onErrorMessage: ( state, { payload } ) => {
+      state.loading = 'error';
+      state.errorMessage = payload;
+    },
+    onClearMessages: ( state ) => {
+      state.successMessage = '';
+      state.errorMessage = '';
+    }
   },
 });
 
 export const { 
   onLoadingDataProject, 
-  onLoadingProjects, 
+  onLoadingProjects,
   onActiveProject, 
   onAddProject,
   onDeleteProject,
@@ -79,5 +100,9 @@ export const {
   onAddUsersSerach, 
   onResetUsersSearch,
   onActiveBoard,
-  onDesactiveActiveBoard
+  onDesactiveActiveBoard,
+  onDeleteCollaborator,
+  onSuccessMessage,
+  onErrorMessage,
+  onClearMessages
 } = projectSlice.actions;

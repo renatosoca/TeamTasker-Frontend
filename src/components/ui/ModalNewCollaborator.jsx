@@ -5,6 +5,7 @@ import { useForm, useProject, useUi } from '../../hooks';
 import { closeModalNewCollaborator, startAddCollaborator, startSearchUsers } from '../../store';
 import { initialNewCollaborator, validationsNewCollaborator } from '../../data/data';
 import { LoadingSpinner } from './LoadingSpinner';
+import { ToastNotification } from './ToastNotification';
 
 ReactModal.setAppElement("#root");
 
@@ -30,6 +31,7 @@ export const ModalNewCollaborator = () => {
   }
 
   const handleClickAddCollaborator = (user) => {
+    if ( activeProject?.collaborators.find( coll => coll._id === user._id ) ) return;
    dispatch( startAddCollaborator( user ) );
   }
 
@@ -51,6 +53,8 @@ export const ModalNewCollaborator = () => {
       overlayClassName='modal'
       className={`max-w-[40rem] w-[95%] bg-[#161B22] text-white rounded-[.3rem] px-0 md:px10`}
     >
+      <ToastNotification />
+      
       <div className='relative py-12 px-4'>
         <h2 className='text-base 2xs:text-lg md:text-xl pb-4 3xs:pb-6 font-jakarta'>
           Añadir un colaborador a "<span className='text-white font-bold'>{ activeProject?.name?.charAt(0).toUpperCase() + activeProject?.name?.slice(1) }"</span>
@@ -93,30 +97,33 @@ export const ModalNewCollaborator = () => {
                 <>
                   { (users.length >= 1) ? 
                     <>
+                      <div className='px-4 py-2 font-jakarta font-bold'>Selecione un usuario</div>
                       {users?.map( user => (
-                        <div 
+                        <button 
                           key={user._id}
-                          className='flex items-center justify-between text-start w-full hover:bg-[#0D47A1]/50 px-4 py-1 transition-colors my-4'
+                          onClick={ () => handleClickAddCollaborator(user) }
+                          type='button'
+                          className={`group bg-[#0A2342] block w-full ${activeProject?.collaborators.find( coll => coll._id === user._id ) ? 'cursor-not-allowed' : ''} hover:bg-[#64B5F6]/80 text-white px-4 py-1 font-jakarta font-bold transition-colors ease-in-out duration-200 my-1 min-h-[4rem]`}
+                          disabled={ activeProject?.collaborators.find( coll => coll._id === user._id ) }
                         >
                           <div className='flex items-center gap-3 text-start'>
-                            <div className=' rounded-full w-9 h-9 bg-[#64B5F6] text-black flex items-center justify-center font-jakarta font-bold transition-colors'>
+                            <div className=' rounded-full w-9 h-9 bg-[#64B5F6] text-black group-hover:text-white flex items-center justify-center font-jakarta font-normal transition-colors'>
                               { user.name?.charAt(0).toUpperCase() + user.lastname?.charAt(0).toUpperCase() }
                             </div>
 
                             <div className='flex flex-col'>
                               <p className='font-bold font-jakarta'>{ user.name + ' ' + user.lastname }</p>
-                              <small className='font-medium'>{ user.email }</small>
+                              { user._id === activeProject.owner._id ? 
+                                <small className='text-gray-300 py-1'>Es el administrador del proyecto</small>
+                                : activeProject?.collaborators.find( coll => coll._id === user._id ) ?
+                                <small className='text-gray-300 py-1'>Es un colaborador del proyecto</small>  :
+                                <>
+                                  <small className='font-jakarta py-1'>@{ user.username }</small>
+                                </>
+                              }
                             </div>
                           </div>
-
-                          <button
-                            onClick={ () => handleClickAddCollaborator(user)}
-                            type='button'
-                            className='bg-[#64B5F6]/80 hover:bg-[#64B5F6] text-black hover:text-white px-4 py-1 rounded-md font-jakarta font-bold transition-colors ease-in-out duration-200'
-                          >
-                            Agregar
-                          </button>
-                        </div>
+                        </button>
                       ))}
                     </> :
                     <p className='text-center py-4'>No se encontraron resultados</p>

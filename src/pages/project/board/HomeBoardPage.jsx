@@ -5,11 +5,11 @@ import { ProjectLayout } from '../../../layouts';
 
 export const HomeBoardPage = () => {
 
-  const { activeProject, isLoadingProjects } = useProject();
+  const { activeBoard, isLoadingProjects } = useProject();
   
   useEffect(() => {
-    document.title =`${activeProject?.boards[0].title} | TeamTasker`
-  }, [activeProject]);
+    document.title =`${activeBoard?.title} | TeamTasker`
+  }, [activeBoard]);
 
   return (
     <ProjectLayout>
