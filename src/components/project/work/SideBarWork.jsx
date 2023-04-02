@@ -23,7 +23,7 @@ export const SideBarWork = () => {
       className={`absolute ${sideBarWork ? 'right-0 rounded-tl-xl rounded-bl-xl' : '-right-full'} 2sm:sticky 2sm:top-0 h-full ${ activeBoard?._id ? 'bg-[#161B22]/80 backdrop-blur-3xl' : 'bg-[#161B22]'} max-w-[18rem] 2sm:max-w-[15rem] w-full border-r-[.1rem] border-[#132F4C] text-gray-400 font-medium text-base transition-[right] ease-in-out border-l z-10`}
     >
         <nav className='w-full'>
-          {isLoadingProjects
+          { !activeProject?._id
             ? <div className='p-4'><SkeletonListSideBar /></div>
             : <Link
               onClick={ handleDesactiveSideBarWork }
@@ -41,7 +41,7 @@ export const SideBarWork = () => {
             </Link>
           }
 
-          {isLoadingProjects
+          {!activeProject?._id
             ? <div className='p-4'><SkeletonListSideBar quantity={3} /></div>
             : <ul 
               className='flex flex-col pt-4 pb-3 gap-2 px-3 2sm:px-2'
@@ -90,7 +90,7 @@ export const SideBarWork = () => {
             </button>
           </div>
 
-          {isLoadingProjects
+          {!activeProject?._id
             ? <div className='p-4'><SkeletonListSideBar quantity={5} /></div>
             : <ul 
               className='flex flex-col gap-1 px-3 2sm:px-2 pb-2 max-h-[calc(100vh-19.85rem)] overflow-y-auto scrollbar'

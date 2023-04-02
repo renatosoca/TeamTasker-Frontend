@@ -15,8 +15,8 @@ export const ListProjectBoard = ({ board, project }) => {
     <li 
       className={`w-[100%] vs:w-[49%] md:w-[32%] mp:w-[23.5%] mb-[2%] h-24 rounded-md`} 
       style={{ 
-        backgroundColor: `${background.includes('#') ? background : ''}`, 
-        backgroundImage: `${background.includes('http') ? `url(${background})` : ''}`,
+        backgroundColor: `${background?.includes('#') ? background : ''}`, 
+        backgroundImage: `${background?.includes('http') ? `url(${background})` : ''}`,
         backgroundSize: 'cover',
       }}
     >

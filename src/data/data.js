@@ -117,9 +117,8 @@ export const customBgImageModalBoard = [
 ];
 
 export const customSettingsData = [
-  {title: 'Membresía', description: 'La membresia para todos los proyectos es totalmente gratuita y se mantendrá así, puede crear tantos proyectos, tableros, listas y tareas como usted desée.'}, 
-  {title: 'Creación de tableros', description: 'Cualquier colaborador puede crear un tablero en este proyecto.'}, 
-  {title: 'Eliminación de tableros', description: 'Cualquier colaborador puede eliminar un tablero en este proyecto.'}, 
-  {title: 'Agregar colaboradores', description: 'Solo el administrador del proyecto puede agregar colaboradores.'}, 
-  {title: 'Créditos', description: 'TeamTasker fue creado por: Renato Soca'}
+  {title: 'Membresía', description: ['La membresia para todos los proyectos es totalmente gratuita y se mantendrá así, puede crear tantos proyectos, tableros, listas y tareas como usted desée.', 'TeamTasker no tiene fines de lucro, es un proyecto personal que se mantiene gracias a la publicidad que se muestra en la aplicación.']}, 
+  {title: 'Tableros', description: ['Cualquier colaborador puede crear un tablero en este proyecto.', 'Cualquier colaborador puede eliminar un tablero en este proyecto.']},
+  {title: 'Colaboradores', description: ['Solo el administrador del proyecto puede agregar colaboradores.', 'Solo el administrador del proyecto puede eliminar colaboradores.']}, 
+  {title: 'Créditos', description: ['TeamTasker fue creado por: Renato Soca', 'Si desea contactarme, puede hacerlo a través de mi correo electrónico: u18215194@gmail.com']}
 ]

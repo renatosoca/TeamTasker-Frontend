@@ -1,27 +1,32 @@
 import { useProject } from '../../../hooks';
 import { FaUserPlus } from 'react-icons/fa';
 import { TbEdit } from 'react-icons/tb';
-import { openModalNewCollaborator } from '../../../store';
+import { openModalNewCollaborator, openModalNewProject, startTypeAction } from '../../../store';
+import { SkeletonListSideBar } from '../SkeletonListSideBar';
 
 export const HeaderProjectWork = () => {
 
-  const { activeProject, dispatch, isLoadingProjects } = useProject();
+  const { activeProject, dispatch } = useProject();
   const firstCaracterProject = activeProject?.name?.charAt(0).toUpperCase();
 
   const handleClickNewCollaborator = () => {
     dispatch( openModalNewCollaborator() )
   }
+  const handleClickModalProject = () => {
+    dispatch( startTypeAction('editProject'));
+    dispatch( openModalNewProject() );
+  }
 
   return (
     <div className=' border-b-2 px-2 md:px-6 py-10'>
       <div className='flex justify-between items-center gap-2 max-w-3xl w-full mx-auto'>
-        {isLoadingProjects  ?
-          <div className='flex items-center gap-2'>
-            <div className='bg-gray-600 animate-pulse w-[2.2rem] h-[2.2rem] rounded-md'></div>
-            <span className='bg-gray-600 w-28 h-3 rounded-md animate-pulse'></span>
-          </div>  :
+        {!activeProject?._id  ?
+          <div className='p-4 w-[10rem] 2xs:w-[12rem] 3xs:w-[15rem] 2sm:w-[10rem] mp:w-[17rem]'><SkeletonListSideBar /></div>  :
           <div className='flex-1 flex gap-2 items-center'>
-            <div className='px-4 py-2 text-xl font-bold rounded-md text-white select-none' style={{ backgroundColor: `${activeProject?.type}` }}>
+            <div 
+              className='px-4 py-2 text-xl font-bold rounded-md text-white select-none' 
+              style={{ backgroundColor: `${activeProject?.type}` }}
+            >
               { firstCaracterProject }
             </div>
 
@@ -32,6 +37,7 @@ export const HeaderProjectWork = () => {
             <button
               className='text-xl py-1 px-2 rounded-md hover:bg-[#132F4C] flex items-center justify-center transition-colors border border-[#132F4C]'
               title='Editar Proyecto'
+              onClick={ handleClickModalProject }
             >
               <TbEdit />
             </button>

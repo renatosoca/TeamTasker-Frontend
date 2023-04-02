@@ -45,6 +45,11 @@ export const projectSlice = createSlice({
       state.loading = 'success Add';
       state.projects.unshift( payload );
     },
+    onEditProject: ( state, { payload } ) => {
+      state.loading = 'success';
+      state.projects = state.projects.map( (project) => (project._id === payload._id) ? payload : project );
+      state.activeProject = payload;
+    },
     onDeleteProject: ( state, { payload } ) => {
       state.loading = 'success';
       state.projects = state.projects.filter( (project) => project._id !== payload );
@@ -70,6 +75,7 @@ export const projectSlice = createSlice({
     },
     onDeleteCollaborator: ( state, { payload } ) => {
       state.loading = 'success';
+      state.successMessage = 'Colaborador eliminado correctamente';
       state.activeProject.collaborators = state.activeProject.collaborators.filter( (user) => user._id !== payload );
 
       state.projects = state.projects.map( (project) => (project._id === state.activeProject._id) ?
@@ -95,6 +101,7 @@ export const {
   onLoadingProjects,
   onActiveProject, 
   onAddProject,
+  onEditProject,
   onDeleteProject,
   onAddBoard, 
   onAddUsersSerach, 

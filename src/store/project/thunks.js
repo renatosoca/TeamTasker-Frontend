@@ -1,6 +1,7 @@
 import { teamTaskeAPI } from "../../api";
-import { onCloseModalNewBoard, onCloseModalNewProject } from "../ui/uiSlice";
-import { onActiveBoard, onActiveProject, onAddBoard, onAddProject, onAddUsersSerach, onClearMessages, onDeleteCollaborator, onDeleteProject, onDesactiveActiveBoard, onErrorMessage, onLoadingDataProject, onLoadingProjects, onResetUsersSearch, onSuccessMessage } from "./projectSlice";
+import { closeModalNewCollaborator } from "../ui/thunks";
+import { onChangeToastNotification, onChangeTypeAction, onCloseModalNewBoard, onCloseModalNewProject } from "../ui/uiSlice";
+import { onActiveBoard, onActiveProject, onAddBoard, onAddProject, onAddUsersSerach, onClearMessages, onDeleteCollaborator, onDeleteProject, onDesactiveActiveBoard, onEditProject, onErrorMessage, onLoadingDataProject, onLoadingProjects, onResetUsersSearch, onSuccessMessage } from "./projectSlice";
 
 export const startLoadingProjects = () => {
   return async (dispatch) => {
@@ -50,13 +51,24 @@ export const startActiveProject = (project) => {
   }
 }
 export const startSavedProject = ({ name, type, description }) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
       dispatch( onLoadingDataProject('loading Saved Project') );
+      const { typeAction } = getState().ui;
+      const { activeProject } = getState().project;
+
+      if ( activeProject._id !== '' && typeAction === 'editProject' ) {
+        const { data } = await teamTaskeAPI.put( `/project/${activeProject._id}`, { name, type, description });
+        dispatch( onEditProject( data.project ) );
+        dispatch( onCloseModalNewProject() );
+        dispatch( onChangeTypeAction(''));
+        return;
+      }
 
       const { data } = await teamTaskeAPI.post( '/project', { name, type, description });
       dispatch( onAddProject( data.project ) );
-      dispatch( onCloseModalNewProject() )
+      dispatch( onCloseModalNewProject() );
+      dispatch( onChangeTypeAction(''));
 
     } catch (error) {
       console.log(error);
@@ -71,7 +83,7 @@ export const startDeleteProject = () => {
 
       await teamTaskeAPI.delete( `/project/${activeProject._id}`);
       dispatch( onDeleteProject( activeProject._id ) );
-      dispatch( onActiveProject({}) )
+      dispatch( onActiveProject(undefined) )
 
     } catch (error) {
       console.log(error);
@@ -122,17 +134,24 @@ export const startAddCollaborator = ({ _id }) => {
     const { activeProject } = getState().project;
 
     try {
-      dispatch( onLoadingDataProject('loading Add Collaborator') );
+      dispatch( onChangeToastNotification('toastAddCollaborator') );
+      dispatch( onLoadingDataProject('loadingToast') );
+
       const { data } = await teamTaskeAPI.post( `/project/add-collaborator/${activeProject._id}`, { collaboratorId: _id } );
       dispatch( onActiveProject(data.project) );
       dispatch( onSuccessMessage(data.msg) );
+
       setTimeout(() => {
+        dispatch( onChangeToastNotification('') );
         dispatch( onClearMessages() );
+        dispatch( closeModalNewCollaborator() );
       }, 2000);
 
     } catch (error) {
       dispatch( onErrorMessage(error.response.data.msg) );
+      
       setTimeout(() => {
+        dispatch( onChangeToastNotification('') );
         dispatch( onClearMessages() );
       }, 2000);
     }
@@ -143,13 +162,24 @@ export const startDeleteCollaborator = ({ _id }) => {
     const { activeProject } = getState().project;
 
     try {
-      dispatch( onLoadingDataProject('loading Delete Collaborator') );
+      dispatch( onChangeToastNotification('toastDeleteCollaborator') );
+      dispatch( onLoadingDataProject('loadingToast') );
 
-      const { data } = await teamTaskeAPI.post( `/project/delete-collaborator/${activeProject._id}`, { collaboratorId: _id } );
+      await teamTaskeAPI.post( `/project/delete-collaborator/${activeProject._id}`, { collaboratorId: _id } );
       dispatch( onDeleteCollaborator(_id) );
 
+      setTimeout(() => {
+        dispatch( onChangeToastNotification('') );
+        dispatch( onClearMessages() );
+      }, 2000);
+
     } catch (error) {
-      console.log(error);
+      dispatch( onErrorMessage(error.response.data.msg) );
+      
+      setTimeout(() => {
+        dispatch( onChangeToastNotification('') );
+        dispatch( onClearMessages() );
+      }, 2000);
     }
   }
 }

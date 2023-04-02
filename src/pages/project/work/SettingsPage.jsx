@@ -1,23 +1,29 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { HeaderProjectWork } from '../../../components';
-import { customSettingsData } from '../../../data/data';
-import { useProject } from '../../../hooks';
-import { ProjectLayout } from '../../../layouts';
+import { customSettingsData } from '../../../data';
+import { useAuth, useProject } from '../../../hooks';
+import { ProjectWorkLayout } from '../../../layouts';
 import { startDeleteProject } from '../../../store';
 
 export const SettingsPage = () => {
-  const { activeProject, dispatch } = useProject();
+  const { user } = useAuth();
+  const { loading, activeProject, dispatch } = useProject();
+  const navigate = useNavigate();
+  const lastURI = localStorage.getItem('lastURL') || `/project/u/${user?.username}`;
   
   useEffect(() => {
     document.title = 'Configuración | TeamTasker';
-  }, []);
+    if ( !activeProject ) navigate( lastURI, { replace: true });
+  }, [ activeProject ]);
 
   const handleDeleteProject = () => {
+    if ( user._id !== activeProject?.owner?._id ) return;
     dispatch( startDeleteProject() );
   }
-
+  
   return (
-    <ProjectLayout>
+    <ProjectWorkLayout>
           <HeaderProjectWork />
           <main className="flex justify-center">
             <div className="max-w-3xl w-full py-8 px-6">
@@ -28,7 +34,9 @@ export const SettingsPage = () => {
                   {customSettingsData.map( ({title, description }, index) => (
                     <div key={ index } className='pb-3 last-of-type:pb-0'>
                       <h3 className='border-b font-jakarta font-bold pb-1 text-lg'>{ title }</h3>
-                      <p className="pt-3 font-medium">{ description }</p>
+                      { description.map( (item, index) => (
+                        <p key={ index } className="first-of-type:pt-3 font-medium">{ item }</p>
+                      ))}
                     </div>
                   ))}
                 </div>
@@ -38,13 +46,14 @@ export const SettingsPage = () => {
                 <button
                   onClick={ handleDeleteProject }
                   type="button"
-                  className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-4 rounded transition-colors"
+                  className={` ${loading === 'loading Delete Project' ? 'bg-gray-500 cursor-not-allowed' : 'bg-red-500 hover:bg-red-600'}  text-white font-bold py-1 px-4 rounded transition-colors`}
+                  disabled={ loading === 'loading Delete Project' }
                 >
                   Eliminar proyecto
                 </button>
               </div>
             </div>
           </main>
-    </ProjectLayout>
+    </ProjectWorkLayout>
   )
 }

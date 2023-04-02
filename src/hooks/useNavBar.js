@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { openModalNewBoard, openModalNewProject, startDesactiveBoard, toggleSideBarUser, toggleSideBarWork } from '../store';
+import { openModalNewBoard, openModalNewProject, startActiveProject, startDesactiveBoard, toggleSideBarUser, toggleSideBarWork } from '../store';
 import { useAuth, useProject, useUi } from './';
 
 export const useNavBar = () => {

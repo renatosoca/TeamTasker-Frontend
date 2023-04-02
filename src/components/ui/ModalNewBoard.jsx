@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ReactModal from 'react-modal';
 import Select from 'react-select';
 import { MdOutlineElectricBolt } from 'react-icons/md';
@@ -17,15 +17,22 @@ export const ModalNewBoard = () => {
   const { isLoadingSavedBoard, projects, activeProject, dispatch } = useProject();
   const projectOptions = projects.map( project => ({ value: project._id, label: project.name}) );
   const defaultOption = projectOptions.find( option => option.value === activeProject?._id );
+  const [ formValues, setFormValues ] = useState(initialNewBoard);
   
   const {
-    formState, title, background, project, isFormValid, handleInputChange, handleCustomChange, handleResetForm
-  } = useForm( initialNewBoard, validationsNewBoard );
+    formState, title, background, isFormValid, handleInputChange, handleCustomChange, handleResetForm
+  } = useForm( formValues, validationsNewBoard );
 
   useEffect(() => {
-    handleCustomChange( 'project', projectOptions[0]?.value ?? activeProject?._id );
+    if ( activeProject?._id !== '' ) {
+      setFormValues({...formValues, project: activeProject?._id });
+    } else {
+      setFormValues({...formValues, project: defaultOption?.value ?? '' });
+    }
+  }, [activeProject])
+  
+  useEffect(() => {
     handleCustomChange( 'background', background || customBgImageModalBoard[0] );
-
   }, [ background, title, activeProject ]);
 
   const handleSubmit = (e) => {
@@ -138,8 +145,8 @@ export const ModalNewBoard = () => {
               styles={ stylesSelectNewBoard }
               onChange={ ({ value }) => handleCustomChange( 'project', value ) }
               classNamePrefix='select'
-              value={ defaultOption|| projectOptions[0] }
-              //defaultValue={ ( defaultOption || projectOptions[0]) }
+              //value={ defaultOption|| projectOptions[0] }
+              defaultValue={ ( defaultOption || projectOptions[0]) }
               options={ projectOptions }
             />
 

@@ -25,8 +25,8 @@ export const ListSideBarWork = ({ activeProject }) => {
             <div 
               className={`px-4 py-4 rounded-md`} 
               style={{ 
-                backgroundColor: `${background.includes('#') ? background : ''}`, 
-                backgroundImage: `${background.includes('http') ? `url(${background})` : ''}`,
+                backgroundColor: `${background?.includes('#') ? background : ''}`, 
+                backgroundImage: `${background?.includes('http') ? `url(${background})` : ''}`,
                 backgroundSize: 'cover',
               }}
             >

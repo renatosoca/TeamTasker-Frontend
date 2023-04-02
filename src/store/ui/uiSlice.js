@@ -3,13 +3,18 @@ import { createSlice } from '@reduxjs/toolkit';
 export const uiSlice = createSlice({
   name: 'ui',
   initialState: {
+    typeAction: '',
     modalNewProject: false,
     modalNewBoard: false,
     modalNewCollaborator: false,
+    toastNotification: '',
     sideBarUser: false,
     sideBarWork: false,
   },
   reducers: {
+    onChangeTypeAction: (state, { payload }) => {
+      state.typeAction = payload;
+    },
     onOpenModalNewProject: (state) => {
       state.modalNewProject = true;
     },
@@ -40,10 +45,15 @@ export const uiSlice = createSlice({
     onDesactiveSideBarWork: (state) => {
       state.sideBarWork = false;
     },
+    onChangeToastNotification: (state, { payload }) => {
+      state.toastNotification = payload;
+    }
   },
 });
 
-export const { 
+export const {
+  onChangeTypeAction,
+
   onOpenModalNewProject,
   onCloseModalNewProject,
 
@@ -59,4 +69,6 @@ export const {
 
   ontoggleSideBarWork,
   onDesactiveSideBarWork,
+
+  onChangeToastNotification,
 } = uiSlice.actions;

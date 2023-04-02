@@ -11,14 +11,15 @@ ReactModal.setAppElement("#root");
 
 export const ModalNewCollaborator = () => {
 
-  const { modalNewCollaborator } = useUi();
+  const { modalNewCollaborator, toastNotification } = useUi();
   const { isLoadingSearchUsers, users, activeProject, dispatch } = useProject();
   const { 
     formState, username, isFormValid, usernameValid, handleInputChange, handleResetForm,
   } = useForm( initialNewCollaborator, validationsNewCollaborator );
-
+  
   const [ isFormSubmit, setIsFormSubmit ] = useState(false);
   const [ showResultUsers, setShowResultUsers ] = useState(false);
+  const isToasNotification = toastNotification === 'toastAddCollaborator';
   
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,7 +32,7 @@ export const ModalNewCollaborator = () => {
   }
 
   const handleClickAddCollaborator = (user) => {
-    if ( activeProject?.collaborators.find( coll => coll._id === user._id ) ) return;
+    if ( activeProject?.collaborators.find( coll => coll._id === user._id ) || isToasNotification ) return;
    dispatch( startAddCollaborator( user ) );
   }
 
@@ -53,7 +54,9 @@ export const ModalNewCollaborator = () => {
       overlayClassName='modal'
       className={`max-w-[40rem] w-[95%] bg-[#161B22] text-white rounded-[.3rem] px-0 md:px10`}
     >
-      <ToastNotification />
+      { isToasNotification && (
+        <ToastNotification textLoading={'Agregando colaborador...'} />
+      )}
       
       <div className='relative py-12 px-4'>
         <h2 className='text-base 2xs:text-lg md:text-xl pb-4 3xs:pb-6 font-jakarta'>
@@ -104,7 +107,7 @@ export const ModalNewCollaborator = () => {
                           onClick={ () => handleClickAddCollaborator(user) }
                           type='button'
                           className={`group bg-[#0A2342] block w-full ${activeProject?.collaborators.find( coll => coll._id === user._id ) ? 'cursor-not-allowed' : ''} hover:bg-[#64B5F6]/80 text-white px-4 py-1 font-jakarta font-bold transition-colors ease-in-out duration-200 my-1 min-h-[4rem]`}
-                          disabled={ activeProject?.collaborators.find( coll => coll._id === user._id ) }
+                          disabled={ activeProject?.collaborators.find( coll => coll._id === user._id ) ? true : isToasNotification ? true : false }
                         >
                           <div className='flex items-center gap-3 text-start'>
                             <div className=' rounded-full w-9 h-9 bg-[#64B5F6] text-black group-hover:text-white flex items-center justify-center font-jakarta font-normal transition-colors'>

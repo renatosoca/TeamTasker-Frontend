@@ -2,26 +2,43 @@ import ReactModal from 'react-modal';
 import Select from 'react-select';
 import { CgClose } from 'react-icons/cg';
 import { useForm, useProject, useUi } from '../../hooks';
-import { closeModalNewProject, startSavedProject } from '../../store';
-import { initialNewProject, typeProjects, validationsNewProject } from '../../data/data';
+import { closeModalNewProject, startSavedProject, startTypeAction } from '../../store';
+import { initialNewProject, typeProjects, validationsNewProject } from '../../data';
 import { stylesSelect } from '../../styles/stylesSelects';
 import { LoadingSpinner } from './LoadingSpinner';
+import { useEffect, useState } from 'react';
 
 ReactModal.setAppElement("#root");
 
 export const ModalNewProject = () => {
 
-  const { modalNewProject } = useUi();
-  const { isLoadingSaveProject, dispatch } = useProject();
+  const { modalNewProject, typeAction } = useUi();
+  const { isLoadingSaveProject, activeProject, dispatch } = useProject();
+
+  const [ formValues, setFormValues ] = useState(initialNewProject)
+  const isEditProject = activeProject?._id !== '' && typeAction === 'editProject';
 
   const { 
     formState, name, description, isFormValid, nameValid, typeValid, handleInputChange, handleCustomChange, handleResetForm
-  } = useForm( initialNewProject, validationsNewProject );
+  } = useForm( formValues, validationsNewProject );
+
+  useEffect(() => {
+    setFormValues(initialNewProject);
+
+    if ( isEditProject ) {
+      setFormValues({
+        name: activeProject.name,
+        description: activeProject.description,
+        type: activeProject.type,
+      })
+    }
+  }, [activeProject, typeAction]);
 
   const handleCloseModalNewProject = () => {
     dispatch( closeModalNewProject() );
     setTimeout(() => {
       handleResetForm();
+      dispatch( startTypeAction(''));
     }, 500);
   }
 
@@ -29,8 +46,8 @@ export const ModalNewProject = () => {
     e.preventDefault();
     
     if ( !isFormValid ) return;
-    dispatch( startSavedProject(formState) )
-    handleResetForm();
+    dispatch( startSavedProject(formState) );
+    if ( !isEditProject ) handleResetForm();
   }
 
   return (
@@ -42,10 +59,14 @@ export const ModalNewProject = () => {
       className={`relative max-w-[35rem] mp:max-w-[80rem] w-[95%] bg-[#292F36] text-white rounded-md my-[4rem] mp:my-0 overflow-hidden`}
     >
       <div className='flex flex-col-reverse mp:grid mp:grid-cols-2'>
-        <div className='max-w-lg mx-auto py-6 px-4 mp:px-8 vs:pt-10 mp:py-10'>
+        <div className='max-w-lg w-full mx-auto py-6 px-4 mp:px-8 vs:pt-10 mp:py-10'>
           <div className='text-center'>
-            <h2 className='text-2xl font-bold font-jakarta select-none'>Crea tu proyecto en unos simples pasos</h2>
-            <p className='text-gray-400 pt-3 pb-6'>Organiza tus proyectos de manera facil, invita a tus colaboradores para que puedan participar</p>
+            <h2 className='text-2xl font-bold font-jakarta select-none'>
+              {isEditProject ? 'Editar Proyecto' : 'Crea tu proyecto en unos simples pasos'}
+            </h2>
+            <p className='text-gray-400 pt-3 pb-6'>
+              {isEditProject ? 'Editar tu proyecto es muy simple, solo tienes que ingresar los datos que deseas modificar' : 'Organiza tus proyectos de manera facil, invita a tus colaboradores para que puedan participar' }
+            </p>
           </div>
 
           <form
@@ -79,10 +100,11 @@ export const ModalNewProject = () => {
               <Select
                 styles={ stylesSelect }
                 onChange={ ({ value }) => handleCustomChange( 'type', value) }
+                defaultValue={ isEditProject ? typeProjects.find( type => type.value === activeProject.type ) : typeProjects[0]}
                 classNamePrefix='select'
                 placeholder='Seleccionar...'
                 options={ typeProjects }
-              />  
+              />
 
               <span className='text-sm block text-start text-gray-400 pt-1'>Escoga el tipo de proyecto que va a desarrollar <small className='text-red-500 text-sm'>*</small></span>
             </div>
@@ -114,7 +136,7 @@ export const ModalNewProject = () => {
               className={`flex gap-2 justify-center items-center ${ isFormValid ? 'bg-[#5FA7F0] text-white hover:bg-blue-500' : 'bg-gray-400 cursor-not-allowed text-gray-300'} rounded-md py-3 font-medium`}
               disabled={ !isFormValid }
             >
-              { isLoadingSaveProject ? <LoadingSpinner title='Creando Proyecto' /> : 'Crear proyecto' }
+              { isLoadingSaveProject ? <LoadingSpinner title={isEditProject ? 'Editando proyecto..' : 'Creando proyecto...'} /> : isEditProject ? 'Editar proyecto' : 'Crear proyecto' }
             </button>
           </form>
         </div>

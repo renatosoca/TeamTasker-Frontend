@@ -1,4 +1,10 @@
-import { onCloseModalNewBoard, onCloseModalNewCollaborator, onCloseModalNewProject, onDesactiveSideBarUser, onDesactiveSideBarWork, onOpenModalNewBoard, onOpenModalNewCollaborator, onOpenModalNewProject, ontoggleSideBarUser, ontoggleSideBarWork } from "./uiSlice";
+import { onChangeTypeAction, onCloseModalNewBoard, onCloseModalNewCollaborator, onCloseModalNewProject, onDesactiveSideBarUser, onDesactiveSideBarWork, onOpenModalNewBoard, onOpenModalNewCollaborator, onOpenModalNewProject, ontoggleSideBarUser, ontoggleSideBarWork } from "./uiSlice";
+
+export const startTypeAction = (type) => {
+  return (dispatch) => {
+    dispatch(onChangeTypeAction(type));
+  }
+}
 
 export const closeModalNewProject = () => {
   return (dispatch) => {

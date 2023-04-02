@@ -1,28 +1,25 @@
 import { FaInfo, FaCheck } from 'react-icons/fa';
 import { AiOutlineExclamation } from 'react-icons/ai';
-import { useProject } from '../../hooks'
+import { useProject, useUi } from '../../hooks'
 import { LoadingSpinner } from './LoadingSpinner';
 
-export const ToastNotification = () => {
-  const { isLoadingAddCollaborator, successMessage, errorMessage } = useProject();
-  const isShow = isLoadingAddCollaborator || !!successMessage || !!errorMessage;
+export const ToastNotification = ({ textLoading }) => {
+  const { toastNotification } = useUi();
+  const { isLoadingToast, successMessage, errorMessage } = useProject();
 
   return (
     <div
-      className={`absolute top-4 ${ isShow ? 'right-4' : ' -right-full' } transition-all duration-300 ease-in-out overflow-hidden`}
+      className={`absolute top-4 ${ toastNotification ? 'right-4' : ' -right-full' } transition-[right] ease-in-out overflow-hidden`}
     >
       <div 
-      className={`pl-5 pr-6 py-3 bg-gray-700 rounded font-jakarta font-medium border-l-[.3rem] ${ isLoadingAddCollaborator ? 'border-blue-500' : !!successMessage ? 'border-green-500' : !!errorMessage ? 'border-red-500' : '' }`}
+      className={`pl-5 pr-6 py-3 bg-gray-700 rounded font-jakarta font-medium border-l-[.3rem] ${ isLoadingToast ? 'border-blue-500' : !!successMessage ? 'border-green-500' : !!errorMessage ? 'border-red-500' : '' }`}
       >
-        {isLoadingAddCollaborator && (
+        {isLoadingToast && (
           <div className="flex gap-5 items-center">
             <FaInfo className='bg-blue-600 w-6 h-6 p-1 rounded-full' />
-            <div className=''>
-              <p className='block pb-1 font-bold'>Notificación</p>
-              <small className='flex gap-2 items-center text-sm text-gray-300'>
-                <LoadingSpinner title={'Agregando colaborador'} />
-              </small>
-            </div>
+            <p className='flex gap-2 py-2 items-center text-gray-300'>
+              <LoadingSpinner title={textLoading} />
+            </p>
           </div>
         )}
         {!!successMessage  && (

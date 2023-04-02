@@ -10,7 +10,7 @@ export const useProject = () => {
     isLoadingSaveProject: stateProject.loading === 'loading Saved Project',
     isLoadingSavedBoard: stateProject.loading === 'loading Saved Board',
     isLoadingSearchUsers: stateProject.loading === 'loading Search Users',
-    isLoadingAddCollaborator: stateProject.loading === 'loading Add Collaborator',
+    isLoadingToast: stateProject.loading === 'loadingToast',
 
     dispatch,
   }
