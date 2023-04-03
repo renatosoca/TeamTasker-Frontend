@@ -2,17 +2,17 @@ import { useEffect, useState } from 'react';
 import ReactModal from 'react-modal';
 import Select from 'react-select';
 import { MdOutlineElectricBolt } from 'react-icons/md';
+import { CgClose } from 'react-icons/cg';
+
 import { useForm, useProject, useUi } from '../../hooks';
 import { closeModalNewBoard, startSavedBoard } from '../../store';
-import { customBgImageModalBoard, customColorModalBoard, initialNewBoard, validationsNewBoard} from '../../data/data';
-import { stylesSelectNewBoard } from '../../styles/stylesSelects';
+import { customBgImageModalBoard, customColorModalBoard, initialNewBoard, validationsNewBoard } from '../../data';
+import { stylesSelectNewBoard } from '../../styles';
 import { LoadingSpinner } from './LoadingSpinner';
-import { CgClose } from 'react-icons/cg';
 
 ReactModal.setAppElement("#root");
 
 export const ModalNewBoard = () => {
-
   const { modalNewBoard } = useUi();
   const { isLoadingSavedBoard, projects, activeProject, dispatch } = useProject();
   const projectOptions = projects.map( project => ({ value: project._id, label: project.name}) );

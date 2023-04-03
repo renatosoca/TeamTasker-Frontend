@@ -45,10 +45,10 @@ export const LoginPage = () => {
             { !!messageAPI?.msg && <MessageAPI /> }
 
             <div className="w-full">
-              <div className={`form__group ${(isFormSubmitted && emailValid) ? 'form__group-error border-red-400 text-red-400 hover:border-red-500 after:bg-red-400' : 'border-gray-400 text-gray-600 hover:border-white after:bg-[#5FA7F0]'} relative w-full border-b-[.15rem] after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 focus-within:after:scale-100 after:transition-all after:duration-300 ease-in`} >
+              <div className={`inputs ${(isFormSubmitted && emailValid) ? 'inputs-error border-red-400 text-red-400 hover:border-red-500 after:bg-red-400' : 'border-gray-400 text-gray-600 hover:border-white after:bg-[#5FA7F0]'} relative w-full border-b-[.15rem] after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 focus-within:after:scale-100 after:transition-all after:duration-300 ease-in`} >
 
                 <input
-                  className={`form__input ${(isFormSubmitted && emailValid)? 'form__input-error': ''} w-full px-2 pt-3 pb-1 outline-none text-white font-normal bg-inherit resize-none`}
+                  className={`inputs__input ${(isFormSubmitted && emailValid)? 'inputs__input-error': ''} w-full px-2 pt-3 pb-1 outline-none text-white font-normal bg-inherit resize-none`}
                   type="email"
                   name="email"
                   id="email"
@@ -61,18 +61,18 @@ export const LoginPage = () => {
                 
                 <label
                   htmlFor="email"
-                  className={`form__label ${(isFormSubmitted && emailValid) ? 'text-red-400' : 'text-gray-300'} absolute  text-base top-[50%] transform -translate-y-1/2 left-2 font-medium bg-inherit focus-within:top-0 transition-[top transform] duration-200 cursor-text`}
+                  className={`inputs__label ${(isFormSubmitted && emailValid) ? 'text-red-400' : 'text-gray-300'} absolute  text-base top-[50%] transform -translate-y-1/2 left-2 font-medium bg-inherit focus-within:top-0 transition-[top transform] duration-200 cursor-text`}
                 >Correo</label>
               </div>
 
-              <span className={`form__span ${(isFormSubmitted && emailValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ emailValid }</span>
+              <span className={`${(isFormSubmitted && emailValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ emailValid }</span>
             </div>
 
             <div className="w-full pb-4">
-              <div className={`form__group ${isFormSubmitted && passwordValid ? 'form__group-error border-red-400 text-red-400 hover:border-red-500 after:bg-red-400' : 'border-gray-400 text-gray-600 hover:border-white after:bg-[#5FA7F0]'} relative w-full border-b-[.15rem] after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 after:bg-[#5FA7F0] focus-within:after:scale-100 after:transition-all after:duration-300 ease-in`}>
+              <div className={`inputs ${isFormSubmitted && passwordValid ? 'inputs-error border-red-400 text-red-400 hover:border-red-500 after:bg-red-400' : 'border-gray-400 text-gray-600 hover:border-white after:bg-[#5FA7F0]'} relative w-full border-b-[.15rem] after:content[''] after:absolute after:top-full after:left-0 after:w-full after:h-[.18rem] after:scale-0 after:bg-[#5FA7F0] focus-within:after:scale-100 after:transition-all after:duration-300 ease-in`}>
 
                 <input
-                  className={`form__input ${(isFormSubmitted && passwordValid)? 'form__input-error': ''} w-full px-2 pt-3 pb-1 outline-none text-white font-normal bg-inherit resize-none`}
+                  className={`inputs__input ${(isFormSubmitted && passwordValid)? 'inputs__input-error': ''} w-full px-2 pt-3 pb-1 outline-none text-white font-normal bg-inherit resize-none`}
                   type="password"
                   name="password"
                   id="password"
@@ -84,11 +84,11 @@ export const LoginPage = () => {
                 
                 <label
                   htmlFor="password"
-                  className={`form__label ${isFormSubmitted && passwordValid ? 'text-red-400' : 'text-gray-300'} absolute text-base top-[50%] transform -translate-y-1/2 left-2 font-medium bg-inherit focus-within:top-0 transition-[top transform] duration-200 cursor-text`}
+                  className={`inputs__label ${isFormSubmitted && passwordValid ? 'text-red-400' : 'text-gray-300'} absolute text-base top-[50%] transform -translate-y-1/2 left-2 font-medium bg-inherit focus-within:top-0 transition-[top transform] duration-200 cursor-text`}
                 >Contraseña</label>
               </div>
 
-              <span className={`form__span ${(isFormSubmitted && passwordValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ passwordValid }</span>
+              <span className={`${(isFormSubmitted && passwordValid) ? 'block' : 'hidden'} text-[.8rem] text-red-400 font-medium`} >{ passwordValid }</span>
             </div>
 
             <button
@@ -121,8 +121,9 @@ export const LoginPage = () => {
         </div>
       </div>
 
-      <div className="hidden md:block h-screen">
-        <div className="image__gradient-login w-full h-full"></div>
+      <div className="hidden md:block h-screen bg-[url(assets/hero-login.jpg)] bg-cover bg-no-repeat">
+        <div className="bg-gradient-to-r from-black from-0% via-black/60 via-30% to-transparent to-100% w-full h-full">
+        </div>
       </div>
     </>
   )

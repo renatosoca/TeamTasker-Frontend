@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import ReactModal from 'react-modal';
 import { CgClose } from 'react-icons/cg';
+
 import { useForm, useProject, useUi } from '../../hooks';
 import { closeModalNewCollaborator, startAddCollaborator, startSearchUsers } from '../../store';
-import { initialNewCollaborator, validationsNewCollaborator } from '../../data/data';
+import { initialNewCollaborator, validationsNewCollaborator } from '../../data';
 import { LoadingSpinner } from './LoadingSpinner';
 import { ToastNotification } from './ToastNotification';
 

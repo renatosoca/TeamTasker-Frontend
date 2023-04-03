@@ -1,12 +1,13 @@
+import { useEffect, useState } from 'react';
 import ReactModal from 'react-modal';
 import Select from 'react-select';
 import { CgClose } from 'react-icons/cg';
+
 import { useForm, useProject, useUi } from '../../hooks';
 import { closeModalNewProject, startSavedProject, startTypeAction } from '../../store';
 import { initialNewProject, typeProjects, validationsNewProject } from '../../data';
-import { stylesSelect } from '../../styles/stylesSelects';
+import { stylesSelect } from '../../styles';
 import { LoadingSpinner } from './LoadingSpinner';
-import { useEffect, useState } from 'react';
 
 ReactModal.setAppElement("#root");
 

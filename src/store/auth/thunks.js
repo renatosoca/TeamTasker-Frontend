@@ -33,9 +33,9 @@ export const startRegisterUser = ({ name, lastname, email, password, username })
 
 export const startConfirmAccount = ( token ) => {
   return async ( dispatch ) => {
-    dispatch( onLoading() );
-
     try {
+      dispatch( onLoading() );
+
       const { data } = await teamTaskeAPI.get( `/auth/confirm-account/${token}`);
       dispatch( onConfirmed( data ));
 

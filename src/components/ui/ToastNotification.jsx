@@ -1,5 +1,6 @@
 import { FaInfo, FaCheck } from 'react-icons/fa';
 import { AiOutlineExclamation } from 'react-icons/ai';
+
 import { useProject, useUi } from '../../hooks'
 import { LoadingSpinner } from './LoadingSpinner';
 
