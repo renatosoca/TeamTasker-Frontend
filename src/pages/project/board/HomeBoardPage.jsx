@@ -1,19 +1,18 @@
 import { useEffect } from 'react';
 import { useProject } from '../../../hooks';
-import { ProjectBoardLayout } from '../../../layouts';
 
 export const HomeBoardPage = () => {
 
   const { activeBoard, activeProject } = useProject();
   
-  const array = Array(1).fill(0);
+  const array = Array(10).fill(0);
 
   useEffect(() => {
     document.title =`${activeBoard?.title} | TeamTasker`
   }, [activeBoard]);
 
   return (
-    <ProjectBoardLayout>
+    <main className='flex-1 flex flex-col h-full'>
       <div className='flex-1 flex flex-col pt-6'>
         <div className='flex justify-between'>
           <h2 className='text-2xl pb-4 px-6 font-jakarta'>Tarea</h2>
@@ -57,6 +56,6 @@ export const HomeBoardPage = () => {
           </div>
         </div>
       </div>
-    </ProjectBoardLayout>
+    </main>
   )
 }

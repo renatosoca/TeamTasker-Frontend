@@ -31,7 +31,7 @@ export const ResetPassPage = () => {
   }
   
   return (
-    <AuthLayout>
+    <>
       <div className="flex items-center justify-center bg-black text-white">
         <div className=" p-4 max-w-md w-full">
           <div>
@@ -83,6 +83,6 @@ export const ResetPassPage = () => {
       <div className="hidden md:block h-screen">
         <div className="image__gradient-login w-full h-full"></div>
       </div>
-    </AuthLayout>
+    </>
   )
 }

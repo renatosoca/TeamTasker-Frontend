@@ -33,7 +33,7 @@ export const LoginPage = () => {
   }
 
   return (
-    <AuthLayout>
+    <>
       <div className="flex items-center justify-center bg-black text-white">
         <div className=" p-4 max-w-md w-full">
           <h1 className="text-5xl uppercase -skew-x-12 font-bold text-center select-none">Bienvenido</h1>
@@ -124,6 +124,6 @@ export const LoginPage = () => {
       <div className="hidden md:block h-screen">
         <div className="image__gradient-login w-full h-full"></div>
       </div>
-    </AuthLayout>
+    </>
   )
 }

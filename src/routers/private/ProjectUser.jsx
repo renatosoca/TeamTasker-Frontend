@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useAuth } from '../hooks';
-import { HomeUserPage, BoardsUserPage } from '../pages';
+import { useAuth } from '../../hooks';
+import { ProjectUserLayout } from '../../layouts';
+import { HomeUserPage, BoardsUserPage } from '../../pages';
 
 export const ProjectUser = () => {
   const { user } = useAuth();
@@ -22,8 +23,10 @@ export const ProjectUser = () => {
 
   return (
     <Routes>
-      <Route path='/:user' element={ <HomeUserPage />} />
-      <Route path='/:user/boards' element={ <BoardsUserPage />} />
+      <Route path='/:user' element={ <ProjectUserLayout />}>
+        <Route index element={ <HomeUserPage />} />
+        <Route path='/:user/boards' element={ <BoardsUserPage />} />
+      </Route>
     </Routes>
   )
 }

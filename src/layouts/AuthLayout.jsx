@@ -1,18 +1,15 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../hooks';
 
-export const AuthLayout = ({ children }) => {
+export const AuthLayout = () => {
 
-  const { status, user } = useAuth()
+  const { status, user } = useAuth();
+
+  if ( status === 'authenticated' ) return <Navigate to={`/project/u/${user?.username}`} />
   
   return (
-    <>
-      { status === 'authenticated' 
-        ? <Navigate to={`/project/u/${user?.username}`} />
-        :<div className='grid md:grid-cols-2 min-h-screen overflow-hidden'>
-          { children }
-        </div>
-      }
-    </>
+    <div className='grid md:grid-cols-2 min-h-screen overflow-hidden'>
+      <Outlet />
+    </div>
   )
 }

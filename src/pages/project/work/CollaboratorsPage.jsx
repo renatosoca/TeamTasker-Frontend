@@ -1,8 +1,7 @@
-import { useEffect } from 'react'
-import { MdAdminPanelSettings } from 'react-icons/md'
+import { useEffect } from 'react';
+import { MdAdminPanelSettings } from 'react-icons/md';
 import { HeaderProjectWork, ToastNotification } from '../../../components';
 import { useProject, useUi } from '../../../hooks';
-import { ProjectWorkLayout } from '../../../layouts';
 import { startDeleteCollaborator } from '../../../store';
 
 export const CollaboratorsPage = () => {
@@ -20,14 +19,14 @@ export const CollaboratorsPage = () => {
   }
 
   return (
-    <ProjectWorkLayout>
+    <main  className='flex-1'>
       { isToasNotification && (
         <ToastNotification textLoading={'Eliminando colaborador...'}/>
       )}
 
       <HeaderProjectWork />
 
-      <main className=''>
+      <div className=''>
         <div className='px-2 2xs:px-6 py-8'>
           <h2 className='font-jakarta text-xl pb-4'>
             Colaboradores del Proyecto ( { activeProject?.collaborators?.length } )
@@ -81,7 +80,7 @@ export const CollaboratorsPage = () => {
             }
           </div>
         </div>
-      </main>
-    </ProjectWorkLayout>
+      </div>
+    </main>
   )
 }

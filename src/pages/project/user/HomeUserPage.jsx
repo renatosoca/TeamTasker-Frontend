@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { MdAddChart } from 'react-icons/md';
 import { useProject } from '../../../hooks';
-import { ProjectUserLayout } from '../../../layouts';
 import { openModalNewProject } from '../../../store';
 
 export const HomeUserPage = () => {
@@ -17,7 +16,7 @@ export const HomeUserPage = () => {
   }
   
   return (
-    <ProjectUserLayout>
+    <>
       <main className='max-w-2xl py-10 px-2 md:px-8'>
         <div className='w-full border-[.1rem] border-[#132F4C] rounded-md text-center shadow overflow-hidden'>
           <div className='w-full h-40 bg-[url(https://a.trellocdn.com/prgb/assets/e55b3540e5c1f06a51d7.svg)] bg-cover bg-no-repeat bg-[center]'>
@@ -42,6 +41,6 @@ export const HomeUserPage = () => {
           <span>Cree un Proyecto</span>
         </button>
       </aside>
-    </ProjectUserLayout>
+    </>
   )
 }
